@@ -2,10 +2,14 @@ import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
+import DownIcon from 'material-ui-icons/KeyboardArrowDown';
 import Grid from 'material-ui/Grid';
 import Input from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+
+const FAB_SIZE = '56';
+const BOTTOM_STRIP_HEIGHT = 144;
 
 const styles = theme => ({
   root: {
@@ -31,9 +35,14 @@ const styles = theme => ({
     paddingBottom: 2 * theme.spacing.unit,
   },
   bottomContainer: {
-    minHeight: '96px',
+    height: BOTTOM_STRIP_HEIGHT,
     background: theme.palette.primary.main,
     boxShadow: 'inset 0px 5px 20px rgba(0, 0, 0, 0.50)'
+  },
+  fab: {
+    position: 'absolute',
+    bottom: BOTTOM_STRIP_HEIGHT - FAB_SIZE/2,
+    right: theme.spacing.unit*4
   }
 });
 
@@ -95,6 +104,9 @@ class LandingPage extends Component {
             <Grid item xs={12} className={this.classes.bottomContainer}/>
           </Grid>
         </Grid>
+        <Button variant={'fab'} color={'secondary'} className={this.classes.fab}>
+          <DownIcon/>
+        </Button>
       </div>
     );
   }

@@ -7,9 +7,7 @@ import Grid from 'material-ui/Grid';
 import Input from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-
-const FAB_SIZE = '56';
-const BOTTOM_STRIP_HEIGHT = 144;
+import {BOTTOM_STRIP_HEIGHT, FAB_SIZE} from './utils/Sizes';
 
 const styles = theme => ({
   root: {

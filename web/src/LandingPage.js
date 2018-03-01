@@ -29,6 +29,10 @@ const styles = theme => ({
     borderTop: 'solid 1px #ababab',
     paddingTop: 2 * theme.spacing.unit,
     paddingBottom: 2 * theme.spacing.unit,
+  },
+  bottomContainer: {
+    minHeight: '96px',
+    background: theme.palette.primary.main
   }
 });
 
@@ -43,13 +47,14 @@ class LandingPage extends Component {
   render() {
     return (
       <div className={this.classes.root}>
+        <AppBar elevation={0} color={'inherit'}>
+          <Toolbar>
+            <div className={this.classes.flex}/>
+            <Button color="primary">Log in</Button>
+          </Toolbar>
+        </AppBar>
         <Grid container direction={'column'} className={this.classes.fullHeight}>
-          <AppBar elevation={0} color={'inherit'}>
-            <Toolbar>
-              <div className={this.classes.flex}/>
-              <Button color="primary">Log in</Button>
-            </Toolbar>
-          </AppBar>
+
           <Grid container spacing={24} alignItems={'center'} className={this.classes.flex}>
             <Grid item xs={12}>
               <Grid container>
@@ -83,6 +88,10 @@ class LandingPage extends Component {
                 </Grid>
               </Grid>
             </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item xs={12} className={this.classes.bottomContainer}/>
           </Grid>
         </Grid>
       </div>

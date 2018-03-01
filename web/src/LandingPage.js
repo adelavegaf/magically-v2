@@ -44,10 +44,10 @@ class LandingPage extends Component {
     return (
       <div className={this.classes.root}>
         <Grid container direction={'column'} className={this.classes.fullHeight}>
-          <AppBar>
+          <AppBar elevation={0} color={'inherit'}>
             <Toolbar>
               <div className={this.classes.flex}/>
-              <Button color="primary">Login</Button>
+              <Button color="primary">Log in</Button>
             </Toolbar>
           </AppBar>
           <Grid container spacing={24} alignItems={'center'} className={this.classes.flex}>

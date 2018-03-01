@@ -32,7 +32,8 @@ const styles = theme => ({
   },
   bottomContainer: {
     minHeight: '96px',
-    background: theme.palette.primary.main
+    background: theme.palette.primary.main,
+    boxShadow: 'inset 0px 5px 20px rgba(0, 0, 0, 0.50)'
   }
 });
 

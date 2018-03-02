@@ -8,6 +8,9 @@ import ThumbDown from 'material-ui-icons/ThumbDown';
 import Favorite from 'material-ui-icons/Favorite';
 
 const styles = theme => ({
+  resultContainer: {
+    marginTop: theme.spacing.unit * 3
+  },
   iconContainer: {
     display: 'inline-flex',
     alignItems: 'center',
@@ -31,7 +34,7 @@ class SearchResult extends Component {
 
   render() {
     return (
-      <Grid container direction={'column'}>
+      <Grid container direction={'column'} className={this.classes.resultContainer}>
         <Grid container alignItems={'center'}>
           <Grid item>
             <Typography variant={'display3'} color={'secondary'}>

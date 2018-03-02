@@ -1,11 +1,24 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
+import ThumbUp from 'material-ui-icons/ThumbUp';
+import ThumbDown from 'material-ui-icons/ThumbDown';
+import Favorite from 'material-ui-icons/Favorite';
 
 const styles = theme => ({
-  root: {}
+  iconContainer: {
+    display: 'inline-flex',
+    alignItems: 'center',
+  },
+  iconButton: {
+    height: theme.spacing.unit * 2,
+    width: theme.spacing.unit * 2
+  },
+  iconValue: {
+    marginLeft: theme.spacing.unit
+  }
 });
 
 
@@ -18,22 +31,49 @@ class SearchResult extends Component {
 
   render() {
     return (
-      <Grid container alignItems={'center'}>
-        <Grid item>
-          <Typography variant={'display3'} color={'secondary'}>
-            77%
-          </Typography>
+      <Grid container direction={'column'}>
+        <Grid container alignItems={'center'}>
+          <Grid item>
+            <Typography variant={'display3'} color={'secondary'}>
+              77%
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant={'title'}>
+              Project Name
+            </Typography>
+            <Typography variant={'subheading'}>
+              Author - Date
+            </Typography>
+            <Typography variant={'caption'}>
+              # errors remaining
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Typography variant={'title'}>
-            Project Name
-          </Typography>
-          <Typography variant={'subheading'}>
-            Author - Date
-          </Typography>
-          <Typography variant={'caption'}>
-            # errors remaining
-          </Typography>
+        <Grid container>
+          <Grid item>
+            <Typography variant={'caption'} className={this.classes.iconContainer}>
+              <IconButton className={this.classes.iconButton}>
+                <Favorite className={this.classes.iconButton}/>
+              </IconButton>
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant={'caption'} className={this.classes.iconContainer}>
+              <IconButton className={this.classes.iconButton}>
+                <ThumbUp className={this.classes.iconButton}/>
+              </IconButton>
+              <span className={this.classes.iconValue}>0</span>
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant={'caption'} className={this.classes.iconContainer}>
+              <IconButton className={this.classes.iconButton}>
+                <ThumbDown className={this.classes.iconButton}/>
+              </IconButton>
+              <span className={this.classes.iconValue}>0</span>
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     );

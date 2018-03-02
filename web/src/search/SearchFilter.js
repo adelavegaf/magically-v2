@@ -22,12 +22,15 @@ const styles = theme => ({
   }
 });
 
-
 class SearchFilter extends Component {
   constructor(props) {
     super(props);
+
     const {classes} = props;
     this.classes = classes;
+    this.state = {
+      expandFilter: false
+    }
   }
 
   getFilterHeading(heading) {
@@ -63,6 +66,20 @@ class SearchFilter extends Component {
     );
   }
 
+  getFilters() {
+    return (
+      <Grid container spacing={24}>
+        {this.getFilterColumn('DATE', ['Today', 'This year', 'All time'])}
+        {this.getFilterColumn('OWNER', ['Anyone', 'Only others', 'Only me'])}
+        {this.getFilterColumn('SORT BY', ['Favorites', 'Upvotes', 'Completion Percentage'])}
+      </Grid>
+    );
+  }
+
+  toggleFilter() {
+    this.setState({expandFilter: !this.state.expandFilter});
+  }
+
   render() {
     return (
       <Grid container className={this.classes.filterContainer}>
@@ -73,17 +90,13 @@ class SearchFilter extends Component {
             </Typography>
           </Grid>
           <Grid item xs={6} className={this.classes.filterButton}>
-            <Button color={'primary'}>
+            <Button color={'primary'} onClick={() => this.toggleFilter()}>
               <FilterIcon/>
               Filter
             </Button>
           </Grid>
         </Grid>
-        <Grid container spacing={24}>
-          {this.getFilterColumn('DATE', ['Today', 'This year', 'All time'])}
-          {this.getFilterColumn('OWNER', ['Anyone', 'Only others', 'Only me'])}
-          {this.getFilterColumn('SORT BY', ['Favorites', 'Upvotes', 'Completion Percentage'])}
-        </Grid>
+        {this.state.expandFilter ? this.getFilters() : <div/>}
       </Grid>
     );
   }

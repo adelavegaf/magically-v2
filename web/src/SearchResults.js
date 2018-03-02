@@ -11,6 +11,7 @@ import Input, {InputAdornment} from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from './utils/Colors';
+import SearchResult from './SearchResult';
 
 const styles = theme => ({
   root: {
@@ -38,10 +39,11 @@ const styles = theme => ({
     marginRight: theme.spacing.unit * 3,
     textAlign: 'right'
   },
-  resultsContainer: {
+  spacingForContainer: {
     marginTop: theme.spacing.unit * 3
   },
   filterContainer: {
+    marginTop: theme.spacing.unit * 3,
     borderBottom: 'solid 1px #eeeeee'
   },
   filterButton: {
@@ -50,7 +52,7 @@ const styles = theme => ({
 });
 
 
-class LandingPage extends Component {
+class SearchResults extends Component {
   constructor(props) {
     super(props);
     const {classes} = props;
@@ -60,50 +62,49 @@ class LandingPage extends Component {
   render() {
     return (
       <div className={this.classes.root}>
-        <Grid container>
 
-          <Grid item xs={12}>
-            <AppBar color={'inherit'} elevation={1} position={'sticky'}>
-              <Toolbar disableGutters={true}>
-                <Grid container alignItems={'center'}>
-                  <Grid item xs={2}>
-                    <Typography variant="title" color="primary" className={this.classes.appTitle}>
-                      Magically
-                    </Typography>
-                  </Grid>
-                  <Input
-                    className={this.classes.searchInput}
-                    placeholder={'Search'}
-                    endAdornment={<InputAdornment position="end"><SearchIcon/></InputAdornment>}
-                  />
-                  <div className={this.classes.flex}/>
-                  <Grid item xs={2} className={this.classes.logInButton}>
-                    <Button variant={'raised'} color="primary">Log in</Button>
-                  </Grid>
-                </Grid>
-              </Toolbar>
-            </AppBar>
-          </Grid>
-
-          <Grid item xs={12} className={this.classes.resultsContainer}>
-            <Grid container>
-              <Grid item xs={2}/>
-              <Grid item xs={8} className={this.classes.filterContainer}>
-                <Grid container justify={'space-between'} alignItems={'center'}>
-                  <Grid item xs={6}>
-                    <Typography>
-                      About 10 results
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6} className={this.classes.filterButton}>
-                    <Button color={'primary'}>
-                      <FilterIcon/>
-                      Filter
-                    </Button>
-                  </Grid>
-                </Grid>
+        <AppBar color={'inherit'} elevation={1} position={'sticky'}>
+          <Toolbar disableGutters={true}>
+            <Grid container alignItems={'center'}>
+              <Grid item xs={2}>
+                <Typography variant="title" color="primary" className={this.classes.appTitle}>
+                  Magically
+                </Typography>
+              </Grid>
+              <Input
+                className={this.classes.searchInput}
+                placeholder={'Search'}
+                endAdornment={<InputAdornment position="end"><SearchIcon/></InputAdornment>}
+              />
+              <div className={this.classes.flex}/>
+              <Grid item xs={2} className={this.classes.logInButton}>
+                <Button variant={'raised'} color="primary">Log in</Button>
               </Grid>
             </Grid>
+          </Toolbar>
+        </AppBar>
+
+        <Grid container>
+
+          <Grid item xs={2}/>
+
+          <Grid item xs={8}>
+
+            <Grid container justify={'space-between'} alignItems={'center'} className={this.classes.filterContainer}>
+              <Grid item xs={6}>
+                <Typography>
+                  About 10 results
+                </Typography>
+              </Grid>
+              <Grid item xs={6} className={this.classes.filterButton}>
+                <Button color={'primary'}>
+                  <FilterIcon/>
+                  Filter
+                </Button>
+              </Grid>
+            </Grid>
+
+            <SearchResult/>
           </Grid>
 
         </Grid>
@@ -116,4 +117,4 @@ class LandingPage extends Component {
   }
 }
 
-export default withStyles(styles)(LandingPage);
+export default withStyles(styles)(SearchResults);

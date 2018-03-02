@@ -59,6 +59,7 @@ class SearchResult extends Component {
               <IconButton className={this.classes.iconButton}>
                 <Favorite className={this.classes.iconButton}/>
               </IconButton>
+              <span className={this.classes.iconValue}>0</span>
             </Typography>
           </Grid>
           <Grid item>

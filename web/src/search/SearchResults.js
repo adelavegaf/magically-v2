@@ -12,6 +12,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
 import SearchResult from './SearchResult';
+import SearchFilter from './SearchFilter';
 
 const styles = theme => ({
   root: {
@@ -89,21 +90,7 @@ class SearchResults extends Component {
           <Grid item xs={2}/>
 
           <Grid item xs={8}>
-
-            <Grid container justify={'space-between'} alignItems={'center'} className={this.classes.filterContainer}>
-              <Grid item xs={6}>
-                <Typography>
-                  About 10 results
-                </Typography>
-              </Grid>
-              <Grid item xs={6} className={this.classes.filterButton}>
-                <Button color={'primary'}>
-                  <FilterIcon/>
-                  Filter
-                </Button>
-              </Grid>
-            </Grid>
-
+            <SearchFilter/>
             <SearchResult/>
           </Grid>
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import LandingPage from './LandingPage';
-import SearchResults from './SearchResults';
+import SearchResults from './search/SearchResults';
 
 const theme = createMuiTheme({
   palette: {

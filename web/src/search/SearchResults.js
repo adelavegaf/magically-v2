@@ -10,7 +10,7 @@ import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import {LIGHT_GRAY} from './utils/Colors';
+import {LIGHT_GRAY} from '../utils/Colors';
 import SearchResult from './SearchResult';
 
 const styles = theme => ({

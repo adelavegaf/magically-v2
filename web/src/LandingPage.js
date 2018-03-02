@@ -8,6 +8,7 @@ import Input from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {BOTTOM_STRIP_HEIGHT, FAB_SIZE} from './utils/Sizes';
+import AuthAppBarButton from './auth/AuthAppBarButton';
 
 const styles = theme => ({
   root: {
@@ -58,7 +59,7 @@ class LandingPage extends Component {
         <AppBar elevation={0} color={'inherit'}>
           <Toolbar>
             <div className={this.classes.flex}/>
-            <Button color="primary">Log in</Button>
+            <AuthAppBarButton/>
           </Toolbar>
         </AppBar>
         <Grid container direction={'column'} className={this.classes.fullHeight}>

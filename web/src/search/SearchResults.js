@@ -3,9 +3,7 @@ import {withStyles} from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
-import {FormControl, FormHelperText} from 'material-ui/Form';
 import SearchIcon from 'material-ui-icons/Search';
-import FilterIcon from 'material-ui-icons/FilterList';
 import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
@@ -13,6 +11,7 @@ import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
 import SearchResult from './SearchResult';
 import SearchFilter from './SearchFilter';
+import AuthAppBarButton from '../auth/AuthAppBarButton';
 
 const styles = theme => ({
   root: {
@@ -78,9 +77,7 @@ class SearchResults extends Component {
                 endAdornment={<InputAdornment position="end"><SearchIcon/></InputAdornment>}
               />
               <div className={this.classes.flex}/>
-              <Grid item xs={2} className={this.classes.logInButton}>
-                <Button variant={'raised'} color="primary">Log in</Button>
-              </Grid>
+              <AuthAppBarButton/>
             </Grid>
           </Toolbar>
         </AppBar>

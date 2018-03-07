@@ -63,6 +63,9 @@ class SearchResults extends Component {
           <Grid item xs={8}>
             <SearchFilter/>
             <SearchResult/>
+            <SearchResult/>
+            <SearchResult/>
+            <SearchResult/>
           </Grid>
 
         </Grid>

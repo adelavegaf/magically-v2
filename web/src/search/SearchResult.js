@@ -13,6 +13,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 6
   },
   actionsContainer: {
+    paddingTop: theme.spacing.unit,
     paddingRight: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 2
   },

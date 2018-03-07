@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import DownIcon from 'material-ui-icons/KeyboardArrowDown';
 import Grid from 'material-ui/Grid';
 import Input from 'material-ui/Input';
-import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {BOTTOM_STRIP_HEIGHT, FAB_SIZE} from './utils/Sizes';
-import AuthAppBarButton from './auth/AuthAppBarButton';
+import AppBarFactory from './appbar/AppBarFactory';
 
 const styles = theme => ({
   root: {
@@ -56,12 +54,8 @@ class LandingPage extends Component {
   render() {
     return (
       <div className={this.classes.root}>
-        <AppBar elevation={0} color={'inherit'}>
-          <Toolbar>
-            <div className={this.classes.flex}/>
-            <AuthAppBarButton/>
-          </Toolbar>
-        </AppBar>
+        <AppBarFactory type={'invisible'}/>
+
         <Grid container direction={'column'} className={this.classes.fullHeight}>
 
           <Grid container spacing={24} alignItems={'center'} className={this.classes.flex}>

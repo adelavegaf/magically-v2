@@ -1,17 +1,12 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
-import SearchIcon from 'material-ui-icons/Search';
 import Grid from 'material-ui/Grid';
-import Input, {InputAdornment} from 'material-ui/Input';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
 import SearchResult from './SearchResult';
 import SearchFilter from './SearchFilter';
-import AuthAppBarButton from '../auth/AuthAppBarButton';
+import AppBarFactory from '../appbar/AppBarFactory';
 
 const styles = theme => ({
   root: {
@@ -59,24 +54,7 @@ class SearchResults extends Component {
     return (
       <div className={this.classes.root}>
 
-        <AppBar color={'inherit'} elevation={1} position={'sticky'}>
-          <Toolbar disableGutters={true}>
-            <Grid container alignItems={'center'}>
-              <Grid item xs={2}>
-                <Typography variant="title" color="primary" className={this.classes.appTitle}>
-                  Magically
-                </Typography>
-              </Grid>
-              <Input
-                className={this.classes.searchInput}
-                placeholder={'Search'}
-                endAdornment={<InputAdornment position="end"><SearchIcon/></InputAdornment>}
-              />
-              <div className={this.classes.flex}/>
-              <AuthAppBarButton/>
-            </Grid>
-          </Toolbar>
-        </AppBar>
+        <AppBarFactory type={'search'}/>
 
         <Grid container>
 
@@ -92,6 +70,7 @@ class SearchResults extends Component {
         <Button variant={'fab'} color={'secondary'} className={this.classes.fab}>
           <AddIcon/>
         </Button>
+
       </div>
     );
   }

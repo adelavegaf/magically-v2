@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
-import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
-import AuthAppBarButton from '../auth/AuthAppBarButton';
-import SearchIcon from 'material-ui-icons/Search';
+import AppBarFactory from '../appbar/AppBarFactory';
 
 const styles = theme => ({
   root: {
@@ -42,7 +39,7 @@ class Editor extends Component {
   render() {
     return (
       <div className={this.classes.root}>
-
+        <AppBarFactory type={'search'}/>
       </div>
     );
   }

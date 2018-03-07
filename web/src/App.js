@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import LandingPage from './LandingPage';
 import SearchResults from './search/SearchResults';
+import Editor from './editor/Editor';
 
 const theme = createMuiTheme({
   palette: {
@@ -24,7 +25,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <SearchResults/>
+        <Editor/>
       </MuiThemeProvider>
     );
   }

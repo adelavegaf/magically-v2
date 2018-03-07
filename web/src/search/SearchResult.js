@@ -9,7 +9,7 @@ import Favorite from 'material-ui-icons/Favorite';
 
 const styles = theme => ({
   resultContainer: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 6
   },
   iconContainer: {
     display: 'inline-flex',
@@ -24,6 +24,7 @@ const styles = theme => ({
   }
 });
 
+// COLORS: #d32f2f (red) #ffca28 (yellow)
 
 class SearchResult extends Component {
   constructor(props) {

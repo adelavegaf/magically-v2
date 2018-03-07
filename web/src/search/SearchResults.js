@@ -35,10 +35,6 @@ const styles = theme => ({
     borderRadius: 2,
     padding: theme.spacing.unit
   },
-  logInButton: {
-    marginRight: theme.spacing.unit * 3,
-    textAlign: 'right'
-  },
   spacingForContainer: {
     marginTop: theme.spacing.unit * 3
   },

@@ -32,6 +32,15 @@ const styles = theme => ({
     background: '#f2f2f2',
     borderRight: 'solid 0px'
   },
+  languageIcon: {
+    color: '#356cf0'
+  },
+  imageIcon: {
+    color: '#eb6523'
+  },
+  contrastIcon: {
+    color: '#178f47'
+  },
   editorContainer: {
     margin: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 6}px`,
     flex: 1
@@ -53,21 +62,21 @@ class Editor extends Component {
         <div className={this.classes.toolbar}/>
         <List component={'nav'}>
           <ListItem button>
-            <ListItemIcon>
+            <ListItemIcon className={this.classes.languageIcon}>
               <LanguageIcon/>
             </ListItemIcon>
             <ListItemText primary="Language"/>
           </ListItem>
 
           <ListItem button>
-            <ListItemIcon>
+            <ListItemIcon className={this.classes.imageIcon}>
               <ImageIcon/>
             </ListItemIcon>
             <ListItemText primary="Images"/>
           </ListItem>
 
           <ListItem button>
-            <ListItemIcon>
+            <ListItemIcon className={this.classes.contrastIcon}>
               <InvertColorsIcon/>
             </ListItemIcon>
             <ListItemText primary="Contrast"/>

@@ -52,7 +52,15 @@ const styles = theme => ({
   editorSideList: {
     width: theme.spacing.unit * 29,
     height: '100%',
+    paddingRight: '0px !important',
+    paddingTop: '0px !important',
     borderRight: 'solid 1px #e0e0e0'
+  },
+  list: {
+    paddingTop: '0px !important'
+  },
+  instructions: {
+    paddingRight: '0px'
   },
   toolbar: theme.mixins.toolbar
 });
@@ -116,9 +124,9 @@ class Editor extends Component {
 
     return (
       <Grid item className={this.classes.editorSideList}>
-        <List>
+        <List className={this.classes.list}>
           <ListItem button disableGutters={true} divider={true}>
-            <ListItemText primary={'Instructions'} align={'center'}/>
+            <ListItemText primary={'Instructions'} align={'center'} className={this.classes.instructions}/>
           </ListItem>
           {listItems}
         </List>
@@ -129,13 +137,15 @@ class Editor extends Component {
   getEditor() {
     return (
       <Grid container direction={'column'}>
-        <div className={this.classes.toolbar}/>
-        <div className={this.classes.toolbar}/>
-        <Paper className={this.classes.editorContainer}>
-          <Grid container className={this.classes.fullHeight}>
-            {this.getEditorSideList()}
-          </Grid>
-        </Paper>
+        <Grid item className={this.classes.toolbar}/>
+        <Grid item className={this.classes.toolbar}/>
+        <Grid item className={this.classes.editorContainer}>
+          <Paper className={this.classes.fullHeight}>
+            <Grid container className={this.classes.fullHeight}>
+              {this.getEditorSideList()}
+            </Grid>
+          </Paper>
+        </Grid>
       </Grid>
     );
   }

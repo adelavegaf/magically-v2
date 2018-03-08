@@ -7,11 +7,12 @@ import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
 import AppBarFactory from '../appbar/AppBarFactory';
 import Drawer from 'material-ui/Drawer';
-import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
+import List, {ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
 import ImageIcon from 'material-ui-icons/Image';
 import LanguageIcon from 'material-ui-icons/Language';
 import InvertColorsIcon from 'material-ui-icons/InvertColors';
 import Paper from 'material-ui/Paper';
+import Checkbox from 'material-ui/Checkbox';
 
 const styles = theme => ({
   root: {
@@ -25,6 +26,9 @@ const styles = theme => ({
   },
   flex: {
     flex: 1
+  },
+  fullHeight: {
+    height: '100%'
   },
   drawerPaper: {
     position: 'relative',
@@ -45,6 +49,11 @@ const styles = theme => ({
     margin: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 6}px`,
     flex: 1
   },
+  editorSideList: {
+    width: theme.spacing.unit * 29,
+    height: '100%',
+    borderRight: 'solid 1px #e0e0e0'
+  },
   toolbar: theme.mixins.toolbar
 });
 
@@ -53,6 +62,11 @@ class Editor extends Component {
     super(props);
     const {classes} = props;
     this.classes = classes;
+    this.errors = [
+      {name: 'jaf.jpg', fixed: true},
+      {name: 'cat.jpg', fixed: true},
+      {name: 'car1230.jpg', fixed: false},
+    ];
   }
 
   getDrawer() {
@@ -65,25 +79,51 @@ class Editor extends Component {
             <ListItemIcon className={this.classes.languageIcon}>
               <LanguageIcon/>
             </ListItemIcon>
-            <ListItemText primary="Language"/>
+            <ListItemText primary={'Language'}/>
           </ListItem>
 
           <ListItem button>
             <ListItemIcon className={this.classes.imageIcon}>
               <ImageIcon/>
             </ListItemIcon>
-            <ListItemText primary="Images"/>
+            <ListItemText primary={'Images'}/>
           </ListItem>
 
           <ListItem button>
             <ListItemIcon className={this.classes.contrastIcon}>
               <InvertColorsIcon/>
             </ListItemIcon>
-            <ListItemText primary="Contrast"/>
+            <ListItemText primary={'Contrast'}/>
           </ListItem>
         </List>
       </Drawer>
     );
+  }
+
+  getEditorSideList() {
+    const listItems = this.errors.map((e, i) => {
+      return (
+        <ListItem button key={i}>
+          <ListItemText primary={e.name}/>
+          <ListItemSecondaryAction>
+            <Checkbox
+              checked={e.fixed}
+            />
+          </ListItemSecondaryAction>
+        </ListItem>
+      )
+    });
+
+    return (
+      <Grid item className={this.classes.editorSideList}>
+        <List>
+          <ListItem button disableGutters={true} divider={true}>
+            <ListItemText primary={'Instructions'} align={'center'}/>
+          </ListItem>
+          {listItems}
+        </List>
+      </Grid>
+    )
   }
 
   getEditor() {
@@ -92,7 +132,9 @@ class Editor extends Component {
         <div className={this.classes.toolbar}/>
         <div className={this.classes.toolbar}/>
         <Paper className={this.classes.editorContainer}>
-
+          <Grid container className={this.classes.fullHeight}>
+            {this.getEditorSideList()}
+          </Grid>
         </Paper>
       </Grid>
     );

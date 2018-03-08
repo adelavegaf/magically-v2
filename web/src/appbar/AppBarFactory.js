@@ -9,17 +9,24 @@ import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
 import AuthAppBarButton from '../auth/AuthAppBarButton';
 import SearchIcon from 'material-ui-icons/Search';
+import Paper from 'material-ui/Paper'
 
 const styles = theme => ({
   root: {
     height: '100%',
     backgroundColor: LIGHT_GRAY
   },
+  leftContainer: {
+    width: theme.spacing.unit * 29
+  },
   flex: {
     flex: 1
   },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
   appTitle: {
-    paddingLeft: theme.spacing.unit * 3
+    paddingLeft: theme.spacing.unit * 9
   },
   searchInput: {
     color: theme.palette.primary.main,
@@ -73,12 +80,42 @@ class AppBarFactory extends Component {
     );
   }
 
+  getEditorBar() {
+    return (
+      <AppBar color={'inherit'} className={this.classes.appBar}>
+        <Toolbar disableGutters={true}>
+          <Grid container alignItems={'center'}>
+            <Grid item className={this.classes.leftContainer}>
+              <Typography variant="title" color="primary" className={this.classes.appTitle}>
+                Magically
+              </Typography>
+            </Grid>
+            <div className={this.classes.flex}/>
+            <AuthAppBarButton/>
+          </Grid>
+        </Toolbar>
+        <Toolbar disableGutters={true}>
+          <Grid container alignItems={'center'}>
+            <Grid item className={this.classes.leftContainer}>
+              <Typography variant="title" className={this.classes.appTitle}>
+                Untitled
+              </Typography>
+            </Grid>
+            <div className={this.classes.flex}/>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+
   render() {
-    switch(this.props.type) {
+    switch (this.props.type) {
       case 'invisible':
         return this.getInvisibleAppBar();
       case 'search':
         return this.getSearchAppBar();
+      case 'editor':
+        return this.getEditorBar();
       default:
         return this.getInvisibleAppBar();
     }

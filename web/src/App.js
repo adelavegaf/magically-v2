@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <SearchResults/>
+        <Editor/>
       </MuiThemeProvider>
     );
   }

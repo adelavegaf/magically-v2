@@ -9,7 +9,6 @@ import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
 import AuthAppBarButton from '../auth/AuthAppBarButton';
 import SearchIcon from 'material-ui-icons/Search';
-import Paper from 'material-ui/Paper'
 
 const styles = theme => ({
   root: {

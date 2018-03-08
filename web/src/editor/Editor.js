@@ -11,12 +11,17 @@ import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
 import ImageIcon from 'material-ui-icons/Image';
 import LanguageIcon from 'material-ui-icons/Language';
 import InvertColorsIcon from 'material-ui-icons/InvertColors';
+import Paper from 'material-ui/Paper';
 
 const styles = theme => ({
   root: {
     height: '100%',
     backgroundColor: LIGHT_GRAY,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    position: 'relative',
+    flexGrow: 1,
+    zIndex: 1,
+    display: 'flex'
   },
   flex: {
     flex: 1
@@ -26,6 +31,10 @@ const styles = theme => ({
     width: theme.spacing.unit * 29,
     background: '#f2f2f2',
     borderRight: 'solid 0px'
+  },
+  editorContainer: {
+    margin: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 6}px`,
+    flex: 1
   },
   toolbar: theme.mixins.toolbar
 });
@@ -68,11 +77,24 @@ class Editor extends Component {
     );
   }
 
+  getEditor() {
+    return (
+      <Grid container direction={'column'}>
+        <div className={this.classes.toolbar}/>
+        <div className={this.classes.toolbar}/>
+        <Paper className={this.classes.editorContainer}>
+
+        </Paper>
+      </Grid>
+    );
+  }
+
   render() {
     return (
       <div className={this.classes.root}>
         <AppBarFactory type={'editor'}/>
         {this.getDrawer()}
+        {this.getEditor()}
       </div>
     );
   }

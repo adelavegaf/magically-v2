@@ -12,7 +12,14 @@ import ImageIcon from 'material-ui-icons/Image';
 import LanguageIcon from 'material-ui-icons/Language';
 import InvertColorsIcon from 'material-ui-icons/InvertColors';
 import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
+import Checkbox from 'material-ui/Checkbox'
+import {
+  FormLabel,
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  FormHelperText,
+} from 'material-ui/Form';
 
 const styles = theme => ({
   root: {
@@ -29,6 +36,9 @@ const styles = theme => ({
   },
   fullHeight: {
     height: '100%'
+  },
+  centerContainer: {
+    textAlign: 'center'
   },
   drawerPaper: {
     position: 'relative',
@@ -70,6 +80,7 @@ class Editor extends Component {
     super(props);
     const {classes} = props;
     this.classes = classes;
+    this.errorType = 'Images';
     this.errors = [
       {name: 'jaf.jpg', fixed: true},
       {name: 'cat.jpg', fixed: true},
@@ -134,6 +145,48 @@ class Editor extends Component {
     )
   }
 
+  getImageEditor() {
+    return (
+      <Grid item className={this.classes.flex}>
+        <Grid container direction={'column'} justify={'center'} className={this.classes.fullHeight}>
+          <Grid item className={this.classes.centerContainer}>
+            <img src="http://via.placeholder.com/350x150"/>
+          </Grid>
+          <Grid item>
+            <Input placeholder="Type image description"
+                   fullWidth
+                   inputProps={{
+                     'aria-label': 'image description',
+                   }}/>
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="no-alt"
+                />
+              }
+              label="This is a decorative image that doesn't need a description"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  getEditorMainView() {
+    switch (this.errorType) {
+      case 'Images':
+        return this.getImageEditor();
+      case 'Language':
+        break;
+      case 'Contrast':
+        break;
+      default:
+        break;
+    }
+  }
+
   getEditor() {
     return (
       <Grid container direction={'column'}>
@@ -143,6 +196,7 @@ class Editor extends Component {
           <Paper className={this.classes.fullHeight}>
             <Grid container className={this.classes.fullHeight}>
               {this.getEditorSideList()}
+              {this.getEditorMainView()}
             </Grid>
           </Paper>
         </Grid>

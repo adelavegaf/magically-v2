@@ -72,6 +72,14 @@ const styles = theme => ({
   instructions: {
     paddingRight: '0px'
   },
+  imageEditorContainer: {
+    height: '100%',
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2
+  },
+  imageEditorActionContainer: {
+    padding: theme.spacing.unit * 2
+  },
   toolbar: theme.mixins.toolbar
 });
 
@@ -148,26 +156,33 @@ class Editor extends Component {
   getImageEditor() {
     return (
       <Grid item className={this.classes.flex}>
-        <Grid container direction={'column'} justify={'center'} className={this.classes.fullHeight}>
-          <Grid item className={this.classes.centerContainer}>
-            <img src="http://via.placeholder.com/350x150"/>
+        <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
+          <Grid container direction={'column'} justify={'center'} className={this.classes.flex}>
+            <Grid item className={this.classes.centerContainer}>
+              <img src="http://via.placeholder.com/350x150"/>
+            </Grid>
+            <Grid item>
+              <Input placeholder="Type image description"
+                     fullWidth
+                     inputProps={{
+                       'aria-label': 'image description',
+                     }}/>
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="no-alt"
+                  />
+                }
+                label="This is a decorative image that doesn't need a description"
+              />
+            </Grid>
           </Grid>
-          <Grid item>
-            <Input placeholder="Type image description"
-                   fullWidth
-                   inputProps={{
-                     'aria-label': 'image description',
-                   }}/>
-          </Grid>
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="no-alt"
-                />
-              }
-              label="This is a decorative image that doesn't need a description"
-            />
+          <Grid container justify={'flex-end'} className={this.classes.imageEditorActionContainer}>
+            <Button variant="raised" color={'secondary'}>
+              Save
+            </Button>
           </Grid>
         </Grid>
       </Grid>

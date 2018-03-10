@@ -159,7 +159,7 @@ class Editor extends Component {
         <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
           <Grid container direction={'column'} justify={'center'} className={this.classes.flex}>
             <Grid item className={this.classes.centerContainer}>
-              <img src="http://via.placeholder.com/350x150"/>
+              <img src="http://via.placeholder.com/350x150" alt="missing description"/>
             </Grid>
             <Grid item>
               <Input placeholder="Type image description"

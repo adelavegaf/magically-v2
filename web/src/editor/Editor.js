@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
-import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
-import Input, {InputAdornment} from 'material-ui/Input';
-import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
 import AppBarFactory from '../appbar/AppBarFactory';
 import Drawer from 'material-ui/Drawer';
@@ -13,13 +10,8 @@ import LanguageIcon from 'material-ui-icons/Language';
 import InvertColorsIcon from 'material-ui-icons/InvertColors';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox'
-import {
-  FormLabel,
-  FormControl,
-  FormGroup,
-  FormControlLabel,
-  FormHelperText,
-} from 'material-ui/Form';
+import ImageFixer from './ImageFixer';
+import EditorSideList from './EditorSideList';
 
 const styles = theme => ({
   root: {
@@ -59,27 +51,6 @@ const styles = theme => ({
     margin: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 6}px`,
     flex: 1
   },
-  editorSideList: {
-    width: theme.spacing.unit * 29,
-    height: '100%',
-    paddingRight: '0px !important',
-    paddingTop: '0px !important',
-    borderRight: 'solid 1px #e0e0e0'
-  },
-  list: {
-    paddingTop: '0px !important'
-  },
-  instructions: {
-    paddingRight: '0px'
-  },
-  imageEditorContainer: {
-    height: '100%',
-    paddingRight: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit * 2
-  },
-  imageEditorActionContainer: {
-    padding: theme.spacing.unit * 2
-  },
   toolbar: theme.mixins.toolbar
 });
 
@@ -89,11 +60,6 @@ class Editor extends Component {
     const {classes} = props;
     this.classes = classes;
     this.errorType = 'Images';
-    this.errors = [
-      {name: 'jaf.jpg', fixed: true},
-      {name: 'cat.jpg', fixed: true},
-      {name: 'car1230.jpg', fixed: false},
-    ];
   }
 
   getDrawer() {
@@ -153,46 +119,10 @@ class Editor extends Component {
     )
   }
 
-  getImageEditor() {
-    return (
-      <Grid item className={this.classes.flex}>
-        <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
-          <Grid container direction={'column'} justify={'center'} className={this.classes.flex}>
-            <Grid item className={this.classes.centerContainer}>
-              <img src="http://via.placeholder.com/350x150" alt="missing description"/>
-            </Grid>
-            <Grid item>
-              <Input placeholder="Type image description"
-                     fullWidth
-                     inputProps={{
-                       'aria-label': 'image description',
-                     }}/>
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="no-alt"
-                  />
-                }
-                label="This is a decorative image that doesn't need a description"
-              />
-            </Grid>
-          </Grid>
-          <Grid container justify={'flex-end'} className={this.classes.imageEditorActionContainer}>
-            <Button variant="raised" color={'secondary'}>
-              Save
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-
   getEditorMainView() {
     switch (this.errorType) {
       case 'Images':
-        return this.getImageEditor();
+        return <ImageFixer/>;
       case 'Language':
         break;
       case 'Contrast':
@@ -210,7 +140,7 @@ class Editor extends Component {
         <Grid item className={this.classes.editorContainer}>
           <Paper className={this.classes.fullHeight}>
             <Grid container className={this.classes.fullHeight}>
-              {this.getEditorSideList()}
+              <EditorSideList/>
               {this.getEditorMainView()}
             </Grid>
           </Paper>

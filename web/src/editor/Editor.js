@@ -12,6 +12,7 @@ import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox'
 import ImageFixer from './ImageFixer';
 import EditorSideList from './EditorSideList';
+import LanguageFixer from './LanguageFixer';
 
 const styles = theme => ({
   root: {
@@ -59,7 +60,7 @@ class Editor extends Component {
     super(props);
     const {classes} = props;
     this.classes = classes;
-    this.errorType = 'Images';
+    this.errorType = 'Language';
   }
 
   getDrawer() {
@@ -124,7 +125,7 @@ class Editor extends Component {
       case 'Images':
         return <ImageFixer/>;
       case 'Language':
-        break;
+        return <LanguageFixer/>;
       case 'Contrast':
         break;
       default:

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
 import Checkbox from 'material-ui/Checkbox'
@@ -40,32 +41,30 @@ class ImageFixer extends Component {
     return (
       <Grid item className={this.classes.flex}>
         <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
-          <Grid container direction={'column'} justify={'center'} className={this.classes.flex}>
-            <Grid item className={this.classes.centerContainer}>
-              <img src="http://via.placeholder.com/350x150" alt="missing description"/>
-            </Grid>
-            <Grid item>
-              <Input placeholder="Type image description"
-                     fullWidth
-                     inputProps={{
-                       'aria-label': 'image description',
-                     }}/>
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="no-alt"
-                  />
-                }
-                label="This is a decorative image that doesn't need a description"
-              />
-            </Grid>
+          <Grid item>
+            <Typography variant={'headline'}>
+              Describe this image
+            </Typography>
           </Grid>
-          <Grid container justify={'flex-end'} className={this.classes.imageEditorActionContainer}>
-            <Button variant="raised" color={'secondary'}>
-              Save
-            </Button>
+          <Grid item className={this.classes.centerContainer}>
+            <img src="http://via.placeholder.com/350x150" alt="missing description"/>
+          </Grid>
+          <Grid item>
+            <Input placeholder="Type image description"
+                   fullWidth
+                   inputProps={{
+                     'aria-label': 'image description',
+                   }}/>
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="no-alt"
+                />
+              }
+              label="This is a decorative image that doesn't need a description"
+            />
           </Grid>
         </Grid>
       </Grid>

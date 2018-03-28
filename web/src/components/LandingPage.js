@@ -55,6 +55,7 @@ class LandingPage extends Component {
   onKeyPress(e) {
     if (e.key === 'Enter') {
       this.props.onSearch();
+      e.preventDefault();
     }
   }
 

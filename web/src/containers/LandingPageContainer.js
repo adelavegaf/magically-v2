@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import LandingPage from '../components/LandingPage';
+import {SEARCH} from '../components/utils/Views';
 
 class LandingPageContainer extends Component {
   constructor(props) {
@@ -14,8 +16,8 @@ class LandingPageContainer extends Component {
   }
 
   onSearch() {
-    // TODO(adelavega): call change view with appropriate params
-    console.log('searching for', this.state.websiteUrl);
+    const searchProps = {websiteUrl: this.state.websiteUrl};
+    this.props.changeView(SEARCH, searchProps);
   }
 
   render() {
@@ -27,5 +29,9 @@ class LandingPageContainer extends Component {
     );
   }
 }
+
+LandingPageContainer.propTypes = {
+  changeView: PropTypes.func.isRequired
+};
 
 export default LandingPageContainer;

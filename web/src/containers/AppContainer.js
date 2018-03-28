@@ -6,18 +6,20 @@ class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentView: LANDING
+      currentView: LANDING,
+      currentViewProps: {}
     };
   }
 
-  changeView(viewName) {
-    this.setState({currentView: viewName});
+  changeView(viewName, viewProps) {
+    this.setState({currentView: viewName, currentViewProps: viewProps});
   }
 
   render() {
     return React.createElement(App, {
         currentView: this.state.currentView,
-        changeView: (viewName) => this.changeView(viewName)
+        currentViewProps: this.state.currentViewProps,
+        changeView: (viewName, viewProps) => this.changeView(viewName, viewProps)
       }
     );
   }

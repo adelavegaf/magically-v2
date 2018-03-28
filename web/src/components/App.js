@@ -25,13 +25,16 @@ const theme = createMuiTheme({
 
 class App extends Component {
   getCurrentView() {
+    const currentViewProps = {...this.props.currentViewProps, changeView: this.props.changeView};
     switch (this.props.currentView) {
       case LANDING:
-        return <LandingPageContainer/>;
+        return React.createElement(LandingPageContainer, currentViewProps);
       case SEARCH:
-        return <SearchResults/>;
+        return React.createElement(SearchResults, currentViewProps);
       case EDITOR:
-        return <Editor/>;
+        return React.createElement(Editor, currentViewProps);
+      default:
+        return <div/>
     }
   }
 
@@ -46,6 +49,7 @@ class App extends Component {
 
 App.propTypes = {
   currentView: PropTypes.string.isRequired,
+  currentViewProps: PropTypes.object.isRequired,
   changeView: PropTypes.func.isRequired
 };
 

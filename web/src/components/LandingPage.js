@@ -4,6 +4,7 @@ import Button from 'material-ui/Button';
 import DownIcon from 'material-ui-icons/KeyboardArrowDown';
 import Grid from 'material-ui/Grid';
 import Input from 'material-ui/Input';
+import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import {BOTTOM_STRIP_HEIGHT, FAB_SIZE} from './utils/Sizes';
 import AppBarFactory from './appbar/AppBarFactory';
@@ -38,8 +39,8 @@ const styles = theme => ({
   },
   fab: {
     position: 'absolute',
-    bottom: BOTTOM_STRIP_HEIGHT - FAB_SIZE/2,
-    right: theme.spacing.unit*4
+    bottom: BOTTOM_STRIP_HEIGHT - FAB_SIZE / 2,
+    right: theme.spacing.unit * 4
   }
 });
 
@@ -49,6 +50,12 @@ class LandingPage extends Component {
     super(props);
     const {classes} = props;
     this.classes = classes;
+  }
+
+  onKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.props.onSearch();
+    }
   }
 
   render() {
@@ -78,6 +85,9 @@ class LandingPage extends Component {
                   <Input placeholder="Type website URL"
                          className={this.classes.input}
                          fullWidth
+                         value={this.props.websiteUrl}
+                         onKeyPress={(e) => this.onKeyPress(e)}
+                         onChange={(e) => this.props.onWebsiteURLChange(e.target.value)}
                          inputProps={{
                            'aria-label': 'Description',
                          }}/>
@@ -104,5 +114,11 @@ class LandingPage extends Component {
     );
   }
 }
+
+LandingPage.propTypes = {
+  websiteUrl: PropTypes.string.isRequired,
+  onWebsiteURLChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(LandingPage);

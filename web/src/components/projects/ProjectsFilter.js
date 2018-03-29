@@ -22,7 +22,7 @@ const styles = theme => ({
   }
 });
 
-class SearchFilter extends Component {
+class ProjectsFilter extends Component {
   constructor(props) {
     super(props);
 
@@ -102,4 +102,4 @@ class SearchFilter extends Component {
   }
 }
 
-export default withStyles(styles)(SearchFilter);
+export default withStyles(styles)(ProjectsFilter);

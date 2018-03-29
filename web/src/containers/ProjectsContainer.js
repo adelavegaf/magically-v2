@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {EDITOR} from '../components/utils/Views';
-import SearchResults from '../components/search/SearchResults';
+import Projects from '../components/projects/Projects';
 
 const MOCK_PROJECT_DATA = [
   {name: 'Awesome Fix 1', author: 'adelavegaf', date: new Date(), errors: 7, percentage: .88, upvotes: 23, downvotes: 0, favorites: 1},
@@ -9,7 +9,7 @@ const MOCK_PROJECT_DATA = [
   {name: 'Colfuturo', author: 'mchief', date: new Date(), errors: 20, percentage: .3, upvotes: 0, downvotes: 11, favorites: 0},
 ];
 
-class SearchContainer extends Component {
+class ProjectsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,7 @@ class SearchContainer extends Component {
   }
 
   render() {
-    return React.createElement(SearchResults, {
+    return React.createElement(Projects, {
         projects: this.state.projects,
         changeView: this.props.changeView
       }
@@ -31,8 +31,8 @@ class SearchContainer extends Component {
   }
 }
 
-SearchContainer.propTypes = {
+ProjectsContainer.propTypes = {
   changeView: PropTypes.func.isRequired
 };
 
-export default SearchContainer;
+export default ProjectsContainer;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Editor from './editor/Editor';
 import {EDITOR, LANDING, SEARCH} from './utils/Views';
 import LandingPageContainer from '../containers/LandingPageContainer';
-import SearchContainer from '../containers/SearchContainer';
+import SearchContainer from '../containers/ProjectsContainer';
 
 const theme = createMuiTheme({
   palette: {

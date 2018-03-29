@@ -33,7 +33,7 @@ const styles = theme => ({
 
 // COLORS: #d32f2f (red) #ffca28 (yellow)
 
-class SearchResult extends Component {
+class Project extends Component {
   constructor(props) {
     super(props);
     this.classes = props.classes;
@@ -130,8 +130,8 @@ class SearchResult extends Component {
   }
 }
 
-SearchResult.propTypes = {
+Project.propTypes = {
   project: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SearchResult);
+export default withStyles(styles)(Project);

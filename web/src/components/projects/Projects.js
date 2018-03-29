@@ -5,8 +5,8 @@ import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Grid from 'material-ui/Grid';
 import {LIGHT_GRAY} from '../utils/Colors';
-import SearchResult from './SearchResult';
-import SearchFilter from './SearchFilter';
+import Project from './Project';
+import ProjectsFilter from './ProjectsFilter';
 import AppBarFactory from '../appbar/AppBarFactory';
 
 const styles = theme => ({
@@ -44,7 +44,7 @@ const styles = theme => ({
 });
 
 
-class SearchResults extends Component {
+class Projects extends Component {
   constructor(props) {
     super(props);
     const {classes} = props;
@@ -53,7 +53,7 @@ class SearchResults extends Component {
 
   getProjects() {
     return this.props.projects.map((project, index) => {
-      return <SearchResult project={project} key={index}/>
+      return <Project project={project} key={index}/>
     });
   }
 
@@ -68,7 +68,7 @@ class SearchResults extends Component {
           <Grid item xs={2}/>
 
           <Grid item xs={8}>
-            <SearchFilter/>
+            <ProjectsFilter/>
             {this.getProjects()}
           </Grid>
 
@@ -83,9 +83,9 @@ class SearchResults extends Component {
   }
 }
 
-SearchResults.propTypes = {
+Projects.propTypes = {
   projects: PropTypes.array.isRequired,
   changeView: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(SearchResults);
+export default withStyles(styles)(Projects);

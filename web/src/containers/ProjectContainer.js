@@ -4,12 +4,8 @@ import {EDITOR} from '../components/utils/Views';
 import Project from '../components/projects/Project';
 
 class ProjectContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   didPressProject() {
-    console.log('project');
+    this.props.changeView(EDITOR, {project: this.props.project});
   }
 
   didPressUpvoteButton() {

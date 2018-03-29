@@ -59,6 +59,11 @@ class Project extends Component {
     return percentageColor;
   }
 
+  didPressActionButton(event, callback) {
+    event.stopPropagation();
+    callback();
+  }
+
   getResultInformation() {
     return (
       <Grid container justify={'center'} alignItems={'center'}>
@@ -92,7 +97,7 @@ class Project extends Component {
       <Grid container justify={'flex-end'} className={this.classes.actionsContainer}>
         <Grid item>
           <Typography variant={'caption'} className={this.classes.iconContainer}>
-            <IconButton className={this.classes.iconButton} onClick={() => this.props.didPressFavoriteButton()}>
+            <IconButton className={this.classes.iconButton} onClick={(e) => this.didPressActionButton(e, this.props.didPressFavoriteButton)}>
               <Favorite className={this.classes.iconButton}/>
             </IconButton>
             <span className={this.classes.iconValue}>{this.project.favorites}</span>
@@ -100,7 +105,7 @@ class Project extends Component {
         </Grid>
         <Grid item>
           <Typography variant={'caption'} className={this.classes.iconContainer}>
-            <IconButton className={this.classes.iconButton} onClick={() => this.props.didPressUpvoteButton()}>
+            <IconButton className={this.classes.iconButton} onClick={(e) => this.didPressActionButton(e, this.props.didPressUpvoteButton)}>
               <ThumbUp className={this.classes.iconButton}/>
             </IconButton>
             <span className={this.classes.iconValue}>{this.project.upvotes}</span>
@@ -108,7 +113,7 @@ class Project extends Component {
         </Grid>
         <Grid item>
           <Typography variant={'caption'} className={this.classes.iconContainer}>
-            <IconButton className={this.classes.iconButton} onClick={() => this.props.didPressDownvoteButton()}>
+            <IconButton className={this.classes.iconButton} onClick={(e) => this.didPressActionButton(e,this.props.didPressDownvoteButton)}>
               <ThumbDown className={this.classes.iconButton}/>
             </IconButton>
             <span className={this.classes.iconValue}>{this.project.downvotes}</span>
@@ -122,7 +127,7 @@ class Project extends Component {
     return (
       <Grid container direction={'column'} className={this.classes.resultContainer}>
         <Grid item xs={12} sm={9} md={6} lg={5} xl={3}>
-          <Paper role={'button'} className={'project'}>
+          <Paper role={'button'} className={'project'} onClick={() => this.props.didPressProject()}>
             {this.getResultInformation()}
             {this.getActionBar()}
           </Paper>

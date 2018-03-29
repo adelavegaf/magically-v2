@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
@@ -50,6 +51,12 @@ class SearchResults extends Component {
     this.classes = classes;
   }
 
+  getProjects() {
+    return this.props.projects.map((project, index) => {
+      return <SearchResult project={project} key={index}/>
+    });
+  }
+
   render() {
     return (
       <div className={this.classes.root}>
@@ -62,10 +69,7 @@ class SearchResults extends Component {
 
           <Grid item xs={8}>
             <SearchFilter/>
-            <SearchResult/>
-            <SearchResult/>
-            <SearchResult/>
-            <SearchResult/>
+            {this.getProjects()}
           </Grid>
 
         </Grid>
@@ -78,5 +82,10 @@ class SearchResults extends Component {
     );
   }
 }
+
+SearchResults.propTypes = {
+  projects: PropTypes.array.isRequired,
+  changeView: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(SearchResults);

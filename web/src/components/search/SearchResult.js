@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import Grid from 'material-ui/Grid';
@@ -35,9 +36,8 @@ const styles = theme => ({
 class SearchResult extends Component {
   constructor(props) {
     super(props);
-    const {classes} = props;
-    this.classes = classes;
-    this.percentage = Math.floor(Math.random() * 100);
+    this.classes = props.classes;
+    this.project = props.project;
   }
 
   getPercentageColor() {
@@ -62,19 +62,22 @@ class SearchResult extends Component {
         <Grid item xs={6}>
           <div style={this.getPercentageColor()}>
             <Typography variant={'display3'} color={'inherit'} align={'center'}>
-              {this.percentage}%
+              {this.project.percentage}
             </Typography>
           </div>
         </Grid>
         <Grid item xs={6}>
           <Typography variant={'title'}>
-            Project Name
+            {this.project.name}
           </Typography>
           <Typography variant={'subheading'}>
-            Author - Date
+            {this.project.author}
+          </Typography>
+          <Typography variant={'body1'} color={'textSecondary'}>
+            {this.project.date.toLocaleDateString()}
           </Typography>
           <Typography variant={'caption'}>
-            # errors remaining
+            {this.project.errors} errors remaining
           </Typography>
         </Grid>
       </Grid>
@@ -89,7 +92,7 @@ class SearchResult extends Component {
             <IconButton className={this.classes.iconButton}>
               <Favorite className={this.classes.iconButton}/>
             </IconButton>
-            <span className={this.classes.iconValue}>0</span>
+            <span className={this.classes.iconValue}>{this.project.favorites}</span>
           </Typography>
         </Grid>
         <Grid item>
@@ -97,7 +100,7 @@ class SearchResult extends Component {
             <IconButton className={this.classes.iconButton}>
               <ThumbUp className={this.classes.iconButton}/>
             </IconButton>
-            <span className={this.classes.iconValue}>0</span>
+            <span className={this.classes.iconValue}>{this.project.upvotes}</span>
           </Typography>
         </Grid>
         <Grid item>
@@ -105,7 +108,7 @@ class SearchResult extends Component {
             <IconButton className={this.classes.iconButton}>
               <ThumbDown className={this.classes.iconButton}/>
             </IconButton>
-            <span className={this.classes.iconValue}>0</span>
+            <span className={this.classes.iconValue}>{this.project.downvotes}</span>
           </Typography>
         </Grid>
       </Grid>
@@ -125,5 +128,9 @@ class SearchResult extends Component {
     );
   }
 }
+
+SearchResult.propTypes = {
+  project: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(SearchResult);

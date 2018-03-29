@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import PropTypes from 'prop-types';
-import SearchResults from './search/SearchResults';
 import Editor from './editor/Editor';
 import {EDITOR, LANDING, SEARCH} from './utils/Views';
 import LandingPageContainer from '../containers/LandingPageContainer';
+import SearchContainer from '../containers/SearchContainer';
 
 const theme = createMuiTheme({
   palette: {
@@ -30,7 +30,7 @@ class App extends Component {
       case LANDING:
         return React.createElement(LandingPageContainer, currentViewProps);
       case SEARCH:
-        return React.createElement(SearchResults, currentViewProps);
+        return React.createElement(SearchContainer, currentViewProps);
       case EDITOR:
         return React.createElement(Editor, currentViewProps);
       default:

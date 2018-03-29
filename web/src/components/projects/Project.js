@@ -9,6 +9,8 @@ import ThumbDown from 'material-ui-icons/ThumbDown';
 import Favorite from 'material-ui-icons/Favorite';
 import Paper from 'material-ui/Paper';
 
+import './Project.css';
+
 const styles = theme => ({
   resultContainer: {
     marginTop: theme.spacing.unit * 6
@@ -90,7 +92,7 @@ class Project extends Component {
       <Grid container justify={'flex-end'} className={this.classes.actionsContainer}>
         <Grid item>
           <Typography variant={'caption'} className={this.classes.iconContainer}>
-            <IconButton className={this.classes.iconButton}>
+            <IconButton className={this.classes.iconButton} onClick={() => this.props.didPressFavoriteButton()}>
               <Favorite className={this.classes.iconButton}/>
             </IconButton>
             <span className={this.classes.iconValue}>{this.project.favorites}</span>
@@ -98,7 +100,7 @@ class Project extends Component {
         </Grid>
         <Grid item>
           <Typography variant={'caption'} className={this.classes.iconContainer}>
-            <IconButton className={this.classes.iconButton}>
+            <IconButton className={this.classes.iconButton} onClick={() => this.props.didPressUpvoteButton()}>
               <ThumbUp className={this.classes.iconButton}/>
             </IconButton>
             <span className={this.classes.iconValue}>{this.project.upvotes}</span>
@@ -106,7 +108,7 @@ class Project extends Component {
         </Grid>
         <Grid item>
           <Typography variant={'caption'} className={this.classes.iconContainer}>
-            <IconButton className={this.classes.iconButton}>
+            <IconButton className={this.classes.iconButton} onClick={() => this.props.didPressDownvoteButton()}>
               <ThumbDown className={this.classes.iconButton}/>
             </IconButton>
             <span className={this.classes.iconValue}>{this.project.downvotes}</span>
@@ -120,7 +122,7 @@ class Project extends Component {
     return (
       <Grid container direction={'column'} className={this.classes.resultContainer}>
         <Grid item xs={12} sm={9} md={6} lg={5} xl={3}>
-          <Paper>
+          <Paper role={'button'} className={'project'}>
             {this.getResultInformation()}
             {this.getActionBar()}
           </Paper>
@@ -131,7 +133,11 @@ class Project extends Component {
 }
 
 Project.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
+  didPressProject: PropTypes.func.isRequired,
+  didPressUpvoteButton: PropTypes.func.isRequired,
+  didPressDownvoteButton: PropTypes.func.isRequired,
+  didPressFavoriteButton: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Project);

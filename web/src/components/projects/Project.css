@@ -1,0 +1,7 @@
+.project {
+    cursor: pointer;
+}
+
+.project:hover {
+    background: rgb(243, 246, 249);
+}

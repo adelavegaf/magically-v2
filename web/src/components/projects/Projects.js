@@ -5,9 +5,9 @@ import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Grid from 'material-ui/Grid';
 import {LIGHT_GRAY} from '../utils/Colors';
-import Project from './Project';
 import ProjectsFilter from './ProjectsFilter';
 import AppBarFactory from '../appbar/AppBarFactory';
+import ProjectContainer from '../../containers/ProjectContainer';
 
 const styles = theme => ({
   root: {
@@ -53,7 +53,7 @@ class Projects extends Component {
 
   getProjects() {
     return this.props.projects.map((project, index) => {
-      return <Project project={project} key={index}/>
+      return <ProjectContainer project={project} changeView={this.props.changeView} key={index}/>
     });
   }
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropStyles from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import {LIGHT_GRAY} from '../utils/Colors';
@@ -13,6 +14,7 @@ import Checkbox from 'material-ui/Checkbox'
 import ImageFixer from './ImageFixer';
 import EditorSideList from './EditorSideList';
 import LanguageFixer from './LanguageFixer';
+import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
 
 const styles = theme => ({
   root: {
@@ -52,6 +54,12 @@ const styles = theme => ({
     margin: `${theme.spacing.unit * 4}px ${theme.spacing.unit * 6}px`,
     flex: 1
   },
+  listItemText: {
+    textTransform: 'capitalize'
+  },
+  selectedListItem: {
+    background: 'rgba(0, 0, 0, .15)'
+  },
   toolbar: theme.mixins.toolbar
 });
 
@@ -60,7 +68,10 @@ class Editor extends Component {
     super(props);
     const {classes} = props;
     this.classes = classes;
-    this.errorType = 'Language';
+  }
+
+  getNavListItemClass(fixerName) {
+    return fixerName === this.props.currentFixer ? this.classes.selectedListItem : ''
   }
 
   getDrawer() {
@@ -69,64 +80,38 @@ class Editor extends Component {
         <div className={this.classes.toolbar}/>
         <div className={this.classes.toolbar}/>
         <List component={'nav'}>
-          <ListItem button>
+          <ListItem button className={this.getNavListItemClass(LANGUAGE_FIXER)} onClick={() => this.props.didPressLanguageFixerButton()}>
             <ListItemIcon className={this.classes.languageIcon}>
               <LanguageIcon/>
             </ListItemIcon>
-            <ListItemText primary={'Language'}/>
+            <ListItemText className={this.classes.listItemText} primary={LANGUAGE_FIXER}/>
           </ListItem>
 
-          <ListItem button>
+          <ListItem button className={this.getNavListItemClass(IMAGES_FIXER)} onClick={() => this.props.didPressImagesFixerButton()}>
             <ListItemIcon className={this.classes.imageIcon}>
               <ImageIcon/>
             </ListItemIcon>
-            <ListItemText primary={'Images'}/>
+            <ListItemText className={this.classes.listItemText} primary={IMAGES_FIXER}/>
           </ListItem>
 
-          <ListItem button>
+          <ListItem button className={this.getNavListItemClass(CONTRAST_FIXER)} onClick={() => this.props.didPressContrastFixerButton()}>
             <ListItemIcon className={this.classes.contrastIcon}>
               <InvertColorsIcon/>
             </ListItemIcon>
-            <ListItemText primary={'Contrast'}/>
+            <ListItemText className={this.classes.listItemText} primary={CONTRAST_FIXER}/>
           </ListItem>
         </List>
       </Drawer>
     );
   }
 
-  getEditorSideList() {
-    const listItems = this.errors.map((e, i) => {
-      return (
-        <ListItem button key={i}>
-          <ListItemText primary={e.name}/>
-          <ListItemSecondaryAction>
-            <Checkbox
-              checked={e.fixed}
-            />
-          </ListItemSecondaryAction>
-        </ListItem>
-      )
-    });
-
-    return (
-      <Grid item className={this.classes.editorSideList}>
-        <List className={this.classes.list}>
-          <ListItem button disableGutters={true} divider={true}>
-            <ListItemText primary={'Instructions'} align={'center'} className={this.classes.instructions}/>
-          </ListItem>
-          {listItems}
-        </List>
-      </Grid>
-    )
-  }
-
   getEditorMainView() {
-    switch (this.errorType) {
-      case 'Images':
+    switch (this.props.currentFixer) {
+      case IMAGES_FIXER:
         return <ImageFixer/>;
-      case 'Language':
+      case LANGUAGE_FIXER:
         return <LanguageFixer/>;
-      case 'Contrast':
+      case CONTRAST_FIXER:
         break;
       default:
         break;
@@ -160,5 +145,13 @@ class Editor extends Component {
     );
   }
 }
+
+Editor.propStyles = {
+  project: PropStyles.object.isRequired,
+  currentFixer: PropStyles.string.isRequired,
+  didPressLanguageFixerButton: PropStyles.func.isRequired,
+  didPressImagesFixerButton: PropStyles.func.isRequired,
+  didPressContrastFixerButton: PropStyles.func.isRequired
+};
 
 export default withStyles(styles)(Editor);

@@ -5,6 +5,7 @@ import Editor from './editor/Editor';
 import {EDITOR, LANDING, SEARCH} from './utils/Views';
 import LandingPageContainer from '../containers/LandingPageContainer';
 import SearchContainer from '../containers/ProjectsContainer';
+import EditorContainer from '../containers/EditorContainer';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,7 +33,7 @@ class App extends Component {
       case SEARCH:
         return React.createElement(SearchContainer, currentViewProps);
       case EDITOR:
-        return React.createElement(Editor, currentViewProps);
+        return React.createElement(EditorContainer, currentViewProps);
       default:
         return <div/>
     }

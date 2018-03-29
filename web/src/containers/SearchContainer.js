@@ -4,9 +4,9 @@ import {EDITOR} from '../components/utils/Views';
 import SearchResults from '../components/search/SearchResults';
 
 const MOCK_PROJECT_DATA = [
-  {name: 'Awesome Fix 1', author: 'adelavegaf', date: new Date(), errors: 7, percentage: '88%', upvotes: 23, downvotes: 0, favorites: 1},
-  {name: 'EzFix', author: 'jsmen', date: new Date(), errors: 10, percentage: '70%', upvotes: 1, downvotes: 1, favorites: 0},
-  {name: 'Colfuturo', author: 'mchief', date: new Date(), errors: 20, percentage: '30%', upvotes: 0, downvotes: 11, favorites: 0},
+  {name: 'Awesome Fix 1', author: 'adelavegaf', date: new Date(), errors: 7, percentage: .88, upvotes: 23, downvotes: 0, favorites: 1},
+  {name: 'EzFix', author: 'jsmen', date: new Date(), errors: 10, percentage: .6, upvotes: 1, downvotes: 1, favorites: 0},
+  {name: 'Colfuturo', author: 'mchief', date: new Date(), errors: 20, percentage: .3, upvotes: 0, downvotes: 11, favorites: 0},
 ];
 
 class SearchContainer extends Component {

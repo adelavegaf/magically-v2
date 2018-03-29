@@ -41,12 +41,13 @@ class SearchResult extends Component {
   }
 
   getPercentageColor() {
+    const percentage = this.project.percentage;
     let percentageColor = {color: '#000'};
 
-    if (this.percentage < 40) {
+    if (percentage < .40) {
       percentageColor = {color: '#d32f2f'};
     }
-    else if (this.percentage < 70) {
+    else if (percentage < .70) {
       percentageColor = {color: '#ffca28'};
     }
     else {
@@ -62,7 +63,7 @@ class SearchResult extends Component {
         <Grid item xs={6}>
           <div style={this.getPercentageColor()}>
             <Typography variant={'display3'} color={'inherit'} align={'center'}>
-              {this.project.percentage}
+              {this.project.percentage * 100}%
             </Typography>
           </div>
         </Grid>

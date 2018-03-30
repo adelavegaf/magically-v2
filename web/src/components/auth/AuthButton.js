@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropStyles from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
@@ -10,8 +11,7 @@ const styles = theme => ({
   },
 });
 
-
-class AuthAppBarButton extends Component {
+class AuthButton extends Component {
   constructor(props) {
     super(props);
     const {classes} = props;
@@ -21,10 +21,14 @@ class AuthAppBarButton extends Component {
   render() {
     return (
       <Grid item xs={2} className={this.classes.logInButton}>
-        <Button variant={'raised'} color="primary">Log in</Button>
+        <Button variant={'raised'} color="primary" onClick={() => this.props.changeView()}>Log in</Button>
       </Grid>
     );
   }
 }
 
-export default withStyles(styles)(AuthAppBarButton);
+AuthButton.propStyles = {
+  changeView: PropStyles.func.isRequired
+};
+
+export default withStyles(styles)(AuthButton);

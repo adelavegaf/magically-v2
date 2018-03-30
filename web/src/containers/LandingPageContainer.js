@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import LandingPage from '../components/LandingPage';
-import {SEARCH} from '../components/utils/Views';
+import {PROJECTS} from '../components/utils/Views';
 
 class LandingPageContainer extends Component {
   constructor(props) {
@@ -17,11 +17,12 @@ class LandingPageContainer extends Component {
 
   onSearch() {
     const searchProps = {websiteUrl: this.state.websiteUrl};
-    this.props.changeView(SEARCH, searchProps);
+    this.props.changeView(PROJECTS, searchProps);
   }
 
   render() {
     return React.createElement(LandingPage, {
+        changeView: this.props.changeView,
         websiteUrl: this.state.websiteUrl,
         onWebsiteURLChange: (websiteUrl) => this.onWebsiteURLChange(websiteUrl),
         onSearch: () => this.onSearch()

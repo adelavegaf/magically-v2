@@ -62,7 +62,7 @@ class LandingPage extends Component {
   render() {
     return (
       <div className={this.classes.root}>
-        <AppBarFactory type={'invisible'}/>
+        <AppBarFactory type={'invisible'} changeView={this.props.changeView}/>
 
         <Grid container direction={'column'} className={this.classes.fullHeight}>
 
@@ -117,6 +117,7 @@ class LandingPage extends Component {
 }
 
 LandingPage.propTypes = {
+  changeView: PropTypes.func.isRequired,
   websiteUrl: PropTypes.string.isRequired,
   onWebsiteURLChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired

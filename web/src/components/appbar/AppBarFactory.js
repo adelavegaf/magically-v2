@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
-import AuthAppBarButton from '../auth/AuthAppBarButton';
 import SearchIcon from 'material-ui-icons/Search';
+import AuthButtonContainer from '../../containers/AuthButtonContainer';
 
 const styles = theme => ({
   root: {
@@ -50,7 +49,7 @@ class AppBarFactory extends Component {
       <AppBar elevation={0} color={'inherit'}>
         <Toolbar>
           <div className={this.classes.flex}/>
-          <AuthAppBarButton/>
+          <AuthButtonContainer changeView={this.props.changeView}/>
         </Toolbar>
       </AppBar>
     );
@@ -72,7 +71,7 @@ class AppBarFactory extends Component {
               endAdornment={<InputAdornment position="end"><SearchIcon/></InputAdornment>}
             />
             <div className={this.classes.flex}/>
-            <AuthAppBarButton/>
+            <AuthButtonContainer changeView={this.props.changeView}/>
           </Grid>
         </Toolbar>
       </AppBar>
@@ -90,7 +89,7 @@ class AppBarFactory extends Component {
               </Typography>
             </Grid>
             <div className={this.classes.flex}/>
-            <AuthAppBarButton/>
+            <AuthButtonContainer changeView={this.props.changeView}/>
           </Grid>
         </Toolbar>
         <Toolbar disableGutters={true}>

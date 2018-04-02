@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid';
 import {withStyles} from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import {REGISTER_VIEW} from '../../containers/SignInContainer';
 
 const styles = theme => ({
   root: {
@@ -30,6 +32,10 @@ const styles = theme => ({
   buttonSpacing: {
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 3
+  },
+  switchViewButton: {
+    cursor: 'pointer',
+    color: 'black'
   }
 });
 
@@ -62,6 +68,37 @@ class SignIn extends Component {
     return this.getScreenFragment(0, true, <div></div>);
   }
 
+  isRegisterView() {
+    return this.props.currentAuthView === REGISTER_VIEW;
+  }
+
+  getSecondaryMessage() {
+    return this.isRegisterView() ? 'Join us today' : 'Continue where you left off';
+  }
+
+  getActionButtonText() {
+    return this.isRegisterView() ? 'Register' : 'Login';
+  }
+
+  getAlternativeViewText() {
+    return this.isRegisterView() ? 'Already have an account?' : 'Don\'t have an account?'
+  }
+
+  getSwitchViewText() {
+    return this.isRegisterView() ? 'Sign in' : 'Register';
+  }
+
+  getExtraTextField() {
+    return this.isRegisterView() ? (
+      <TextField
+        label="Confirm password"
+        type="password"
+        margin="normal"
+        fullWidth
+      />
+    ) : <div/>
+  }
+
   getRightScreen() {
     const rightChildComponents = (
       <div>
@@ -72,7 +109,7 @@ class SignIn extends Component {
           Help make the web accessible to anyone
         </Typography>
         <Typography variant={'title'} color={'textSecondary'}>
-          Join us today
+          {this.getSecondaryMessage()}
         </Typography>
         <TextField
           label="Account"
@@ -85,9 +122,14 @@ class SignIn extends Component {
           margin="normal"
           fullWidth
         />
-        <Button variant={'raised'} color={'secondary'} className={this.classes.buttonSpacing}>Register</Button>
-        <Typography>
-          Already have an account? Sign in
+        {this.getExtraTextField()}
+        <Button variant={'raised'} color={'secondary'}
+                className={this.classes.buttonSpacing}>{this.getActionButtonText()}</Button>
+        <Typography color={'textSecondary'}>
+          {this.getAlternativeViewText() + ' '}
+          <span className={this.classes.switchViewButton} onClick={() => this.props.changeAuthView()}>
+            {this.getSwitchViewText()}
+          </span>
         </Typography>
       </div>
     );
@@ -103,5 +145,10 @@ class SignIn extends Component {
     );
   }
 }
+
+SignIn.propTypes = {
+  currentAuthView: PropTypes.string.isRequired,
+  changeAuthView: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(SignIn);

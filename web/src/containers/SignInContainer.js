@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import SignIn from '../components/auth/SignIn';
+import firebase from '../firebase';
+import {LANDING} from '../components/utils/Views';
 
 export const REGISTER_VIEW = 'register';
 export const LOGIN_VIEW = 'login';
 const INITIAL_STATE = {
-  username: '',
+  email: '',
   password: '',
   confirmPassword: '',
   errorHelperText: '',
@@ -26,15 +29,25 @@ class SignInContainer extends Component {
   }
 
   register() {
-
+    if (this.state.password === this.state.confirmPassword) {
+      // TODO(adelavega): Only show error in one of the textfields. The appropriate one.
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+              .then(() => this.props.changeView(LANDING, {}))
+              .catch((error) => this.setState({errorHelperText: error.message}));
+    }
+    else {
+      this.setState({errorHelperText: 'Passwords don\'t match'});
+    }
   }
 
   login() {
-
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => this.props.changeView(LANDING, {}))
+            .catch((error) => this.setState({errorHelperText: error.message}));
   }
 
-  onUsernameChange(username) {
-    this.setState({username: username});
+  onEmailChange(email) {
+    this.setState({email: email});
   }
 
   onPasswordChange(password) {
@@ -61,11 +74,17 @@ class SignInContainer extends Component {
       errorHelperText: this.state.errorHelperText,
       currentAuthView: this.state.currentAuthView,
       changeAuthView: () => this.changeAuthView(),
-      onUsernameChange: (username) => this.onUsernameChange(username),
+      onEmailChange: (email) => this.onEmailChange(email),
       onPasswordChange: (password) => this.onPasswordChange(password),
-      onConfirmPasswordChange: (confirmPassword) => this.onConfirmPasswordChange(confirmPassword)
+      onConfirmPasswordChange: (confirmPassword) => this.onConfirmPasswordChange(confirmPassword),
+      didPressActionButton: () => this.didPressActionButton()
     });
   }
 }
+
+// TODO(adelavega): Add last view prop to redirect to proper view. Also add last view state.
+SignInContainer.propTypes = {
+  changeView: PropTypes.func.isRequired
+};
 
 export default SignInContainer;

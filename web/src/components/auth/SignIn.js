@@ -94,7 +94,7 @@ class SignIn extends Component {
         label="Confirm password"
         type="password"
         margin="normal"
-        error={this.props.errorHelperText}
+        error={!!this.props.errorHelperText}
         helperText={this.props.errorHelperText}
         onChange={(e) => this.props.onConfirmPasswordChange(e.target.value)}
         fullWidth
@@ -115,25 +115,29 @@ class SignIn extends Component {
           {this.getSecondaryMessage()}
         </Typography>
         <TextField
-          label="Account"
+          label="Email"
+          type="email"
           margin="normal"
-          error={this.props.errorHelperText}
+          error={!!this.props.errorHelperText}
           helperText={this.props.errorHelperText}
-          onChange={(e) => this.props.onUsernameChange(e.target.value)}
+          onChange={(e) => this.props.onEmailChange(e.target.value)}
           fullWidth
         />
         <TextField
           label="Password"
           type="password"
           margin="normal"
-          error={this.props.errorHelperText}
+          error={!!this.props.errorHelperText}
           helperText={this.props.errorHelperText}
           onChange={(e) => this.props.onPasswordChange(e.target.value)}
           fullWidth
         />
         {this.getExtraTextField()}
         <Button variant={'raised'} color={'secondary'}
-                className={this.classes.buttonSpacing}>{this.getActionButtonText()}</Button>
+                className={this.classes.buttonSpacing}
+                onClick={() => this.props.didPressActionButton()}>
+          {this.getActionButtonText()}
+        </Button>
         <Typography color={'textSecondary'}>
           {this.getAlternativeViewText() + ' '}
           <span className={this.classes.switchViewButton} onClick={() => this.props.changeAuthView()}>
@@ -159,9 +163,10 @@ SignIn.propTypes = {
   errorHelperText: PropTypes.string.isRequired,
   currentAuthView: PropTypes.string.isRequired,
   changeAuthView: PropTypes.func.isRequired,
-  onUsernameChange: PropTypes.func.isRequired,
+  onEmailChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
-  onConfirmPasswordChange: PropTypes.func.isRequired
+  onConfirmPasswordChange: PropTypes.func.isRequired,
+  didPressActionButton: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SignIn);

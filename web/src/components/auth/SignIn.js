@@ -94,6 +94,9 @@ class SignIn extends Component {
         label="Confirm password"
         type="password"
         margin="normal"
+        error={this.props.errorHelperText}
+        helperText={this.props.errorHelperText}
+        onChange={(e) => this.props.onConfirmPasswordChange(e.target.value)}
         fullWidth
       />
     ) : <div/>
@@ -114,12 +117,18 @@ class SignIn extends Component {
         <TextField
           label="Account"
           margin="normal"
+          error={this.props.errorHelperText}
+          helperText={this.props.errorHelperText}
+          onChange={(e) => this.props.onUsernameChange(e.target.value)}
           fullWidth
         />
         <TextField
           label="Password"
           type="password"
           margin="normal"
+          error={this.props.errorHelperText}
+          helperText={this.props.errorHelperText}
+          onChange={(e) => this.props.onPasswordChange(e.target.value)}
           fullWidth
         />
         {this.getExtraTextField()}
@@ -147,8 +156,12 @@ class SignIn extends Component {
 }
 
 SignIn.propTypes = {
+  errorHelperText: PropTypes.string.isRequired,
   currentAuthView: PropTypes.string.isRequired,
-  changeAuthView: PropTypes.func.isRequired
+  changeAuthView: PropTypes.func.isRequired,
+  onUsernameChange: PropTypes.func.isRequired,
+  onPasswordChange: PropTypes.func.isRequired,
+  onConfirmPasswordChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SignIn);

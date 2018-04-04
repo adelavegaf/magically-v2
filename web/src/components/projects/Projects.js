@@ -5,6 +5,8 @@ import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Grid from 'material-ui/Grid';
 import {LIGHT_GRAY} from '../utils/Colors';
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
+import Typography from 'material-ui/Typography';
 import ProjectsFilter from './ProjectsFilter';
 import AppBarFactory from '../appbar/AppBarFactory';
 import ProjectContainer from '../../containers/ProjectContainer';
@@ -57,6 +59,33 @@ class Projects extends Component {
     });
   }
 
+  getCreateProjectConfirmationDialog() {
+    return (
+      <Dialog
+        open={this.props.openCreateProjectDialog}
+        disableBackdropClick
+        disableEscapeKeyDown
+        maxWidth="xs"
+        aria-labelledby="create-new-project-confirmation-dialog"
+      >
+        <DialogTitle id="create-new-project-confirmation-dialog">Create new project for this URL?</DialogTitle>
+        <DialogContent>
+          <Typography variant={'caption'}>
+            https://www.example.com
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => this.props.cancelNewProject()} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => this.props.createNewProject()} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
   render() {
     return (
       <div className={this.classes.root}>
@@ -74,10 +103,14 @@ class Projects extends Component {
 
         </Grid>
 
-        <Button variant={'fab'} color={'secondary'} className={this.classes.fab}>
+        <Button variant={'fab'}
+                color={'secondary'}
+                className={this.classes.fab}
+                onClick={() => this.props.didPressCreateProjectButton()}>
           <AddIcon/>
         </Button>
 
+        {this.getCreateProjectConfirmationDialog()}
       </div>
     );
   }
@@ -85,6 +118,11 @@ class Projects extends Component {
 
 Projects.propTypes = {
   projects: PropTypes.array.isRequired,
+  websiteUrl: PropTypes.string.isRequired,
+  openCreateProjectDialog: PropTypes.bool.isRequired,
+  didPressCreateProjectButton: PropTypes.func.isRequired,
+  cancelNewProject: PropTypes.func.isRequired,
+  createNewProject: PropTypes.func.isRequired,
   changeView: PropTypes.func.isRequired
 };
 

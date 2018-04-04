@@ -47,7 +47,7 @@ class AppBarFactory extends Component {
   getInvisibleAppBar() {
     return (
       <AppBar elevation={0} color={'inherit'}>
-        <Toolbar>
+        <Toolbar disableGutters={true}>
           <div className={this.classes.flex}/>
           <AuthButtonContainer changeView={this.props.changeView}/>
         </Toolbar>

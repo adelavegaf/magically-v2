@@ -41,13 +41,12 @@ class ProjectsContainer extends Component {
     super(props);
     this.state = {
       projects: MOCK_PROJECT_DATA,
-      websiteUrl: '',
+      websiteUrl: this.props.websiteUrl,
       openCreateProjectDialog: false
     }
   }
 
-  viewDidLoad() {
-    super.viewDidLoad()
+  componentDidMount() {
     // TODO(adelavega): query firebase for all projects that have URL: this.props.websiteUrl
   }
 

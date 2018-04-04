@@ -3,11 +3,11 @@ import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import DownIcon from 'material-ui-icons/KeyboardArrowDown';
 import Grid from 'material-ui/Grid';
-import Input from 'material-ui/Input';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import {BOTTOM_STRIP_HEIGHT, FAB_SIZE} from './utils/Sizes';
 import AppBarFactory from './appbar/AppBarFactory';
+import SearchContainer from '../containers/SearchContainer';
 
 const styles = theme => ({
   root: {
@@ -26,11 +26,6 @@ const styles = theme => ({
   button: {
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit
-  },
-  input: {
-    borderTop: 'solid 1px #ababab',
-    paddingTop: 2 * theme.spacing.unit,
-    paddingBottom: 2 * theme.spacing.unit,
   },
   bottomContainer: {
     height: BOTTOM_STRIP_HEIGHT,
@@ -52,17 +47,10 @@ class LandingPage extends Component {
     this.classes = classes;
   }
 
-  onKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.props.onSearch();
-      e.preventDefault();
-    }
-  }
-
   render() {
     return (
       <div className={this.classes.root}>
-        <AppBarFactory type={'invisible'} changeView={this.props.changeView}/>
+        <AppBarFactory type={'invisible'} searchBarStartText={''} changeView={this.props.changeView}/>
 
         <Grid container direction={'column'} className={this.classes.fullHeight}>
 
@@ -83,15 +71,7 @@ class LandingPage extends Component {
 
                 <Grid item md={2} lg={3} hidden={{smDown: true}}/>
                 <Grid item xs={12} md={8} lg={6}>
-                  <Input placeholder="Type website URL"
-                         className={this.classes.input}
-                         fullWidth
-                         value={this.props.websiteUrl}
-                         onKeyPress={(e) => this.onKeyPress(e)}
-                         onChange={(e) => this.props.onWebsiteURLChange(e.target.value)}
-                         inputProps={{
-                           'aria-label': 'Description',
-                         }}/>
+                  <SearchContainer startText={''} variant={'big'} changeView={this.props.changeView}/>
                 </Grid>
                 <Grid item md={2} lg={3} hidden={{smDown: true}}/>
 
@@ -117,10 +97,7 @@ class LandingPage extends Component {
 }
 
 LandingPage.propTypes = {
-  changeView: PropTypes.func.isRequired,
-  websiteUrl: PropTypes.string.isRequired,
-  onWebsiteURLChange: PropTypes.func.isRequired,
-  onSearch: PropTypes.func.isRequired
+  changeView: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(LandingPage);

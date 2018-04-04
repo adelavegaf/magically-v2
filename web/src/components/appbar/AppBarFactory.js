@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Grid from 'material-ui/Grid';
-import Input, {InputAdornment} from 'material-ui/Input';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
-import SearchIcon from 'material-ui-icons/Search';
 import AuthButtonContainer from '../../containers/AuthButtonContainer';
+import SearchContainer from '../../containers/SearchContainer';
 
 const styles = theme => ({
   root: {
@@ -25,12 +25,6 @@ const styles = theme => ({
   },
   appTitle: {
     paddingLeft: theme.spacing.unit * 9
-  },
-  searchInput: {
-    color: theme.palette.primary.main,
-    flex: 1,
-    borderRadius: 2,
-    padding: theme.spacing.unit
   },
   spacingForContainer: {
     marginTop: theme.spacing.unit * 3
@@ -69,11 +63,9 @@ class AppBarFactory extends Component {
                 Magically
               </Typography>
             </Grid>
-            <Input
-              className={this.classes.searchInput}
-              placeholder={'Search'}
-              endAdornment={<InputAdornment position="end"><SearchIcon/></InputAdornment>}
-            />
+            <SearchContainer startText={this.props.searchBarStartText}
+                             variant={'normal'}
+                             changeView={this.props.changeView}/>
             <div className={this.classes.flex}/>
             {this.getAuthButton()}
           </Grid>
@@ -123,5 +115,10 @@ class AppBarFactory extends Component {
     }
   }
 }
+
+AppBarFactory.propTypes = {
+  searchBarStartText: PropTypes.string.isRequired,
+  changeView: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(AppBarFactory);

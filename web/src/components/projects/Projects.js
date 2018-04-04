@@ -61,7 +61,7 @@ class Projects extends Component {
     return (
       <div className={this.classes.root}>
 
-        <AppBarFactory type={'search'}/>
+        <AppBarFactory type={'search'} changeView={this.props.changeView}/>
 
         <Grid container>
 

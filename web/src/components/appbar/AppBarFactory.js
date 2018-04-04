@@ -44,12 +44,16 @@ class AppBarFactory extends Component {
     this.classes = classes;
   }
 
+  getAuthButton() {
+    return <AuthButtonContainer changeView={this.props.changeView}/>;
+  }
+
   getInvisibleAppBar() {
     return (
       <AppBar elevation={0} color={'inherit'}>
         <Toolbar disableGutters={true}>
           <div className={this.classes.flex}/>
-          <AuthButtonContainer changeView={this.props.changeView}/>
+          {this.getAuthButton()}
         </Toolbar>
       </AppBar>
     );
@@ -71,7 +75,7 @@ class AppBarFactory extends Component {
               endAdornment={<InputAdornment position="end"><SearchIcon/></InputAdornment>}
             />
             <div className={this.classes.flex}/>
-            <AuthButtonContainer changeView={this.props.changeView}/>
+            {this.getAuthButton()}
           </Grid>
         </Toolbar>
       </AppBar>
@@ -89,7 +93,7 @@ class AppBarFactory extends Component {
               </Typography>
             </Grid>
             <div className={this.classes.flex}/>
-            <AuthButtonContainer changeView={this.props.changeView}/>
+            {this.getAuthButton()}
           </Grid>
         </Toolbar>
         <Toolbar disableGutters={true}>

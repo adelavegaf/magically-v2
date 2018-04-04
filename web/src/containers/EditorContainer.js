@@ -32,7 +32,8 @@ class EditorContainer extends Component {
         currentFixer: this.state.currentFixer,
         didPressLanguageFixerButton: () => this.didPressLanguageFixerButton(),
         didPressImagesFixerButton: () => this.didPressImagesFixerButton(),
-        didPressContrastFixerButton: () => this.didPressContrastFixerButton()
+        didPressContrastFixerButton: () => this.didPressContrastFixerButton(),
+        changeView: this.props.changeView
       }
     );
   }

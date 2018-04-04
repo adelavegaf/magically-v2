@@ -138,7 +138,7 @@ class Editor extends Component {
   render() {
     return (
       <div className={this.classes.root}>
-        <AppBarFactory type={'editor'}/>
+        <AppBarFactory type={'editor'} changeView={this.props.changeView}/>
         {this.getDrawer()}
         {this.getEditor()}
       </div>
@@ -151,7 +151,8 @@ Editor.propStyles = {
   currentFixer: PropStyles.string.isRequired,
   didPressLanguageFixerButton: PropStyles.func.isRequired,
   didPressImagesFixerButton: PropStyles.func.isRequired,
-  didPressContrastFixerButton: PropStyles.func.isRequired
+  didPressContrastFixerButton: PropStyles.func.isRequired,
+  changeView: PropStyles.func.isRequired
 };
 
 export default withStyles(styles)(Editor);

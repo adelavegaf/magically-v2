@@ -5,7 +5,7 @@ import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Grid from 'material-ui/Grid';
 import {LIGHT_GRAY} from '../utils/Colors';
-import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
+import Dialog, {DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog';
 import Typography from 'material-ui/Typography';
 import ProjectsFilter from './ProjectsFilter';
 import AppBarFactory from '../appbar/AppBarFactory';
@@ -68,17 +68,19 @@ class Projects extends Component {
         maxWidth="xs"
         aria-labelledby="create-new-project-confirmation-dialog"
       >
-        <DialogTitle id="create-new-project-confirmation-dialog">Create new project for this URL?</DialogTitle>
+        <DialogTitle id="create-new-project-confirmation-dialog">
+          {this.props.signedIn ? 'Create new project for this URL?' : 'Sign in to create project'}
+        </DialogTitle>
         <DialogContent>
           <Typography variant={'subheading'} color={'textSecondary'}>
-            {this.props.websiteUrl}
+            {this.props.signedIn ? this.props.websiteUrl : ''}
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => this.props.cancelNewProject()} color="primary">
+          <Button onClick={() => this.props.closeDialog()} color="primary">
             Cancel
           </Button>
-          <Button onClick={() => this.props.createNewProject()} color="primary">
+          <Button onClick={() => this.props.confirmDialog()} color="primary">
             Ok
           </Button>
         </DialogActions>
@@ -117,12 +119,13 @@ class Projects extends Component {
 }
 
 Projects.propTypes = {
+  signedIn: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   websiteUrl: PropTypes.string.isRequired,
   openCreateProjectDialog: PropTypes.bool.isRequired,
   didPressCreateProjectButton: PropTypes.func.isRequired,
-  cancelNewProject: PropTypes.func.isRequired,
-  createNewProject: PropTypes.func.isRequired,
+  closeDialog: PropTypes.func.isRequired,
+  confirmDialog: PropTypes.func.isRequired,
   changeView: PropTypes.func.isRequired
 };
 

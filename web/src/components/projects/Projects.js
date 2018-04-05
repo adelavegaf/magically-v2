@@ -10,11 +10,16 @@ import Typography from 'material-ui/Typography';
 import ProjectsFilter from './ProjectsFilter';
 import AppBarFactory from '../appbar/AppBarFactory';
 import ProjectContainer from '../../containers/ProjectContainer';
+import {CircularProgress} from 'material-ui/Progress';
+
 
 const styles = theme => ({
   root: {
     height: '100%',
     backgroundColor: LIGHT_GRAY
+  },
+  fullHeight: {
+    height: '100%'
   },
   fab: {
     position: 'absolute',
@@ -53,7 +58,46 @@ class Projects extends Component {
     this.classes = classes;
   }
 
+  getFetching() {
+    return (
+      <Grid container direction={'column'} spacing={24} justify={'center'} alignItems={'center'}
+            className={this.classes.spacingForContainer}>
+        <Grid item>
+          <CircularProgress size={50}/>
+        </Grid>
+        <Grid item>
+          <Typography variant={'subheading'} color={'textSecondary'}>
+            Looking for projects
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  getNoResultsFound() {
+    return (
+      <Grid container direction={'column'} spacing={24} className={this.classes.spacingForContainer}>
+        <Grid item>
+          <Typography variant={'title'}>
+            No results found
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant={'subheading'}>
+            Tap on the + button to create a project for this URL.
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+
   getProjects() {
+    if (this.props.fetching) {
+      return this.getFetching();
+    }
+    if (this.props.projects.length === 0) {
+      return this.getNoResultsFound();
+    }
     return this.props.projects.map((project, index) => {
       return <ProjectContainer project={project} changeView={this.props.changeView} key={index}/>
     });
@@ -94,12 +138,12 @@ class Projects extends Component {
 
         <AppBarFactory type={'search'} searchBarStartText={this.props.websiteUrl} changeView={this.props.changeView}/>
 
-        <Grid container>
+        <Grid container className={this.classes.fullHeight}>
 
           <Grid item xs={2}/>
 
-          <Grid item xs={8}>
-            <ProjectsFilter/>
+          <Grid item xs={8} className={this.classes.fullHeight}>
+            <ProjectsFilter projectCount={this.props.projects.length}/>
             {this.getProjects()}
           </Grid>
 
@@ -119,6 +163,7 @@ class Projects extends Component {
 }
 
 Projects.propTypes = {
+  fetching: PropTypes.bool.isRequired,
   signedIn: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   websiteUrl: PropTypes.string.isRequired,

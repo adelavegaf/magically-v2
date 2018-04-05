@@ -17,11 +17,14 @@ class CreateProjectContainer extends Component {
       authorId: firebase.auth().currentUser.uid,
       authorDisplayName: firebase.auth().currentUser.displayName,
       authorEmail: firebase.auth().currentUser.email,
+      title: 'Untitled',
       createdAt: new Date(),
       websiteUrl: this.props.websiteUrl,
       upvotes: 0,
       downvotes: 0,
       favorites: 0,
+      errorNumber: 15, // TODO(adelavega): Remove property once the backend is connected.
+      fixedNumber: 0,
       loading: true
     });
   }

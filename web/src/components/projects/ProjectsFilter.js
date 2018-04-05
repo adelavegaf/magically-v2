@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import FilterIcon from 'material-ui-icons/FilterList';
@@ -86,7 +87,7 @@ class ProjectsFilter extends Component {
         <Grid container justify={'space-between'} alignItems={'center'}>
           <Grid item xs={6}>
             <Typography>
-              About 10 results
+              About {this.props.projectCount} results
             </Typography>
           </Grid>
           <Grid item xs={6} className={this.classes.filterButton}>
@@ -101,5 +102,9 @@ class ProjectsFilter extends Component {
     );
   }
 }
+
+ProjectsFilter.propTypes = {
+  projectCount: PropTypes.number.isRequired
+};
 
 export default withStyles(styles)(ProjectsFilter);

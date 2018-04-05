@@ -56,7 +56,7 @@ class Search extends Component {
              onKeyPress={(e) => this.onKeyPress(e)}
              onChange={(e) => this.props.onWebsiteURLChange(e.target.value)}
              inputProps={{
-               'aria-label': 'Description',
+               'aria-label': 'Url',
              }}/>
     );
   }

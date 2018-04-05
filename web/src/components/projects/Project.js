@@ -43,7 +43,7 @@ class Project extends Component {
   }
 
   getPercentageColor() {
-    const percentage = this.project.percentage;
+    const percentage = this.project.fixedNumber / this.project.errorNumber;
     let percentageColor = {color: '#000'};
 
     if (percentage < .40) {
@@ -70,22 +70,22 @@ class Project extends Component {
         <Grid item xs={6}>
           <div style={this.getPercentageColor()}>
             <Typography variant={'display3'} color={'inherit'} align={'center'}>
-              {this.project.percentage * 100}%
+              {this.project.fixedNumber / this.project.errorNumber * 100}%
             </Typography>
           </div>
         </Grid>
         <Grid item xs={6}>
           <Typography variant={'title'}>
-            {this.project.name}
+            {this.project.title}
           </Typography>
           <Typography variant={'subheading'}>
-            {this.project.author}
+            {this.project.authorDisplayName}
           </Typography>
           <Typography variant={'body1'} color={'textSecondary'}>
-            {this.project.date.toLocaleDateString()}
+            {this.project.createdAt.toLocaleDateString()}
           </Typography>
           <Typography variant={'caption'}>
-            {this.project.errors} errors remaining
+            {this.project.errorNumber} errors remaining
           </Typography>
         </Grid>
       </Grid>

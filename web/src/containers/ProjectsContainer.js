@@ -4,49 +4,28 @@ import {CREATE_PROJECT, EDITOR, SIGN_IN} from '../components/utils/Views';
 import Projects from '../components/projects/Projects';
 import firebase from '../firebase';
 
-const MOCK_PROJECT_DATA = [
-  {
-    name: 'Awesome Fix 1',
-    author: 'adelavegaf',
-    date: new Date(),
-    errors: 7,
-    percentage: .88,
-    upvotes: 23,
-    downvotes: 0,
-    favorites: 1
-  },
-  {
-    name: 'EzFix',
-    author: 'jsmen',
-    date: new Date(),
-    errors: 10,
-    percentage: .6,
-    upvotes: 1,
-    downvotes: 1,
-    favorites: 0
-  },
-  {
-    name: 'Colfuturo',
-    author: 'mchief',
-    date: new Date(),
-    errors: 20,
-    percentage: .3,
-    upvotes: 0,
-    downvotes: 11,
-    favorites: 0
-  },
-];
-
 class ProjectsContainer extends Component {
   constructor(props) {
     super(props);
     this.authHandle = null;
     this.state = {
-      projects: MOCK_PROJECT_DATA,
+      projects: [],
       websiteUrl: this.props.websiteUrl,
       openCreateProjectDialog: false,
-      signedIn: false
+      signedIn: false,
+      fetching: true
     }
+  }
+
+  fetchProjects() {
+    firebase.firestore()
+            .collection('projects')
+            .where('websiteUrl', '==', this.props.websiteUrl)
+            .get()
+            .then(snapshot => {
+              const docs = snapshot.docs.map(doc => doc.data());
+              this.setState({projects: docs, fetching: false});
+            });
   }
 
   componentDidMount() {
@@ -57,7 +36,14 @@ class ProjectsContainer extends Component {
         this.setState({signedIn: false});
       }
     });
-    // TODO(adelavega): query firebase for all projects that have URL: this.props.websiteUrl
+    this.fetchProjects();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.websiteUrl === this.props.websiteUrl) {
+      return;
+    }
+    this.fetchProjects();
   }
 
   componentWillUnmount() {
@@ -84,6 +70,7 @@ class ProjectsContainer extends Component {
   render() {
     return React.createElement(Projects, {
         signedIn: this.state.signedIn,
+        fetching: this.state.fetching,
         projects: this.state.projects,
         websiteUrl: this.state.websiteUrl,
         openCreateProjectDialog: this.state.openCreateProjectDialog,

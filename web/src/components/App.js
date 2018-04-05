@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import PropTypes from 'prop-types';
-import {EDITOR, LANDING, PROJECTS, SIGN_IN} from './utils/Views';
+import {CREATE_PROJECT, EDITOR, LANDING, PROJECTS, SIGN_IN} from './utils/Views';
 import LandingPageContainer from '../containers/LandingPageContainer';
 import ProjectsContainer from '../containers/ProjectsContainer';
 import EditorContainer from '../containers/EditorContainer';
 import SignInContainer from '../containers/SignInContainer';
+import CreateProjectContainer from '../containers/CreateProjectContainer';
 
 const theme = createMuiTheme({
   palette: {
@@ -36,6 +37,8 @@ class App extends Component {
         return React.createElement(EditorContainer, currentViewProps);
       case SIGN_IN:
         return React.createElement(SignInContainer, currentViewProps);
+      case CREATE_PROJECT:
+        return React.createElement(CreateProjectContainer, currentViewProps);
       default:
         return <div/>
     }

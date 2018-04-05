@@ -70,8 +70,8 @@ class Projects extends Component {
       >
         <DialogTitle id="create-new-project-confirmation-dialog">Create new project for this URL?</DialogTitle>
         <DialogContent>
-          <Typography variant={'caption'}>
-            https://www.example.com
+          <Typography variant={'subheading'} color={'textSecondary'}>
+            {this.props.websiteUrl}
           </Typography>
         </DialogContent>
         <DialogActions>

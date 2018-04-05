@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {EDITOR} from '../components/utils/Views';
+import {CREATE_PROJECT, EDITOR} from '../components/utils/Views';
 import Projects from '../components/projects/Projects';
 
 const MOCK_PROJECT_DATA = [
@@ -59,7 +59,7 @@ class ProjectsContainer extends Component {
   }
 
   createNewProject() {
-
+    this.props.changeView(CREATE_PROJECT, {websiteUrl: this.props.websiteUrl});
   }
 
   render() {

@@ -30,13 +30,34 @@ const styles = theme => ({
   bottomContainer: {
     height: BOTTOM_STRIP_HEIGHT,
     background: theme.palette.primary.main,
-    boxShadow: 'inset 0px 5px 20px rgba(0, 0, 0, 0.50)'
+  },
+  bottomContainerStripe: {
+    height: '10px',
+    backgroundImage: 'linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,0))'
   },
   fab: {
     position: 'absolute',
     bottom: BOTTOM_STRIP_HEIGHT - FAB_SIZE / 2,
     right: theme.spacing.unit * 4
-  }
+  },
+  secondViewRoot: {
+    height: '100%',
+    flexGrow: 1,
+    background: theme.palette.primary.main
+  },
+  secondViewText: {
+    color: '#fff',
+    fontWeight: '100',
+    fontSize: '0.96em',
+    marginBottom: theme.spacing.unit * 3
+  },
+  secondViewTextHeader: {
+    color: '#fff',
+    fontWeight: '100',
+    fontSize: '3.5rem',
+    fontFamily: 'Roboto'
+  },
+  toolbar: theme.mixins.toolbar
 });
 
 
@@ -47,12 +68,12 @@ class LandingPage extends Component {
     this.classes = classes;
   }
 
-  render() {
+  getFirstView() {
     return (
       <div className={this.classes.root}>
         <AppBarFactory type={'invisible'} searchBarStartText={''} changeView={this.props.changeView}/>
 
-        <Grid container direction={'column'} className={this.classes.fullHeight}>
+        <Grid container direction={'column'} className={this.classes.fullHeight} spacing={0}>
 
           <Grid container spacing={24} alignItems={'center'} className={this.classes.flex}>
             <Grid item xs={12}>
@@ -84,8 +105,8 @@ class LandingPage extends Component {
             </Grid>
           </Grid>
 
-          <Grid container>
-            <Grid item xs={12} className={this.classes.bottomContainer}/>
+          <Grid container className={this.classes.bottomContainer} spacing={0}>
+            <Grid item xs={12} className={this.classes.bottomContainerStripe}/>
           </Grid>
         </Grid>
         <Button variant={'fab'} color={'secondary'} className={this.classes.fab}>
@@ -93,6 +114,42 @@ class LandingPage extends Component {
         </Button>
       </div>
     );
+  }
+
+  getSecondView() {
+    return (
+      <div className={this.classes.secondViewRoot}>
+        <Grid container className={this.classes.fullHeight}>
+          <div className={this.classes.toolbar}/>
+          <Grid item xs={6} className={this.classes.fullHeight}>
+            <Grid container justify={'center'} alignItems={'center'} className={this.classes.fullHeight}>
+              <Grid item xs={6}>
+                <h1 className={this.classes.secondViewTextHeader}>How does it work?</h1>
+                <Typography variant={'subheading'} className={this.classes.secondViewText} gutterBottom={true}>
+                  Through our web platform you can fix the most common accessibility issues that are present in a given
+                  website.
+                </Typography>
+                <Typography variant={'subheading'} className={this.classes.secondViewText} gutterBottom={true}>
+                  We try to provide an intuitive interface for you to fix the problems as easily and fast as possible.
+                </Typography>
+                <Typography variant={'subheading'} className={this.classes.secondViewText} gutterBottom={true}>
+                  We then use the solutions you devised to correct the issues through our Chrome extension!
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div className={this.classes.root}>
+        {this.getFirstView()}
+        {this.getSecondView()}
+      </div>
+    )
   }
 }
 

@@ -57,7 +57,7 @@ const getImageErrors = (lhr, url) => {
     message.ack();
 
     const payload = JSON.parse(message.data);
-    const {websiteUrl} = payload;
+    const {projectId, websiteUrl} = payload;
     console.log(`Received Message ${message.id} with URL: ${websiteUrl}`);
 
     const lhr = await lighthouse(websiteUrl, opts, lighthouseConfig);
@@ -68,6 +68,7 @@ const getImageErrors = (lhr, url) => {
     console.log(JSON.stringify(imageErrors));
 
     const auditResult = {
+      projectId: projectId,
       websiteUrl: websiteUrl,
       imageErrors: imageErrors
     };

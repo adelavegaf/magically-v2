@@ -31,6 +31,51 @@ exports.addAuditResultToFirestore = functions
   .pubsub
   .topic('audit-result')
   .onPublish(message => {
-    const auditResult = message.json;
-    return admin.firestore().collection('audits').add(auditResult);
+
+    const auditPayload = message.json;
+    const websiteUrl = auditPayload.websiteUrl;
+    const projectId = auditPayload.projectId;
+
+    const auditResult = {
+      websiteUrl: websiteUrl,
+      imageErrors: auditPayload.imageErrors,
+      auditRunDate: new Date()
+    };
+
+    const updateExistingAuditResult = (auditId) => {
+      return admin
+        .firestore()
+        .collection('audits')
+        .doc(auditId)
+        .set(auditResult);
+    };
+
+    const addNewAuditResult = () => {
+      return admin
+        .firestore()
+        .collection('audits')
+        .add(auditResult);
+    };
+
+    const addAuditResultToProject = () => {
+      return admin
+        .firestore()
+        .collection('projects')
+        .doc(projectId)
+        .set({
+          loading: false,
+          errors: auditResult
+        }, {merge: true})
+    };
+
+    return admin
+      .firestore()
+      .collection('audits')
+      .where('websiteUrl', '==', websiteUrl)
+      .get()
+      .then((auditsRef) => {
+        const docs = auditsRef.docs;
+        return docs.length === 0 ? addNewAuditResult() : updateExistingAuditResult(docs[0].id);
+      })
+      .then(addAuditResultToProject());
   });

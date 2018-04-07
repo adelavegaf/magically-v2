@@ -36,7 +36,7 @@ const styles = theme => ({
     backgroundImage: 'linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,0))'
   },
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: BOTTOM_STRIP_HEIGHT - FAB_SIZE / 2,
     right: theme.spacing.unit * 4
   },
@@ -75,7 +75,7 @@ class LandingPage extends Component {
 
         <Grid container direction={'column'} className={this.classes.fullHeight} spacing={0}>
 
-          <Grid container spacing={24} alignItems={'center'} className={this.classes.flex}>
+          <Grid container spacing={0} alignItems={'center'} className={this.classes.flex}>
             <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={12}>
@@ -109,9 +109,6 @@ class LandingPage extends Component {
             <Grid item xs={12} className={this.classes.bottomContainerStripe}/>
           </Grid>
         </Grid>
-        <Button variant={'fab'} color={'secondary'} className={this.classes.fab}>
-          <DownIcon/>
-        </Button>
       </div>
     );
   }
@@ -119,10 +116,10 @@ class LandingPage extends Component {
   getSecondView() {
     return (
       <div className={this.classes.secondViewRoot}>
-        <Grid container className={this.classes.fullHeight}>
+        <Grid container className={this.classes.fullHeight} spacing={0}>
           <div className={this.classes.toolbar}/>
           <Grid item xs={6} className={this.classes.fullHeight}>
-            <Grid container justify={'center'} alignItems={'center'} className={this.classes.fullHeight}>
+            <Grid container justify={'center'} alignItems={'center'} className={this.classes.fullHeight} spacing={0}>
               <Grid item xs={6}>
                 <h1 className={this.classes.secondViewTextHeader}>How does it work?</h1>
                 <Typography variant={'subheading'} className={this.classes.secondViewText} gutterBottom={true}>
@@ -148,6 +145,9 @@ class LandingPage extends Component {
       <div className={this.classes.root}>
         {this.getFirstView()}
         {this.getSecondView()}
+        <Button variant={'fab'} color={'secondary'} className={this.classes.fab}>
+          <DownIcon/>
+        </Button>
       </div>
     )
   }

@@ -1,0 +1,13 @@
+{
+  "extends": "lighthouse:default",
+  "settings": {
+    "onlyCategories": [
+      "accessibility"
+    ]
+  },
+  "categories": {
+    "accessibility": {
+      "weight": 1
+    }
+  }
+}

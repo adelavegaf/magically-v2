@@ -68,6 +68,7 @@ const getImageErrors = (lhr, url) => {
     console.log(JSON.stringify(imageErrors));
 
     const auditResult = {
+      websiteUrl: websiteUrl,
       imageErrors: imageErrors
     };
 

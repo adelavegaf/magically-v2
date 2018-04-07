@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 curl https://storage.googleapis.com/chrome-builds/headless/chrome-headless.deb > chrome-headless.deb
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 
 apt-get update && apt-get install -y \
   build-essential \
@@ -33,7 +34,7 @@ apt-get update && apt-get install -y \
   xdg-utils \
   --no-install-recommends && \
   dpkg -i './chrome-headless.deb' && \
-  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
+  curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && \
   sudo apt-get install -y nodejs && \
   sudo apt-get install -y libnss3 && \
   rm -rf /var/lib/apt/lists/*

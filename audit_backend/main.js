@@ -8,6 +8,23 @@ const pubsub = new PubSub();
 const subscriptionName = 'audit-sub';
 const subscription = pubsub.subscription(subscriptionName);
 
+const publishAuditResultToQueue = (auditResult) => {
+  const data = JSON.stringify(auditResult);
+  const dataBuffer = Buffer.from(data);
+
+  return pubsub
+    .topic('audit-result')
+    .publisher()
+    .publish(dataBuffer)
+    .then(messageId => {
+      console.log(`Message ${messageId} published to audit-result topic.`);
+      return messageId;
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });
+};
+
 const getImageErrors = (lhr, url) => {
   const errors = lhr.audits['image-alt'].details.items;
   return errors
@@ -49,6 +66,12 @@ const getImageErrors = (lhr, url) => {
     const imageErrors = getImageErrors(lhr, websiteUrl);
     console.log('image errors');
     console.log(JSON.stringify(imageErrors));
+
+    const auditResult = {
+      imageErrors: imageErrors
+    };
+
+    publishAuditResultToQueue(auditResult);
   }));
 
 })();

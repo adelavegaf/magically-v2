@@ -42,41 +42,51 @@ class ImageFixer extends Component {
     this.classes = classes;
   }
 
+  getIntructions() {
+    return <div/>;
+  }
+
+  getFixer() {
+    return (
+      <Grid item className={this.classes.flex}>
+        <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
+          <Grid item>
+            <Typography variant={'headline'}>
+              Describe this image
+            </Typography>
+          </Grid>
+          <Grid item className={this.classes.centerContainer}>
+            <img src={this.props.currentError.imgURL}/>
+          </Grid>
+          <Grid item>
+            <Input placeholder="Type image description"
+                   fullWidth
+                   inputProps={{
+                     'aria-label': 'image description',
+                   }}/>
+          </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="no-alt"
+                />
+              }
+              label="This is a decorative image that doesn't need a description"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
+
   render() {
     return (
       <Grid container className={this.classes.fullHeight}>
         <EditorSideList currentError={this.props.currentError}
                         errors={this.props.imageErrors}
                         changeError={this.props.changeError}/>
-        <Grid item className={this.classes.flex}>
-          <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
-            <Grid item>
-              <Typography variant={'headline'}>
-                Describe this image
-              </Typography>
-            </Grid>
-            <Grid item className={this.classes.centerContainer}>
-              <img src="http://via.placeholder.com/350x150" alt="missing description"/>
-            </Grid>
-            <Grid item>
-              <Input placeholder="Type image description"
-                     fullWidth
-                     inputProps={{
-                       'aria-label': 'image description',
-                     }}/>
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="no-alt"
-                  />
-                }
-                label="This is a decorative image that doesn't need a description"
-              />
-            </Grid>
-          </Grid>
-        </Grid>
+        {this.props.currentError ? this.getFixer() : this.getIntructions()}
       </Grid>
     );
   }

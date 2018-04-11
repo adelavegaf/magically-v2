@@ -11,10 +11,9 @@ import LanguageIcon from 'material-ui-icons/Language';
 import InvertColorsIcon from 'material-ui-icons/InvertColors';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox'
-import ImageFixer from './ImageFixer';
-import EditorSideList from './EditorSideList';
 import LanguageFixer from './LanguageFixer';
 import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
+import ImageFixerContainer from '../../containers/ImageFixerContainer';
 
 const styles = theme => ({
   root: {
@@ -136,7 +135,7 @@ class Editor extends Component {
   getEditorMainView() {
     switch (this.props.currentFixer) {
       case IMAGES_FIXER:
-        return <ImageFixer/>;
+        return <ImageFixerContainer imageErrors={this.props.project.errors.imageErrors}/>;
       case LANGUAGE_FIXER:
         return <LanguageFixer/>;
       case CONTRAST_FIXER:
@@ -153,10 +152,7 @@ class Editor extends Component {
         <Grid item className={this.classes.toolbar}/>
         <Grid item className={this.classes.editorContainer}>
           <Paper className={this.classes.fullHeight}>
-            <Grid container className={this.classes.fullHeight}>
-              <EditorSideList/>
-              {this.getEditorMainView()}
-            </Grid>
+            {this.getEditorMainView()}
           </Paper>
         </Grid>
       </Grid>

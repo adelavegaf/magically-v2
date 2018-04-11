@@ -27,21 +27,20 @@ class EditorSideList extends Component {
     super(props);
     const {classes} = props;
     this.classes = classes;
-    this.errors = [
-      {name: 'jaf.jpg', fixed: true},
-      {name: 'cat.jpg', fixed: true},
-      {name: 'car1230.jpg', fixed: false},
-    ];
+  }
+
+  getLastPartOfUrl(url) {
+    return url.substr(url.lastIndexOf('/') + 1);
   }
 
   render() {
-    const listItems = this.errors.map((e, i) => {
+    const listItems = this.props.errors.map((e, i) => {
       return (
         <ListItem button key={i}>
-          <ListItemText primary={e.name}/>
+          <ListItemText primary={this.getLastPartOfUrl(e.imgURL)}/>
           <ListItemSecondaryAction>
             <Checkbox
-              checked={e.fixed}
+              checked={e.fixed ? e.fixed : false}
             />
           </ListItemSecondaryAction>
         </ListItem>

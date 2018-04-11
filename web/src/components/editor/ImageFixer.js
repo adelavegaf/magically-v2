@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
+import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
@@ -12,10 +13,14 @@ import {
   FormControlLabel,
   FormHelperText,
 } from 'material-ui/Form';
+import EditorSideList from './EditorSideList';
 
 const styles = theme => ({
   flex: {
     flex: 1
+  },
+  fullHeight: {
+    height: '100%'
   },
   centerContainer: {
     textAlign: 'center'
@@ -39,37 +44,46 @@ class ImageFixer extends Component {
 
   render() {
     return (
-      <Grid item className={this.classes.flex}>
-        <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
-          <Grid item>
-            <Typography variant={'headline'}>
-              Describe this image
-            </Typography>
-          </Grid>
-          <Grid item className={this.classes.centerContainer}>
-            <img src="http://via.placeholder.com/350x150" alt="missing description"/>
-          </Grid>
-          <Grid item>
-            <Input placeholder="Type image description"
-                   fullWidth
-                   inputProps={{
-                     'aria-label': 'image description',
-                   }}/>
-          </Grid>
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="no-alt"
-                />
-              }
-              label="This is a decorative image that doesn't need a description"
-            />
+      <Grid container className={this.classes.fullHeight}>
+        <EditorSideList errors={this.props.imageErrors}/>
+        <Grid item className={this.classes.flex}>
+          <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
+            <Grid item>
+              <Typography variant={'headline'}>
+                Describe this image
+              </Typography>
+            </Grid>
+            <Grid item className={this.classes.centerContainer}>
+              <img src="http://via.placeholder.com/350x150" alt="missing description"/>
+            </Grid>
+            <Grid item>
+              <Input placeholder="Type image description"
+                     fullWidth
+                     inputProps={{
+                       'aria-label': 'image description',
+                     }}/>
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="no-alt"
+                  />
+                }
+                label="This is a decorative image that doesn't need a description"
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
     );
   }
 }
+
+ImageFixer.propTypes = {
+  imageErrors: PropTypes.array.isRequired,
+  currentError: PropTypes.object,
+  changeError: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(ImageFixer);

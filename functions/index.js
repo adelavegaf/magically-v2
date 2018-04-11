@@ -39,6 +39,8 @@ exports.addAuditResultToFirestore = functions
     const auditResult = {
       websiteUrl: websiteUrl,
       imageErrors: auditPayload.imageErrors,
+      contrastErrors: auditPayload.contrastErrors,
+      langErrors: auditPayload.langErrors,
       auditRunDate: new Date()
     };
 

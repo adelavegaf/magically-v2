@@ -8,6 +8,15 @@ const pubsub = new PubSub();
 const subscriptionName = 'audit-sub';
 const subscription = pubsub.subscription(subscriptionName);
 
+/**
+ * TODO(adelavega)
+ * add lhr.audits['color-contrast'].details.items
+ * add ['document-title']
+ * add ['html-has-lang'] use 'selector'
+ * add ['html-lang-valid']
+ * add ["link-name"]
+ */
+
 const publishAuditResultToQueue = (auditResult) => {
   const data = JSON.stringify(auditResult);
   const dataBuffer = Buffer.from(data);
@@ -43,6 +52,32 @@ const getImageErrors = (lhr, url) => {
     })
 };
 
+const getLangErrors = (lhr) => {
+  const errors = lhr.audits['html-has-lang'].details.items;
+  return errors.map(error => {
+    return {
+      domSelector: error.selector
+    }
+  });
+};
+
+const getContrastErrors = (lhr) => {
+  const errors = lhr.audits['color-contrast'].extendedInfo.value.nodes;
+  return errors.map(error => {
+    const failureRegex = /.*foreground color: (.*), background color: (.*), font size: (.*), font weight: (.*)\)\. Expected contrast ratio of (.*)/;
+    const [x, foregroundColor, backgroundColor, fontSize, fontWeight, expectedContrastRatio] =
+      error.failureSummary.match(failureRegex);
+    return {
+      domSelector: error.target[0],
+      foregroundColor: foregroundColor,
+      backgroundColor: backgroundColor,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      expectedContrastRatio: expectedContrastRatio
+    }
+  });
+};
+
 (async () => {
   const opts = {
     chromeFlags: ['--headless', '--disable-gpu'],
@@ -64,13 +99,19 @@ const getImageErrors = (lhr, url) => {
     console.log(`Lighthouse score: ${lhr.score}`);
 
     const imageErrors = getImageErrors(lhr, websiteUrl);
-    console.log('image errors');
-    console.log(JSON.stringify(imageErrors));
+    const langErrors = getLangErrors(lhr);
+    const contrastErrors = getContrastErrors(lhr);
+    console.log('lang errors');
+    console.log(langErrors);
+    console.log('color errors');
+    console.log(JSON.stringify(contrastErrors));
 
     const auditResult = {
       projectId: projectId,
       websiteUrl: websiteUrl,
-      imageErrors: imageErrors
+      imageErrors: imageErrors,
+      langErrors: langErrors,
+      contrastErrors: contrastErrors
     };
 
     publishAuditResultToQueue(auditResult);

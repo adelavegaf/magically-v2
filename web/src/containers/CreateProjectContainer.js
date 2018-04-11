@@ -8,7 +8,7 @@ class CreateProjectContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      isLoading: true
     };
     this.projectHandler = null;
   }
@@ -29,7 +29,7 @@ class CreateProjectContainer extends Component {
         favorites: 0,
         errorNumber: 15, // TODO(adelavega): Remove property once the backend is connected.
         fixedNumber: 0,
-        loading: true
+        isLoading: true
       })
       .then(projectRef => {
         const projectId = projectRef.id;
@@ -39,7 +39,7 @@ class CreateProjectContainer extends Component {
           .doc(projectId)
           .onSnapshot(project => {
             if (!project.data().isLoading) {
-              this.props.changeView(EDITOR, {project: project.data()});
+              this.props.changeView(EDITOR, {projectId: projectId, project: project.data()});
             }
           })
       });

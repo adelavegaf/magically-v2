@@ -17,6 +17,9 @@ const styles = theme => ({
   list: {
     paddingTop: '0px !important'
   },
+  selectedListItem: {
+    background: 'rgba(0, 0, 0, .15)'
+  },
   instructions: {
     paddingRight: '0px'
   }
@@ -33,10 +36,18 @@ class EditorSideList extends Component {
     return url.substr(url.lastIndexOf('/') + 1);
   }
 
+  getListItemClass(domSelector) {
+    if (!this.props.currentError) return '';
+    return this.props.currentError.domSelector === domSelector ? this.classes.selectedListItem : ''
+  }
+
   render() {
     const listItems = this.props.errors.map((e, i) => {
       return (
-        <ListItem button key={i}>
+        <ListItem button
+                  key={i}
+                  className={this.getListItemClass(e.domSelector)}
+                  onClick={() => this.props.changeError(e)}>
           <ListItemText primary={this.getLastPartOfUrl(e.imgURL)}/>
           <ListItemSecondaryAction>
             <Checkbox
@@ -61,7 +72,9 @@ class EditorSideList extends Component {
 }
 
 EditorSideList.propTypes = {
-  errors: PropTypes.array.isRequired
+  errors: PropTypes.array.isRequired,
+  currentError: PropTypes.object,
+  changeError: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(EditorSideList);

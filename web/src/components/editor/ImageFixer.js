@@ -45,7 +45,9 @@ class ImageFixer extends Component {
   render() {
     return (
       <Grid container className={this.classes.fullHeight}>
-        <EditorSideList errors={this.props.imageErrors}/>
+        <EditorSideList currentError={this.props.currentError}
+                        errors={this.props.imageErrors}
+                        changeError={this.props.changeError}/>
         <Grid item className={this.classes.flex}>
           <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
             <Grid item>

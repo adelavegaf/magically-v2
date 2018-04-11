@@ -40,6 +40,7 @@ class AuthButton extends Component {
     );
   }
 
+  // TODO(adelavega): use material avatar instead of using custom class to generate letter avatar.
   getProfileButton() {
     return (
       <div>

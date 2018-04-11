@@ -80,21 +80,24 @@ class Editor extends Component {
         <div className={this.classes.toolbar}/>
         <div className={this.classes.toolbar}/>
         <List component={'nav'}>
-          <ListItem button className={this.getNavListItemClass(LANGUAGE_FIXER)} onClick={() => this.props.didPressLanguageFixerButton()}>
+          <ListItem button className={this.getNavListItemClass(LANGUAGE_FIXER)}
+                    onClick={() => this.props.didPressLanguageFixerButton()}>
             <ListItemIcon className={this.classes.languageIcon}>
               <LanguageIcon/>
             </ListItemIcon>
             <ListItemText className={this.classes.listItemText} primary={LANGUAGE_FIXER}/>
           </ListItem>
 
-          <ListItem button className={this.getNavListItemClass(IMAGES_FIXER)} onClick={() => this.props.didPressImagesFixerButton()}>
+          <ListItem button className={this.getNavListItemClass(IMAGES_FIXER)}
+                    onClick={() => this.props.didPressImagesFixerButton()}>
             <ListItemIcon className={this.classes.imageIcon}>
               <ImageIcon/>
             </ListItemIcon>
             <ListItemText className={this.classes.listItemText} primary={IMAGES_FIXER}/>
           </ListItem>
 
-          <ListItem button className={this.getNavListItemClass(CONTRAST_FIXER)} onClick={() => this.props.didPressContrastFixerButton()}>
+          <ListItem button className={this.getNavListItemClass(CONTRAST_FIXER)}
+                    onClick={() => this.props.didPressContrastFixerButton()}>
             <ListItemIcon className={this.classes.contrastIcon}>
               <InvertColorsIcon/>
             </ListItemIcon>
@@ -138,7 +141,13 @@ class Editor extends Component {
   render() {
     return (
       <div className={this.classes.root}>
-        <AppBarFactory type={'editor'} changeView={this.props.changeView}/>
+        <AppBarFactory
+          isOwner={this.props.isOwner}
+          projectTitle={this.props.project.title}
+          type={'editor'}
+          changeView={this.props.changeView}
+          didEditTitle={this.props.didEditProjectTitle}
+          didFinishEditingProjectTitle={this.props.didFinishEditingProjectTitle}/>
         {this.getDrawer()}
         {this.getEditor()}
       </div>
@@ -147,11 +156,14 @@ class Editor extends Component {
 }
 
 Editor.propStyles = {
+  isOwner: PropStyles.bool.isRequired,
   project: PropStyles.object.isRequired,
   currentFixer: PropStyles.string.isRequired,
   didPressLanguageFixerButton: PropStyles.func.isRequired,
   didPressImagesFixerButton: PropStyles.func.isRequired,
   didPressContrastFixerButton: PropStyles.func.isRequired,
+  didEditTitle: PropStyles.func.isRequired,
+  didFinishEditingProjectTitle: PropStyles.func.isRequired,
   changeView: PropStyles.func.isRequired
 };
 

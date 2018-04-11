@@ -7,7 +7,7 @@ import firebase from '../firebase';
 class AuthButtonContainer extends Component {
   constructor(props) {
     super(props);
-    this.authHandle = null;
+    this.authUnsubscribe = null;
     this.state = {
       loggedIn: false,
       displayName: '',
@@ -16,7 +16,7 @@ class AuthButtonContainer extends Component {
   }
 
   componentDidMount() {
-    this.authHandle = firebase.auth().onAuthStateChanged(user => {
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
           loggedIn: true,
@@ -33,7 +33,7 @@ class AuthButtonContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.authHandle();
+    this.authUnsubscribe();
   }
 
   changeView() {

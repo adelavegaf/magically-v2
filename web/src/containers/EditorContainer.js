@@ -1,17 +1,51 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Editor from '../components/editor/Editor';
+import firebase from '../firebase';
 
 export const LANGUAGE_FIXER = 'language';
 export const IMAGES_FIXER = 'images';
 export const CONTRAST_FIXER = 'contrast';
+export const PROJECT_TITLE_MAX_LENGTH = 20;
 
 class EditorContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentFixer: LANGUAGE_FIXER
+      currentFixer: LANGUAGE_FIXER,
+      project: this.props.project,
+      isOwner: this.isProjectOwner(this.props.project)
     };
+    this.authUnsubscribe = null;
+    this.projectUnsubscribe = null;
+  }
+
+  isProjectOwner(project) {
+    const user = firebase.auth().currentUser;
+    return user && project ? user.uid === project.authorId : false;
+  }
+
+  componentDidMount() {
+    this.authUnsubscribe = firebase
+      .auth()
+      .onAuthStateChanged(() => {
+        this.setState({isOwner: this.isProjectOwner(this.state.project)});
+      });
+    this.projectUnsubscribe = firebase
+      .firestore()
+      .collection('projects')
+      .doc(this.props.projectId)
+      .onSnapshot(doc => {
+        this.setState({
+          project: doc.data(),
+          isOwner: this.isProjectOwner(doc.data())
+        });
+      });
+  }
+
+  componentWillUnmount() {
+    this.authUnsubscribe();
+    this.projectUnsubscribe();
   }
 
   didPressLanguageFixerButton() {
@@ -26,13 +60,39 @@ class EditorContainer extends Component {
     this.setState({currentFixer: CONTRAST_FIXER});
   }
 
+  didEditProjectTitle(title) {
+    if (title.length > PROJECT_TITLE_MAX_LENGTH) {
+      return;
+    }
+    firebase
+      .firestore()
+      .collection('projects')
+      .doc(this.props.projectId)
+      .set({title: title}, {merge: true});
+  }
+
+  didFinishEditingProjectTitle() {
+    const title = this.state.project.title;
+    if (title.length > 0) {
+      return;
+    }
+    firebase
+      .firestore()
+      .collection('projects')
+      .doc(this.props.projectId)
+      .set({title: 'Untitled'}, {merge: true});
+  }
+
   render() {
     return React.createElement(Editor, {
-        project: this.props.project,
+        isOwner: this.state.isOwner,
+        project: this.state.project,
         currentFixer: this.state.currentFixer,
         didPressLanguageFixerButton: () => this.didPressLanguageFixerButton(),
         didPressImagesFixerButton: () => this.didPressImagesFixerButton(),
         didPressContrastFixerButton: () => this.didPressContrastFixerButton(),
+        didEditProjectTitle: (title) => this.didEditProjectTitle(title),
+        didFinishEditingProjectTitle: () => this.didFinishEditingProjectTitle(),
         changeView: this.props.changeView
       }
     );
@@ -40,6 +100,7 @@ class EditorContainer extends Component {
 }
 
 EditorContainer.propTypes = {
+  projectId: PropTypes.string.isRequired,
   project: PropTypes.object.isRequired,
   changeView: PropTypes.func.isRequired
 };

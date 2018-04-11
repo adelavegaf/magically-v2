@@ -99,7 +99,10 @@ class Projects extends Component {
       return this.getNoResultsFound();
     }
     return this.props.projects.map((project, index) => {
-      return <ProjectContainer project={project} changeView={this.props.changeView} key={index}/>
+      return <ProjectContainer project={project}
+                               projectId={project.id}
+                               changeView={this.props.changeView}
+                               key={index}/>
     });
   }
 

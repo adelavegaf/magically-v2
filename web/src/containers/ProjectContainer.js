@@ -5,7 +5,7 @@ import Project from '../components/projects/Project';
 
 class ProjectContainer extends Component {
   didPressProject() {
-    this.props.changeView(EDITOR, {project: this.props.project});
+    this.props.changeView(EDITOR, {projectId: this.props.projectId, project: this.props.project});
   }
 
   didPressUpvoteButton() {
@@ -23,6 +23,7 @@ class ProjectContainer extends Component {
   render() {
     return React.createElement(Project, {
         project: this.props.project,
+        projectId: this.props.projectId,
         didPressProject: () => this.didPressProject(),
         didPressUpvoteButton: () => this.didPressUpvoteButton(),
         didPressDownvoteButton: () => this.didPressDownvoteButton(),
@@ -33,6 +34,7 @@ class ProjectContainer extends Component {
 }
 
 ProjectContainer.propTypes = {
+  projectId: PropTypes.string.isRequired,
   project: PropTypes.object.isRequired,
   changeView: PropTypes.func.isRequired
 };

@@ -24,7 +24,15 @@ const styles = theme => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   appTitle: {
-    paddingLeft: theme.spacing.unit * 9
+    marginLeft: theme.spacing.unit * 9
+  },
+  projectTitle: {
+    fontSize: theme.typography.title.fontSize,
+    fontWeight: 500,
+    border: 'solid 1px transparent',
+    '&:hover': {
+      border: 'solid 1px rgba(0,0,0, 0.15)'
+    }
   },
   spacingForContainer: {
     marginTop: theme.spacing.unit * 3
@@ -74,6 +82,14 @@ class AppBarFactory extends Component {
     );
   }
 
+  onKeyPress(e) {
+    if (e.key === 'Enter') {
+      e.target.blur();
+      this.props.didFinishEditingProjectTitle();
+      e.preventDefault();
+    }
+  }
+
   getEditorBar() {
     return (
       <AppBar color={'inherit'} className={this.classes.appBar}>
@@ -90,12 +106,20 @@ class AppBarFactory extends Component {
         </Toolbar>
         <Toolbar disableGutters={true}>
           <Grid container alignItems={'center'}>
-            <Grid item className={this.classes.leftContainer}>
+            <Grid item className={this.classes.leftContainer} xs>
               <Typography variant="title" className={this.classes.appTitle}>
-                Untitled
+                <div>
+                  <input className={this.classes.projectTitle}
+                         type="text"
+                         pattern="[a-zA-Z0-9 ]+"
+                         onKeyPress={(event) => this.onKeyPress(event)}
+                         onBlur={this.props.didFinishEditingProjectTitle}
+                         onChange={(event) => this.props.didEditTitle(event.target.value)}
+                         value={this.props.projectTitle}/>
+                </div>
               </Typography>
             </Grid>
-            <div className={this.classes.flex}/>
+            <Grid item xs/>
           </Grid>
         </Toolbar>
       </AppBar>
@@ -117,7 +141,10 @@ class AppBarFactory extends Component {
 }
 
 AppBarFactory.propTypes = {
-  searchBarStartText: PropTypes.string.isRequired,
+  projectTitle: PropTypes.string,
+  searchBarStartText: PropTypes.string,
+  didEditTitle: PropTypes.func,
+  didFinishEditingProjectTitle: PropTypes.func,
   changeView: PropTypes.func.isRequired
 };
 

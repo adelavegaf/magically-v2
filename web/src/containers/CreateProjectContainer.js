@@ -38,7 +38,7 @@ class CreateProjectContainer extends Component {
           .collection('projects')
           .doc(projectId)
           .onSnapshot(project => {
-            if (!project.data().loading) {
+            if (!project.data().isLoading) {
               this.props.changeView(EDITOR, {project: project.data()});
             }
           })

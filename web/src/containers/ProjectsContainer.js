@@ -7,7 +7,7 @@ import firebase from '../firebase';
 class ProjectsContainer extends Component {
   constructor(props) {
     super(props);
-    this.authHandle = null;
+    this.authUnsubscribe = null;
     this.state = {
       projects: [],
       websiteUrl: this.props.websiteUrl,
@@ -23,13 +23,15 @@ class ProjectsContainer extends Component {
             .where('websiteUrl', '==', this.props.websiteUrl)
             .get()
             .then(snapshot => {
-              const docs = snapshot.docs.map(doc => doc.data());
+              const docs = snapshot.docs.map(doc => {
+                return {id: doc.id, ...doc.data()}
+              });
               this.setState({projects: docs, fetching: false});
             });
   }
 
   componentDidMount() {
-    this.authHandle = firebase.auth().onAuthStateChanged(user => {
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({signedIn: true});
       } else {
@@ -47,7 +49,7 @@ class ProjectsContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.authHandle();
+    this.authUnsubscribe();
   }
 
   didPressCreateProjectButton() {

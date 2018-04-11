@@ -63,7 +63,7 @@ exports.addAuditResultToFirestore = functions
         .collection('projects')
         .doc(projectId)
         .set({
-          loading: false,
+          isLoading: false,
           errors: auditResult
         }, {merge: true})
     };

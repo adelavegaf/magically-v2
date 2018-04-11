@@ -57,6 +57,10 @@ const styles = theme => ({
   listItemText: {
     textTransform: 'capitalize'
   },
+  selectedListItemText: {
+    textTransform: 'capitalize',
+    fontWeight: 500
+  },
   selectedListItem: {
     background: 'rgba(0, 0, 0, .15)'
   },
@@ -74,6 +78,21 @@ class Editor extends Component {
     return fixerName === this.props.currentFixer ? this.classes.selectedListItem : ''
   }
 
+  getNavListItemTextClass(fixerName) {
+    return fixerName === this.props.currentFixer ? this.classes.selectedListItemText : this.classes.listItemText
+  }
+
+  getFixerNameWithErrorCount(fixerName) {
+    switch (fixerName) {
+      case LANGUAGE_FIXER:
+        return `${LANGUAGE_FIXER} (${this.props.project.errors.langErrors.length})`;
+      case CONTRAST_FIXER:
+        return `${CONTRAST_FIXER} (${this.props.project.errors.contrastErrors.length})`;
+      case IMAGES_FIXER:
+        return `${IMAGES_FIXER} (${this.props.project.errors.imageErrors.length})`;
+    }
+  }
+
   getDrawer() {
     return (
       <Drawer variant={'persistent'} open={true} classes={{paper: this.classes.drawerPaper}}>
@@ -85,7 +104,9 @@ class Editor extends Component {
             <ListItemIcon className={this.classes.languageIcon}>
               <LanguageIcon/>
             </ListItemIcon>
-            <ListItemText className={this.classes.listItemText} primary={LANGUAGE_FIXER}/>
+            <ListItemText className={this.getNavListItemTextClass(LANGUAGE_FIXER)}
+                          primary={this.getFixerNameWithErrorCount(LANGUAGE_FIXER)}
+                          disableTypography={true}/>
           </ListItem>
 
           <ListItem button className={this.getNavListItemClass(IMAGES_FIXER)}
@@ -93,7 +114,9 @@ class Editor extends Component {
             <ListItemIcon className={this.classes.imageIcon}>
               <ImageIcon/>
             </ListItemIcon>
-            <ListItemText className={this.classes.listItemText} primary={IMAGES_FIXER}/>
+            <ListItemText className={this.getNavListItemTextClass(IMAGES_FIXER)}
+                          primary={this.getFixerNameWithErrorCount(IMAGES_FIXER)}
+                          disableTypography={true}/>
           </ListItem>
 
           <ListItem button className={this.getNavListItemClass(CONTRAST_FIXER)}
@@ -101,7 +124,9 @@ class Editor extends Component {
             <ListItemIcon className={this.classes.contrastIcon}>
               <InvertColorsIcon/>
             </ListItemIcon>
-            <ListItemText className={this.classes.listItemText} primary={CONTRAST_FIXER}/>
+            <ListItemText className={this.getNavListItemTextClass(CONTRAST_FIXER)}
+                          primary={this.getFixerNameWithErrorCount(CONTRAST_FIXER)}
+                          disableTypography={true}/>
           </ListItem>
         </List>
       </Drawer>

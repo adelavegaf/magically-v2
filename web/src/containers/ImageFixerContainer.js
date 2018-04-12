@@ -17,14 +17,24 @@ class ImageFixerContainer extends Component {
   }
 
   didEditDescription(description) {
-    this.props.didEditImageDescription(this.state.currentErrorKey, description);
+    this.props.didEditImageDescription(this.state.currentErrorKey, description, false /* hasNoDescription */);
+  }
+
+  didPressHasNoDescription(checked) {
+    this.props.didEditImageDescription(this.state.currentErrorKey, '', checked /* hasNoDescription */);
   }
 
   render() {
+    const imageErrors = this.props.imageErrors;
+    const index = this.state.currentErrorKey;
+    const error = imageErrors[index];
+    const hasNoDescription = error ? error.isFixed && error.description.length === 0 : false;
     return React.createElement(ImageFixer, {
+        didPressHasNoDescription: (checked) => this.didPressHasNoDescription(checked),
         didEditDescription: (description) => this.didEditDescription(description),
-        imageErrors: this.props.imageErrors,
-        currentError: this.props.imageErrors[this.state.currentErrorKey],
+        imageErrors: imageErrors,
+        currentError: error,
+        hasNoDescription: hasNoDescription,
         changeError: (key, error) => this.changeError(key, error),
       }
     );

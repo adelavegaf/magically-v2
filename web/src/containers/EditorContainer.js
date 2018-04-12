@@ -83,8 +83,10 @@ class EditorContainer extends Component {
       .set({title: 'Untitled'}, {merge: true});
   }
 
-  didEditImageDescription(imageErrorKey, description) {
-    const shouldDeleteFix = !description; // if description is null, we should delete it.
+  didEditImageDescription(imageErrorKey, description, hasNoDescription) {
+    // if there is no description when it should have a description.
+    const shouldDeleteFix = !(hasNoDescription || description);
+    console.log(hasNoDescription, description, hasNoDescription || description);
     const imageErrorsFixCount = this.state.project.errors.imageErrorsFixCount;
     const totalFixCount = this.state.project.errors.totalFixCount;
     const wasFixed = this.state.project.errors.imageErrors[imageErrorKey].isFixed;
@@ -118,7 +120,9 @@ class EditorContainer extends Component {
         didPressContrastFixerButton: () => this.didPressContrastFixerButton(),
         didEditProjectTitle: (title) => this.didEditProjectTitle(title),
         didFinishEditingProjectTitle: () => this.didFinishEditingProjectTitle(),
-        didEditImageDescription: (imageErrorKey, description) => this.didEditImageDescription(imageErrorKey, description),
+        didEditImageDescription:
+          (imageErrorKey, description, hasNoDescription) =>
+            this.didEditImageDescription(imageErrorKey, description, hasNoDescription),
         changeView: this.props.changeView
       }
     );

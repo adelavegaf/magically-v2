@@ -85,9 +85,9 @@ class EditorContainer extends Component {
 
   didEditImageDescription(imageErrorKey, description) {
     const shouldDeleteFix = !description; // if description is null, we should delete it.
-    const imageErrorsFixCount = this.props.project.errors.imageErrorsFixCount;
-    const totalFixCount = this.props.project.errors.totalFixCount;
-    const wasFixed = this.props.project.errors.imageErrors[imageErrorKey].isFixed || false;
+    const imageErrorsFixCount = this.state.project.errors.imageErrorsFixCount;
+    const totalFixCount = this.state.project.errors.totalFixCount;
+    const wasFixed = this.state.project.errors.imageErrors[imageErrorKey].isFixed;
     const updatedProject = {};
 
     updatedProject[`errors.imageErrors.${imageErrorKey}.description`] = description;

@@ -9,10 +9,8 @@ const subscriptionName = 'audit-sub';
 const subscription = pubsub.subscription(subscriptionName);
 
 /**
- * TODO(adelavega)
- * add lhr.audits['color-contrast'].details.items
+ * TODO(adelavega): IMPORTANT: HANDLE ERRORS WITH REGEX
  * add ['document-title']
- * add ['html-has-lang'] use 'selector'
  * add ['html-lang-valid']
  * add ["link-name"]
  */
@@ -64,16 +62,28 @@ const getLangErrors = (lhr) => {
 const getContrastErrors = (lhr) => {
   const errors = lhr.audits['color-contrast'].extendedInfo.value.nodes;
   return errors.map(error => {
+    const textRegex = /<.*>([\s\S]*)<\/.*>/;
     const failureRegex = /.*foreground color: (.*), background color: (.*), font size: (.*), font weight: (.*)\)\. Expected contrast ratio of (.*)/;
-    const [x, foregroundColor, backgroundColor, fontSize, fontWeight, expectedContrastRatio] =
-      error.failureSummary.match(failureRegex);
+    const htmlRegexMatch = error.html.match(textRegex);
+    const failureRegexMatch = error.failureSummary.match(failureRegex);
+    let [, text] = htmlRegexMatch ? htmlRegexMatch : [];
+    const [, foregroundColor, backgroundColor, fontSize, fontWeight, expectedContrastRatio] =
+      failureRegexMatch ? failureRegexMatch : [];
+    if (!htmlRegexMatch) {
+      console.error('Failed to do html regex match setting example test', error.html);
+      text = 'Example text';
+    }
+    if (!failureRegexMatch) {
+      console.error('Failed to do failure summary regex match', error.failureSummary);
+    }
     return {
       domSelector: error.target[0],
       foregroundColor: foregroundColor,
       backgroundColor: backgroundColor,
       fontSize: fontSize,
       fontWeight: fontWeight,
-      expectedContrastRatio: expectedContrastRatio
+      expectedContrastRatio: expectedContrastRatio,
+      text: text.replace(/(\r\n\t|\n|\r\t)/gm, ' ')
     }
   });
 };
@@ -101,10 +111,6 @@ const getContrastErrors = (lhr) => {
     const imageErrors = getImageErrors(lhr, websiteUrl);
     const langErrors = getLangErrors(lhr);
     const contrastErrors = getContrastErrors(lhr);
-    console.log('lang errors');
-    console.log(langErrors);
-    console.log('color errors');
-    console.log(JSON.stringify(contrastErrors));
 
     const auditResult = {
       projectId: projectId,

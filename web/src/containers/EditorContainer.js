@@ -83,6 +83,31 @@ class EditorContainer extends Component {
       .set({title: 'Untitled'}, {merge: true});
   }
 
+  didEditImageDescription(imageErrorKey, description) {
+    const shouldDeleteFix = !description; // if description is null, we should delete it.
+    const imageErrorsFixCount = this.props.project.errors.imageErrorsFixCount;
+    const totalFixCount = this.props.project.errors.totalFixCount;
+    const wasFixed = this.props.project.errors.imageErrors[imageErrorKey].isFixed || false;
+    const updatedProject = {};
+
+    updatedProject[`errors.imageErrors.${imageErrorKey}.description`] = description;
+    updatedProject[`errors.imageErrors.${imageErrorKey}.isFixed`] = !shouldDeleteFix;
+
+    if (shouldDeleteFix) {
+      updatedProject[`errors.imageErrorsFixCount`] = wasFixed ? imageErrorsFixCount - 1 : imageErrorsFixCount;
+      updatedProject[`errors.totalFixCount`] = wasFixed ? totalFixCount - 1 : totalFixCount;
+    } else {
+      updatedProject[`errors.imageErrorsFixCount`] = wasFixed ? imageErrorsFixCount : imageErrorsFixCount + 1;
+      updatedProject[`errors.totalFixCount`] = wasFixed ? totalFixCount : totalFixCount + 1;
+    }
+
+    firebase
+      .firestore()
+      .collection('projects')
+      .doc(this.props.projectId)
+      .update(updatedProject)
+  }
+
   render() {
     return React.createElement(Editor, {
         isOwner: this.state.isOwner,
@@ -93,6 +118,7 @@ class EditorContainer extends Component {
         didPressContrastFixerButton: () => this.didPressContrastFixerButton(),
         didEditProjectTitle: (title) => this.didEditProjectTitle(title),
         didFinishEditingProjectTitle: () => this.didFinishEditingProjectTitle(),
+        didEditImageDescription: (imageErrorKey, description) => this.didEditImageDescription(imageErrorKey, description),
         changeView: this.props.changeView
       }
     );

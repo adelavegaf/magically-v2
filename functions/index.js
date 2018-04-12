@@ -36,11 +36,28 @@ exports.addAuditResultToFirestore = functions
     const websiteUrl = auditPayload.websiteUrl;
     const projectId = auditPayload.projectId;
 
+    const arrayToObject = (array) => {
+      return array.reduce((acc, cur, i) => {
+        acc[i] = cur;
+        return acc;
+      }, {});
+    };
+
     const auditResult = {
       websiteUrl: websiteUrl,
-      imageErrors: auditPayload.imageErrors,
-      contrastErrors: auditPayload.contrastErrors,
-      langErrors: auditPayload.langErrors,
+      imageErrors: arrayToObject(auditPayload.imageErrors),
+      imageErrorsCount: auditPayload.imageErrors.length,
+      imageErrorsFixCount: 0,
+      contrastErrors: arrayToObject(auditPayload.contrastErrors),
+      contrastErrorsCount: auditPayload.contrastErrors.length,
+      contrastErrorsFixCount: 0,
+      langErrors: arrayToObject(auditPayload.langErrors),
+      langErrorsCount: auditPayload.langErrors.length,
+      langErrorsFixCount: 0,
+      totalFixCount: 0,
+      totalErrorsCount: auditPayload.imageErrors.length +
+                        auditPayload.contrastErrors.length +
+                        auditPayload.langErrors.length,
       auditRunDate: new Date()
     };
 

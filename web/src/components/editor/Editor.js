@@ -81,15 +81,20 @@ class Editor extends Component {
     return fixerName === this.props.currentFixer ? this.classes.selectedListItemText : this.classes.listItemText
   }
 
-  getFixerNameWithErrorCount(fixerName) {
+  getUnfixedErrorCount(fixerName) {
     switch (fixerName) {
       case LANGUAGE_FIXER:
-        return `${LANGUAGE_FIXER} (${this.props.project.errors.langErrors.length})`;
+        return this.props.project.errors.langErrorsCount - this.props.project.errors.langErrorsFixCount;
       case CONTRAST_FIXER:
-        return `${CONTRAST_FIXER} (${this.props.project.errors.contrastErrors.length})`;
+        return this.props.project.errors.contrastErrorsCount - this.props.project.errors.contrastErrorsFixCount;
       case IMAGES_FIXER:
-        return `${IMAGES_FIXER} (${this.props.project.errors.imageErrors.length})`;
+        return this.props.project.errors.imageErrorsCount - this.props.project.errors.imageErrorsFixCount;
     }
+  }
+
+  getFixerNameWithErrorCount(fixerName) {
+    const unfixedErrorCount = this.getUnfixedErrorCount(fixerName);
+    return unfixedErrorCount > 0 ? `${fixerName} (${unfixedErrorCount})` : fixerName;
   }
 
   getDrawer() {
@@ -135,7 +140,9 @@ class Editor extends Component {
   getEditorMainView() {
     switch (this.props.currentFixer) {
       case IMAGES_FIXER:
-        return <ImageFixerContainer imageErrors={this.props.project.errors.imageErrors}/>;
+        return <ImageFixerContainer didEditImageDescription={this.props.didEditImageDescription}
+                                    imageErrors={this.props.project.errors.imageErrors}
+                                    imageErrorsCount={this.props.project.errors.imageErrorsCount}/>;
       case LANGUAGE_FIXER:
         return <LanguageFixer/>;
       case CONTRAST_FIXER:
@@ -185,6 +192,7 @@ Editor.propStyles = {
   didPressContrastFixerButton: PropStyles.func.isRequired,
   didEditTitle: PropStyles.func.isRequired,
   didFinishEditingProjectTitle: PropStyles.func.isRequired,
+  didEditImageDescription: PropStyles.func.isRequired,
   changeView: PropStyles.func.isRequired
 };
 

@@ -42,7 +42,7 @@ class ImageFixer extends Component {
     this.classes = classes;
   }
 
-  getIntructions() {
+  getInstructions() {
     return <div/>;
   }
 
@@ -60,6 +60,8 @@ class ImageFixer extends Component {
           </Grid>
           <Grid item>
             <Input placeholder="Type image description"
+                   onChange={(event) => this.props.didEditDescription(event.target.value)}
+                   value={this.props.currentError.description || ''}
                    fullWidth
                    inputProps={{
                      'aria-label': 'image description',
@@ -86,16 +88,17 @@ class ImageFixer extends Component {
         <EditorSideList currentError={this.props.currentError}
                         errors={this.props.imageErrors}
                         changeError={this.props.changeError}/>
-        {this.props.currentError ? this.getFixer() : this.getIntructions()}
+        {this.props.currentError ? this.getFixer() : this.getInstructions()}
       </Grid>
     );
   }
 }
 
 ImageFixer.propTypes = {
-  imageErrors: PropTypes.array.isRequired,
+  imageErrors: PropTypes.object.isRequired,
   currentError: PropTypes.object,
-  changeError: PropTypes.func.isRequired
+  changeError: PropTypes.func.isRequired,
+  didEditDescription: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ImageFixer);

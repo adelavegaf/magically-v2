@@ -41,13 +41,13 @@ class EditorSideList extends Component {
     return this.props.currentError.domSelector === domSelector ? this.classes.selectedListItem : ''
   }
 
-  render() {
-    const listItems = this.props.errors.map((e, i) => {
+  getListItems() {
+    return Object.entries(this.props.errors).map(([k, e]) => {
       return (
         <ListItem button
-                  key={i}
+                  key={k}
                   className={this.getListItemClass(e.domSelector)}
-                  onClick={() => this.props.changeError(e)}>
+                  onClick={() => this.props.changeError(k, e)}>
           <ListItemText primary={this.getLastPartOfUrl(e.imgURL)}/>
           <ListItemSecondaryAction>
             <Checkbox
@@ -55,16 +55,18 @@ class EditorSideList extends Component {
             />
           </ListItemSecondaryAction>
         </ListItem>
-      )
+      );
     });
+  }
 
+  render() {
     return (
       <Grid item className={this.classes.editorSideList}>
         <List className={this.classes.list}>
           <ListItem button disableGutters={true} divider={true}>
             <ListItemText primary={'Instructions'} align={'center'} className={this.classes.instructions}/>
           </ListItem>
-          {listItems}
+          {this.getListItems()}
         </List>
       </Grid>
     )
@@ -72,7 +74,7 @@ class EditorSideList extends Component {
 }
 
 EditorSideList.propTypes = {
-  errors: PropTypes.array.isRequired,
+  errors: PropTypes.object.isRequired,
   currentError: PropTypes.object,
   changeError: PropTypes.func.isRequired
 };

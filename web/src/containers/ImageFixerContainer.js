@@ -1,26 +1,39 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ImageFixer from '../components/editor/ImageFixer';
 
 class ImageFixerContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentError: null,
+      currentErrorKey: -1,
     };
   }
 
-  changeError(error) {
-    this.setState({currentError: error});
+  changeError(key) {
+    this.setState({
+      currentErrorKey: key
+    });
+  }
+
+  didEditDescription(description) {
+    this.props.didEditImageDescription(this.state.currentErrorKey, description);
   }
 
   render() {
     return React.createElement(ImageFixer, {
+        didEditDescription: (description) => this.didEditDescription(description),
         imageErrors: this.props.imageErrors,
-        currentError: this.state.currentError,
-        changeError: (error) => this.changeError(error),
+        currentError: this.props.imageErrors[this.state.currentErrorKey],
+        changeError: (key, error) => this.changeError(key, error),
       }
     );
   }
 }
+
+ImageFixerContainer.propTypes = {
+  didEditImageDescription: PropTypes.func.isRequired,
+  imageErrors: PropTypes.object.isRequired
+};
 
 export default ImageFixerContainer;

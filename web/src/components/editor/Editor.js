@@ -15,6 +15,7 @@ import LanguageFixer from './LanguageFixer';
 import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
 import ImageFixerContainer from '../../containers/ImageFixerContainer';
 import LanguageFixerContainer from '../../containers/LanguageFixerContainer';
+import ContrastFixerContainer from '../../containers/ContrastFixerContainer';
 
 const styles = theme => ({
   root: {
@@ -149,7 +150,7 @@ class Editor extends Component {
                                        langErrors={this.props.project.errors.langErrors}
                                        langErrorsCount={this.props.project.errors.langErrorsCount}/>;
       case CONTRAST_FIXER:
-        break;
+        return <ContrastFixerContainer contrastErrors={this.props.project.errors.contrastErrors}/>;
       default:
         break;
     }

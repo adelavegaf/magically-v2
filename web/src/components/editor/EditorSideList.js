@@ -5,7 +5,7 @@ import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import List, {ListItem, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox'
-import {IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
+import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
 
 const styles = theme => ({
   editorSideList: {
@@ -43,6 +43,8 @@ class EditorSideList extends Component {
         return this.getLastPartOfUrl(error.imgURL);
       case LANGUAGE_FIXER:
         return 'Missing language';
+      case CONTRAST_FIXER:
+        return 'contrast';
       default:
         return;
     }

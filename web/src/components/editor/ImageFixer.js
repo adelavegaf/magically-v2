@@ -30,9 +30,6 @@ const styles = theme => ({
     height: '100%',
     paddingRight: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 2
-  },
-  imageEditorActionContainer: {
-    padding: theme.spacing.unit * 2
   }
 });
 

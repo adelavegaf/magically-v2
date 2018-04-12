@@ -14,6 +14,7 @@ import Checkbox from 'material-ui/Checkbox'
 import LanguageFixer from './LanguageFixer';
 import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
 import ImageFixerContainer from '../../containers/ImageFixerContainer';
+import LanguageFixerContainer from '../../containers/LanguageFixerContainer';
 
 const styles = theme => ({
   root: {
@@ -144,7 +145,9 @@ class Editor extends Component {
                                     imageErrors={this.props.project.errors.imageErrors}
                                     imageErrorsCount={this.props.project.errors.imageErrorsCount}/>;
       case LANGUAGE_FIXER:
-        return <LanguageFixer/>;
+        return <LanguageFixerContainer didChangeLang={this.props.didChangeLang}
+                                       langErrors={this.props.project.errors.langErrors}
+                                       langErrorsCount={this.props.project.errors.langErrorsCount}/>;
       case CONTRAST_FIXER:
         break;
       default:
@@ -193,6 +196,7 @@ Editor.propStyles = {
   didEditTitle: PropStyles.func.isRequired,
   didFinishEditingProjectTitle: PropStyles.func.isRequired,
   didEditImageDescription: PropStyles.func.isRequired,
+  didChangeLang: PropStyles.func.isRequired,
   changeView: PropStyles.func.isRequired
 };
 

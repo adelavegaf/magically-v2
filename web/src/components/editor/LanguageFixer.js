@@ -7,10 +7,15 @@ import Input, {InputLabel} from 'material-ui/Input';
 import {MenuItem} from 'material-ui/Menu';
 import {FormControl, FormHelperText} from 'material-ui/Form';
 import Select from 'material-ui/Select';
+import EditorSideList from './EditorSideList';
+import {LANGUAGE_FIXER} from '../../containers/EditorContainer';
 
 const styles = theme => ({
   flex: {
     flex: 1
+  },
+  fullHeight: {
+    height: '100%'
   },
   centerContainer: {
     textAlign: 'center'
@@ -32,7 +37,11 @@ class LanguageFixer extends Component {
     this.classes = classes;
   }
 
-  render() {
+  getInstructions() {
+    return <div/>;
+  }
+
+  getFixer() {
     return (
       <Grid item className={this.classes.flex}>
         <Grid container direction={'column'} className={this.classes.languageEditorContainer}>
@@ -45,12 +54,14 @@ class LanguageFixer extends Component {
             <FormControl className={this.classes.formControl}>
               <InputLabel htmlFor="language">Language</InputLabel>
               <Select
-                value={1}
+                value={this.props.currentError.lang || ''}
+                onChange={(e) => this.props.didChangeLang(e.target.value)}
                 inputProps={{
                   name: 'language',
                   id: 'language',
                 }}
               >
+                <MenuItem value={''}>None</MenuItem>
                 <MenuItem value={'en'}>English</MenuItem>
                 <MenuItem value={'ru'}>Russian</MenuItem>
                 <MenuItem value={'de'}>German</MenuItem>
@@ -67,6 +78,18 @@ class LanguageFixer extends Component {
             </FormControl>
           </Grid>
         </Grid>
+      </Grid>
+    );
+  }
+
+  render() {
+    return (
+      <Grid container className={this.classes.fullHeight}>
+        <EditorSideList fixerName={LANGUAGE_FIXER}
+                        currentError={this.props.currentError}
+                        errors={this.props.langErrors}
+                        changeError={this.props.changeError}/>
+        {this.props.currentError ? this.getFixer() : this.getInstructions()}
       </Grid>
     );
   }

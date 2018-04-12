@@ -86,7 +86,6 @@ class EditorContainer extends Component {
   didEditImageDescription(imageErrorKey, description, hasNoDescription) {
     // if there is no description when it should have a description.
     const shouldDeleteFix = !(hasNoDescription || description);
-    console.log(hasNoDescription, description, hasNoDescription || description);
     const imageErrorsFixCount = this.state.project.errors.imageErrorsFixCount;
     const totalFixCount = this.state.project.errors.totalFixCount;
     const wasFixed = this.state.project.errors.imageErrors[imageErrorKey].isFixed;
@@ -107,7 +106,32 @@ class EditorContainer extends Component {
       .firestore()
       .collection('projects')
       .doc(this.props.projectId)
-      .update(updatedProject)
+      .update(updatedProject);
+  }
+
+  didChangeLang(langErrorKey, lang) {
+    const shouldDeleteFix = lang.length === 0;
+    const langErrorsFixCount = this.state.project.errors.langErrorsFixCount;
+    const totalFixCount = this.state.project.errors.totalFixCount;
+    const wasFixed = this.state.project.errors.langErrors[langErrorKey].isFixed;
+    const updatedProject = {};
+
+    updatedProject[`errors.langErrors.${langErrorKey}.lang`] = lang;
+    updatedProject[`errors.langErrors.${langErrorKey}.isFixed`] = !shouldDeleteFix;
+
+    if (shouldDeleteFix) {
+      updatedProject[`errors.langErrorsFixCount`] = wasFixed ? langErrorsFixCount - 1 : langErrorsFixCount;
+      updatedProject[`errors.totalFixCount`] = wasFixed ? totalFixCount - 1 : totalFixCount;
+    } else {
+      updatedProject[`errors.langErrorsFixCount`] = wasFixed ? langErrorsFixCount : langErrorsFixCount + 1;
+      updatedProject[`errors.totalFixCount`] = wasFixed ? totalFixCount : totalFixCount + 1;
+    }
+
+    firebase
+      .firestore()
+      .collection('projects')
+      .doc(this.props.projectId)
+      .update(updatedProject);
   }
 
   render() {
@@ -123,6 +147,7 @@ class EditorContainer extends Component {
         didEditImageDescription:
           (imageErrorKey, description, hasNoDescription) =>
             this.didEditImageDescription(imageErrorKey, description, hasNoDescription),
+        didChangeLang: (langErrorKey, lang) => this.didChangeLang(langErrorKey, lang),
         changeView: this.props.changeView
       }
     );

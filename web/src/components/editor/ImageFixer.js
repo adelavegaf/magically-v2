@@ -14,6 +14,7 @@ import {
   FormHelperText,
 } from 'material-ui/Form';
 import EditorSideList from './EditorSideList';
+import {IMAGES_FIXER} from '../../containers/EditorContainer';
 
 const styles = theme => ({
   flex: {
@@ -88,7 +89,8 @@ class ImageFixer extends Component {
   render() {
     return (
       <Grid container className={this.classes.fullHeight}>
-        <EditorSideList currentError={this.props.currentError}
+        <EditorSideList fixerName={IMAGES_FIXER}
+                        currentError={this.props.currentError}
                         errors={this.props.imageErrors}
                         changeError={this.props.changeError}/>
         {this.props.currentError ? this.getFixer() : this.getInstructions()}

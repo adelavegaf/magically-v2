@@ -51,7 +51,8 @@ class EditorSideList extends Component {
           <ListItemText primary={this.getLastPartOfUrl(e.imgURL)}/>
           <ListItemSecondaryAction>
             <Checkbox
-              checked={e.fixed ? e.fixed : false}
+              disableRipple
+              checked={e.isFixed ? e.isFixed : false}
             />
           </ListItemSecondaryAction>
         </ListItem>

@@ -43,7 +43,7 @@ class Project extends Component {
   }
 
   getPercentageColor() {
-    const percentage = this.project.fixedNumber / this.project.errorNumber;
+    const percentage = this.getPercentage();
     let percentageColor = {color: '#000'};
 
     if (percentage < .40) {
@@ -59,6 +59,10 @@ class Project extends Component {
     return percentageColor;
   }
 
+  getPercentage() {
+    return this.project.errors.totalFixCount / this.project.errors.totalErrorsCount
+  }
+
   didPressActionButton(event, callback) {
     event.stopPropagation();
     callback();
@@ -70,7 +74,7 @@ class Project extends Component {
         <Grid item xs={6}>
           <div style={this.getPercentageColor()}>
             <Typography variant={'display3'} color={'inherit'} align={'center'}>
-              {this.project.fixedNumber / this.project.errorNumber * 100}%
+              {(this.getPercentage() * 100).toFixed(0)}%
             </Typography>
           </div>
         </Grid>
@@ -85,7 +89,7 @@ class Project extends Component {
             {this.project.createdAt.toLocaleDateString()}
           </Typography>
           <Typography variant={'caption'}>
-            {this.project.errorNumber} errors remaining
+            {this.project.errors.totalErrorsCount - this.project.errors.totalFixCount} errors remaining
           </Typography>
         </Grid>
       </Grid>

@@ -73,7 +73,17 @@ class Editor extends Component {
     super(props);
     const {classes} = props;
     this.classes = classes;
+    this.state = {
+      sideListMaxHeight: 0
+    };
   }
+
+  componentDidMount() {
+    // TODO(adelavega): HACK, find a way to do this better. Get height to cap side list size.
+    const height = this.editorElement.clientHeight - 48;
+    this.setState({sideListMaxHeight: height});
+  }
+
 
   getNavListItemClass(fixerName) {
     return fixerName === this.props.currentFixer ? this.classes.selectedListItem : ''
@@ -142,15 +152,18 @@ class Editor extends Component {
   getEditorMainView() {
     switch (this.props.currentFixer) {
       case IMAGES_FIXER:
-        return <ImageFixerContainer didEditImageDescription={this.props.didEditImageDescription}
+        return <ImageFixerContainer sideListMaxHeight={this.state.sideListMaxHeight}
+                                    didEditImageDescription={this.props.didEditImageDescription}
                                     imageErrors={this.props.project.errors.imageErrors}
                                     imageErrorsCount={this.props.project.errors.imageErrorsCount}/>;
       case LANGUAGE_FIXER:
-        return <LanguageFixerContainer didChangeLang={this.props.didChangeLang}
+        return <LanguageFixerContainer sideListMaxHeight={this.state.sideListMaxHeight}
+                                       didChangeLang={this.props.didChangeLang}
                                        langErrors={this.props.project.errors.langErrors}
                                        langErrorsCount={this.props.project.errors.langErrorsCount}/>;
       case CONTRAST_FIXER:
-        return <ContrastFixerContainer contrastErrors={this.props.project.errors.contrastErrors}/>;
+        return <ContrastFixerContainer sideListMaxHeight={this.state.sideListMaxHeight}
+                                       contrastErrors={this.props.project.errors.contrastErrors}/>;
       default:
         break;
     }
@@ -163,7 +176,9 @@ class Editor extends Component {
         <Grid item className={this.classes.toolbar}/>
         <Grid item className={this.classes.editorContainer}>
           <Paper className={this.classes.fullHeight}>
-            {this.getEditorMainView()}
+            <div className={this.classes.fullHeight} ref={(element) => {this.editorElement = element}}>
+              {this.getEditorMainView()}
+            </div>
           </Paper>
         </Grid>
       </Grid>

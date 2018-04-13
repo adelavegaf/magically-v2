@@ -85,7 +85,8 @@ class LanguageFixer extends Component {
   render() {
     return (
       <Grid container className={this.classes.fullHeight}>
-        <EditorSideList fixerName={LANGUAGE_FIXER}
+        <EditorSideList sideListMaxHeight={this.props.sideListMaxHeight}
+                        fixerName={LANGUAGE_FIXER}
                         currentError={this.props.currentError}
                         errors={this.props.langErrors}
                         changeError={this.props.changeError}/>

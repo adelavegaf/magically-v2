@@ -9,6 +9,7 @@ import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/Edi
 
 const styles = theme => ({
   editorSideList: {
+    overflowY: 'auto',
     width: theme.spacing.unit * 29,
     height: '100%',
     paddingRight: '0px !important',
@@ -79,7 +80,7 @@ class EditorSideList extends Component {
   render() {
     return (
       <Grid item className={this.classes.editorSideList}>
-        <List className={this.classes.list}>
+        <List className={this.classes.list} style={{maxHeight: this.props.sideListMaxHeight}}>
           <ListItem button disableGutters={true} divider={true}>
             <ListItemText primary={'Instructions'} align={'center'} className={this.classes.instructions}/>
           </ListItem>
@@ -91,6 +92,7 @@ class EditorSideList extends Component {
 }
 
 EditorSideList.propTypes = {
+  sideListMaxHeight: PropTypes.number.isRequired,
   fixerName: PropTypes.string.isRequired,
   errors: PropTypes.object.isRequired,
   currentError: PropTypes.object,

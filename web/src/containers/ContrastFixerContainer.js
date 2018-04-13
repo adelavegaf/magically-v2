@@ -21,6 +21,7 @@ class ContrastFixerContainer extends Component {
     const index = this.state.currentErrorKey;
     const error = contrastErrors[index];
     return React.createElement(ContrastFixer, {
+        sideListMaxHeight: this.props.sideListMaxHeight,
         contrastErrors: contrastErrors,
         currentError: error,
         changeError: (key, error) => this.changeError(key, error),
@@ -30,6 +31,7 @@ class ContrastFixerContainer extends Component {
 }
 
 ContrastFixerContainer.propTypes = {
+  sideListMaxHeight: PropTypes.number.isRequired,
   contrastErrors: PropTypes.object.isRequired
 };
 

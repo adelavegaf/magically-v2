@@ -86,7 +86,8 @@ class ImageFixer extends Component {
   render() {
     return (
       <Grid container className={this.classes.fullHeight}>
-        <EditorSideList fixerName={IMAGES_FIXER}
+        <EditorSideList sideListMaxHeight={this.props.sideListMaxHeight}
+                        fixerName={IMAGES_FIXER}
                         currentError={this.props.currentError}
                         errors={this.props.imageErrors}
                         changeError={this.props.changeError}/>
@@ -97,6 +98,7 @@ class ImageFixer extends Component {
 }
 
 ImageFixer.propTypes = {
+  sideListMaxHeight: PropTypes.number.isRequired,
   didPressHasNoDescription: PropTypes.func.isRequired,
   hasNoDescription: PropTypes.bool.isRequired,
   imageErrors: PropTypes.object.isRequired,

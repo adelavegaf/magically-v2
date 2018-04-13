@@ -61,7 +61,8 @@ class ContrastFixer extends Component {
   render() {
     return (
       <Grid container className={this.classes.fullHeight} zeroMinWidth>
-        <EditorSideList fixerName={CONTRAST_FIXER}
+        <EditorSideList sideListMaxHeight={this.props.sideListMaxHeight}
+                        fixerName={CONTRAST_FIXER}
                         currentError={this.props.currentError}
                         errors={this.props.contrastErrors}
                         changeError={this.props.changeError}/>
@@ -72,6 +73,7 @@ class ContrastFixer extends Component {
 }
 
 ContrastFixer.propTypes = {
+  sideListMaxHeight: PropTypes.number.isRequired,
   contrastErrors: PropTypes.object.isRequired,
   currentError: PropTypes.object,
   changeError: PropTypes.func.isRequired

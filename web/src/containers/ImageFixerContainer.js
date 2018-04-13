@@ -30,6 +30,7 @@ class ImageFixerContainer extends Component {
     const error = imageErrors[index];
     const hasNoDescription = error ? error.isFixed && error.description.length === 0 : false;
     return React.createElement(ImageFixer, {
+        sideListMaxHeight: this.props.sideListMaxHeight,
         didPressHasNoDescription: (checked) => this.didPressHasNoDescription(checked),
         didEditDescription: (description) => this.didEditDescription(description),
         imageErrors: imageErrors,
@@ -42,6 +43,7 @@ class ImageFixerContainer extends Component {
 }
 
 ImageFixerContainer.propTypes = {
+  sideListMaxHeight: PropTypes.number.isRequired,
   didEditImageDescription: PropTypes.func.isRequired,
   imageErrors: PropTypes.object.isRequired
 };

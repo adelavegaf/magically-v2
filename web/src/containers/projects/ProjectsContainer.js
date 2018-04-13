@@ -8,6 +8,7 @@ class ProjectsContainer extends Component {
   constructor(props) {
     super(props);
     this.authUnsubscribe = null;
+    this.projectsUnsubscribe = null;
     this.state = {
       projects: [],
       websiteUrl: this.props.websiteUrl,
@@ -18,17 +19,20 @@ class ProjectsContainer extends Component {
   }
 
   fetchProjects() {
-    firebase.firestore()
-            .collection('projects')
-            .where('websiteUrl', '==', this.props.websiteUrl)
-            .where('isLoading', '==', false)
-            .get()
-            .then(snapshot => {
-              const docs = snapshot.docs.map(doc => {
-                return {id: doc.id, ...doc.data()}
-              });
-              this.setState({projects: docs, fetching: false});
-            });
+    if (this.projectsUnsubscribe) {
+      this.projectsUnsubscribe();
+    }
+    this.projectsUnsubscribe = firebase
+      .firestore()
+      .collection('projects')
+      .where('websiteUrl', '==', this.props.websiteUrl)
+      .where('isLoading', '==', false)
+      .onSnapshot(snapshot => {
+        const docs = snapshot.docs.map(doc => {
+          return {id: doc.id, ...doc.data()}
+        });
+        this.setState({projects: docs, fetching: false});
+      });
   }
 
   componentDidMount() {
@@ -51,6 +55,7 @@ class ProjectsContainer extends Component {
 
   componentWillUnmount() {
     this.authUnsubscribe();
+    this.projectsUnsubscribe();
   }
 
   didPressCreateProjectButton() {

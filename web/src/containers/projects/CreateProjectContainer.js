@@ -24,9 +24,10 @@ class CreateProjectContainer extends Component {
         title: 'Untitled',
         createdAt: new Date(),
         websiteUrl: this.props.websiteUrl,
-        upvotes: 0,
-        downvotes: 0,
-        favorites: 0,
+        favoriteCount: 0,
+        favoriteBy: {},
+        copiedFrom: null,
+        copyCount: 0,
         isLoading: true
       })
       .then(projectRef => {

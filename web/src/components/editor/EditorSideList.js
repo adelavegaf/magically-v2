@@ -45,7 +45,7 @@ class EditorSideList extends Component {
       case LANGUAGE_FIXER:
         return 'Missing language';
       case CONTRAST_FIXER:
-        return 'contrast';
+        return error.text;
       default:
         return;
     }

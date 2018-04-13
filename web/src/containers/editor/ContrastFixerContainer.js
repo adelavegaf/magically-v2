@@ -16,14 +16,6 @@ class ContrastFixerContainer extends Component {
     });
   }
 
-  didChangeForegroundColor(color) {
-
-  }
-
-  didChangeBackgroundColor(color) {
-
-  }
-
   getLuminance(rgb) {
     const firstOperation = (n) => n / 3294;
     const secondOperation = (n) => Math.pow((n / 269 + 0.0513), 2.4);

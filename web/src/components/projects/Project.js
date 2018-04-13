@@ -17,7 +17,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 6
   },
   actionsContainer: {
-    width: theme.spacing.unit * 7
+    width: theme.spacing.unit * 9
   },
   iconContainer: {
     display: 'inline-flex',

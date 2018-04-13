@@ -60,7 +60,7 @@ class ImageFixer extends Component {
             <Input placeholder="Type image description"
                    onChange={(event) => this.props.didEditDescription(event.target.value)}
                    value={this.props.currentError.description || ''}
-                   disabled={this.props.hasNoDescription}
+                   disabled={this.props.hasNoDescription || !this.props.isOwner}
                    fullWidth
                    inputProps={{
                      'aria-label': 'image description',
@@ -70,6 +70,7 @@ class ImageFixer extends Component {
             <FormControlLabel
               control={
                 <Checkbox
+                  disabled={!this.props.isOwner}
                   checked={this.props.hasNoDescription}
                   onChange={(event, checked) => this.props.didPressHasNoDescription(checked)}
                   value="no-alt"
@@ -98,6 +99,7 @@ class ImageFixer extends Component {
 }
 
 ImageFixer.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
   sideListMaxHeight: PropTypes.number.isRequired,
   didPressHasNoDescription: PropTypes.func.isRequired,
   hasNoDescription: PropTypes.bool.isRequired,

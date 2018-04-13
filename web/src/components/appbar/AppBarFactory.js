@@ -34,6 +34,12 @@ const styles = theme => ({
       border: 'solid 1px rgba(0,0,0, 0.15)'
     }
   },
+  projectTitleDisabled: {
+    color: '#000',
+    fontSize: theme.typography.title.fontSize,
+    fontWeight: 500,
+    border: 'none'
+  },
   spacingForContainer: {
     marginTop: theme.spacing.unit * 3
   }
@@ -109,9 +115,10 @@ class AppBarFactory extends Component {
             <Grid item className={this.classes.leftContainer} xs>
               <Typography variant="title" className={this.classes.appTitle}>
                 <div>
-                  <input className={this.classes.projectTitle}
+                  <input className={this.props.isOwner ? this.classes.projectTitle : this.classes.projectTitleDisabled}
                          type="text"
                          pattern="[a-zA-Z0-9 ]+"
+                         disabled={!this.props.isOwner}
                          onKeyPress={(event) => this.onKeyPress(event)}
                          onBlur={this.props.didFinishEditingProjectTitle}
                          onChange={(event) => this.props.didEditTitle(event.target.value)}
@@ -141,6 +148,7 @@ class AppBarFactory extends Component {
 }
 
 AppBarFactory.propTypes = {
+  isOwner: PropTypes.bool,
   projectTitle: PropTypes.string,
   searchBarStartText: PropTypes.string,
   didEditTitle: PropTypes.func,

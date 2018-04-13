@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
-import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import Input, {InputLabel} from 'material-ui/Input';
+import {InputLabel} from 'material-ui/Input';
 import {MenuItem} from 'material-ui/Menu';
-import {FormControl, FormHelperText} from 'material-ui/Form';
+import {FormControl} from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import EditorSideList from './EditorSideList';
 import {LANGUAGE_FIXER} from '../../containers/editor/EditorContainer';
@@ -54,6 +54,7 @@ class LanguageFixer extends Component {
             <FormControl className={this.classes.formControl}>
               <InputLabel htmlFor="language">Language</InputLabel>
               <Select
+                disabled={!this.props.isOwner}
                 value={this.props.currentError.lang || ''}
                 onChange={(e) => this.props.didChangeLang(e.target.value)}
                 inputProps={{
@@ -95,5 +96,13 @@ class LanguageFixer extends Component {
     );
   }
 }
+
+LanguageFixer.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+  langErrors: PropTypes.object.isRequired,
+  currentError: PropTypes.object.isRequired,
+  sideListMaxHeight: PropTypes.number.isRequired,
+  changeError: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(LanguageFixer);

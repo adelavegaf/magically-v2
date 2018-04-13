@@ -22,6 +22,7 @@ class LanguageFixerContainer extends Component {
 
   render() {
     return React.createElement(LanguageFixer, {
+        isOwner: this.props.isOwner,
         sideListMaxHeight: this.props.sideListMaxHeight,
         didChangeLang: (language) => this.didChangeLang(language),
         langErrors: this.props.langErrors,
@@ -33,6 +34,7 @@ class LanguageFixerContainer extends Component {
 }
 
 LanguageFixerContainer.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
   sideListMaxHeight: PropTypes.number.isRequired,
   didChangeLang: PropTypes.func.isRequired,
   langErrors: PropTypes.object.isRequired,

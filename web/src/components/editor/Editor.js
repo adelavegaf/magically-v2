@@ -152,17 +152,20 @@ class Editor extends Component {
   getEditorMainView() {
     switch (this.props.currentFixer) {
       case IMAGES_FIXER:
-        return <ImageFixerContainer sideListMaxHeight={this.state.sideListMaxHeight}
+        return <ImageFixerContainer isOwner={this.props.isOwner}
+                                    sideListMaxHeight={this.state.sideListMaxHeight}
                                     didEditImageDescription={this.props.didEditImageDescription}
                                     imageErrors={this.props.project.errors.imageErrors}
                                     imageErrorsCount={this.props.project.errors.imageErrorsCount}/>;
       case LANGUAGE_FIXER:
-        return <LanguageFixerContainer sideListMaxHeight={this.state.sideListMaxHeight}
+        return <LanguageFixerContainer isOwner={this.props.isOwner}
+                                       sideListMaxHeight={this.state.sideListMaxHeight}
                                        didChangeLang={this.props.didChangeLang}
                                        langErrors={this.props.project.errors.langErrors}
                                        langErrorsCount={this.props.project.errors.langErrorsCount}/>;
       case CONTRAST_FIXER:
-        return <ContrastFixerContainer didChangeForegroundColor={this.props.didChangeForegroundColor}
+        return <ContrastFixerContainer isOwner={this.props.isOwner}
+                                       didChangeForegroundColor={this.props.didChangeForegroundColor}
                                        didChangeBackgroundColor={this.props.didChangeBackgroundColor}
                                        sideListMaxHeight={this.state.sideListMaxHeight}
                                        contrastErrors={this.props.project.errors.contrastErrors}/>;

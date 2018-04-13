@@ -71,6 +71,7 @@ class ContrastFixerContainer extends Component {
     const error = contrastErrors[index];
     const currentContrast = error ? this.calculateContrast(error.foregroundColor, error.backgroundColor) : 0;
     return React.createElement(ContrastFixer, {
+        isOwner: this.props.isOwner,
         sideListMaxHeight: this.props.sideListMaxHeight,
         contrastErrors: contrastErrors,
         currentError: error,
@@ -84,6 +85,7 @@ class ContrastFixerContainer extends Component {
 }
 
 ContrastFixerContainer.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
   sideListMaxHeight: PropTypes.number.isRequired,
   contrastErrors: PropTypes.object.isRequired,
   didChangeForegroundColor: PropTypes.func.isRequired,

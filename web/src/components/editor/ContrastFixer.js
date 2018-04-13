@@ -35,6 +35,25 @@ class ContrastFixer extends Component {
     return <div/>;
   }
 
+  getColorPickers() {
+    return this.props.isOwner ? (
+      <Grid item>
+        <Grid container justify={'space-around'}>
+          <Grid item>
+            <Typography variant={'title'} align={'center'}>Foreground Color</Typography>
+            <ChromePicker color={this.props.currentError.foregroundColor}
+                          onChange={(color, event) => this.props.didChangeForegroundColor(color.hex)}/>
+          </Grid>
+          <Grid item>
+            <Typography variant={'title'} align={'center'}>Background Color</Typography>
+            <ChromePicker color={this.props.currentError.backgroundColor}
+                          onChange={(color, event) => this.props.didChangeBackgroundColor(color.hex)}/>
+          </Grid>
+        </Grid>
+      </Grid>
+    ) : <div/>;
+  }
+
   getFixer() {
     return (
       <Grid item className={this.classes.flex}>
@@ -52,18 +71,7 @@ class ContrastFixer extends Component {
               {this.props.currentError.text}
             </p>
           </Grid>
-          <Grid container justify={'space-around'}>
-            <Grid item>
-              <Typography variant={'title'} align={'center'}>Foreground Color</Typography>
-              <ChromePicker color={this.props.currentError.foregroundColor}
-                            onChange={(color, event) => this.props.didChangeForegroundColor(color.hex)}/>
-            </Grid>
-            <Grid item>
-              <Typography variant={'title'} align={'center'}>Background Color</Typography>
-              <ChromePicker color={this.props.currentError.backgroundColor}
-                            onChange={(color, event) => this.props.didChangeBackgroundColor(color.hex)}/>
-            </Grid>
-          </Grid>
+          {this.getColorPickers()}
           <Grid item>
             <Typography variant={'subheading'}>
               Current contrast ratio - {this.props.currentContrast.toFixed(1)}:1
@@ -94,6 +102,7 @@ class ContrastFixer extends Component {
 }
 
 ContrastFixer.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
   sideListMaxHeight: PropTypes.number.isRequired,
   contrastErrors: PropTypes.object.isRequired,
   currentError: PropTypes.object,

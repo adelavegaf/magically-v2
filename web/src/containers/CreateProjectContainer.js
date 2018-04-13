@@ -27,8 +27,6 @@ class CreateProjectContainer extends Component {
         upvotes: 0,
         downvotes: 0,
         favorites: 0,
-        errorNumber: 15, // TODO(adelavega): Remove property once the backend is connected.
-        fixedNumber: 0,
         isLoading: true
       })
       .then(projectRef => {

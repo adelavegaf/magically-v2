@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropStyles from 'prop-types';
+import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import {LIGHT_GRAY} from '../utils/Colors';
@@ -162,7 +162,9 @@ class Editor extends Component {
                                        langErrors={this.props.project.errors.langErrors}
                                        langErrorsCount={this.props.project.errors.langErrorsCount}/>;
       case CONTRAST_FIXER:
-        return <ContrastFixerContainer sideListMaxHeight={this.state.sideListMaxHeight}
+        return <ContrastFixerContainer didChangeForegroundColor={this.props.didChangeForegroundColor}
+                                       didChangeBackgroundColor={this.props.didChangeBackgroundColor}
+                                       sideListMaxHeight={this.state.sideListMaxHeight}
                                        contrastErrors={this.props.project.errors.contrastErrors}/>;
       default:
         break;
@@ -176,7 +178,9 @@ class Editor extends Component {
         <Grid item className={this.classes.toolbar}/>
         <Grid item className={this.classes.editorContainer}>
           <Paper className={this.classes.fullHeight}>
-            <div className={this.classes.fullHeight} ref={(element) => {this.editorElement = element}}>
+            <div className={this.classes.fullHeight} ref={(element) => {
+              this.editorElement = element
+            }}>
               {this.getEditorMainView()}
             </div>
           </Paper>
@@ -202,18 +206,20 @@ class Editor extends Component {
   }
 }
 
-Editor.propStyles = {
-  isOwner: PropStyles.bool.isRequired,
-  project: PropStyles.object.isRequired,
-  currentFixer: PropStyles.string.isRequired,
-  didPressLanguageFixerButton: PropStyles.func.isRequired,
-  didPressImagesFixerButton: PropStyles.func.isRequired,
-  didPressContrastFixerButton: PropStyles.func.isRequired,
-  didEditTitle: PropStyles.func.isRequired,
-  didFinishEditingProjectTitle: PropStyles.func.isRequired,
-  didEditImageDescription: PropStyles.func.isRequired,
-  didChangeLang: PropStyles.func.isRequired,
-  changeView: PropStyles.func.isRequired
+Editor.propTypes = {
+  isOwner: PropTypes.bool.isRequired,
+  project: PropTypes.object.isRequired,
+  currentFixer: PropTypes.string.isRequired,
+  didPressLanguageFixerButton: PropTypes.func.isRequired,
+  didPressImagesFixerButton: PropTypes.func.isRequired,
+  didPressContrastFixerButton: PropTypes.func.isRequired,
+  didEditProjectTitle: PropTypes.func.isRequired,
+  didFinishEditingProjectTitle: PropTypes.func.isRequired,
+  didEditImageDescription: PropTypes.func.isRequired,
+  didChangeLang: PropTypes.func.isRequired,
+  didChangeForegroundColor: PropTypes.func.isRequired,
+  didChangeBackgroundColor: PropTypes.func.isRequired,
+  changeView: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Editor);

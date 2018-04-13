@@ -134,6 +134,40 @@ class EditorContainer extends Component {
       .update(updatedProject);
   }
 
+  didChangeContrastColor(contrastErrorKey, colorType, color, isFixed) {
+    const contrastErrorsFixCount = this.state.project.errors.contrastErrorsFixCount;
+    const totalFixCount = this.state.project.errors.totalFixCount;
+    const wasFixed = this.state.project.errors.contrastErrors[contrastErrorKey].isFixed;
+    const shouldDeleteFix = wasFixed && !isFixed;
+    const updatedProject = {};
+
+    updatedProject[`errors.contrastErrors.${contrastErrorKey}.${colorType}`] = color;
+    updatedProject[`errors.contrastErrors.${contrastErrorKey}.isFixed`] = isFixed;
+
+    if (shouldDeleteFix) {
+      updatedProject[`errors.contrastErrorsFixCount`] = contrastErrorsFixCount - 1;
+      updatedProject[`errors.totalFixCount`] = totalFixCount - 1;
+    } else if (isFixed) {
+      updatedProject[`errors.contrastErrorsFixCount`] =
+        wasFixed ? contrastErrorsFixCount : contrastErrorsFixCount + 1;
+      updatedProject[`errors.totalFixCount`] = wasFixed ? totalFixCount : totalFixCount + 1;
+    }
+
+    firebase
+      .firestore()
+      .collection('projects')
+      .doc(this.props.projectId)
+      .update(updatedProject);
+  }
+
+  didChangeForegroundColor(contrastErrorKey, color, isFixed) {
+    this.didChangeContrastColor(contrastErrorKey, 'foregroundColor', color, isFixed);
+  }
+
+  didChangeBackgroundColor(contrastErrorKey, color, isFixed) {
+    this.didChangeContrastColor(contrastErrorKey, 'backgroundColor', color, isFixed);
+  }
+
   render() {
     return React.createElement(Editor, {
         isOwner: this.state.isOwner,
@@ -148,6 +182,10 @@ class EditorContainer extends Component {
           (imageErrorKey, description, hasNoDescription) =>
             this.didEditImageDescription(imageErrorKey, description, hasNoDescription),
         didChangeLang: (langErrorKey, lang) => this.didChangeLang(langErrorKey, lang),
+        didChangeForegroundColor: (contrastErrorKey, color, isFixed) => this.didChangeForegroundColor(contrastErrorKey,
+          color, isFixed),
+        didChangeBackgroundColor: (contrastErrorKey, color, isFixed) => this.didChangeBackgroundColor(contrastErrorKey,
+          color, isFixed),
         changeView: this.props.changeView
       }
     );

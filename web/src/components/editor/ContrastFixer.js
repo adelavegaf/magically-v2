@@ -1,20 +1,11 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
-import Input, {InputAdornment} from 'material-ui/Input';
-import Checkbox from 'material-ui/Checkbox'
-import {
-  FormLabel,
-  FormControl,
-  FormGroup,
-  FormControlLabel,
-  FormHelperText,
-} from 'material-ui/Form';
 import EditorSideList from './EditorSideList';
-import {CONTRAST_FIXER, IMAGES_FIXER} from '../../containers/EditorContainer';
+import {CONTRAST_FIXER} from '../../containers/EditorContainer';
+import {ChromePicker} from 'react-color';
 
 const styles = theme => ({
   flex: {
@@ -53,6 +44,36 @@ class ContrastFixer extends Component {
               Adjust the foreground and background colors
             </Typography>
           </Grid>
+          <Grid item zeroMinWidth>
+            <p style={{
+              background: this.props.currentError.backgroundColor,
+              color: this.props.currentError.foregroundColor
+            }}>
+              {this.props.currentError.text}
+            </p>
+          </Grid>
+          <Grid container justify={'space-around'}>
+            <Grid item>
+              <Typography variant={'title'} align={'center'}>Foreground Color</Typography>
+              <ChromePicker color={this.props.currentError.foregroundColor}
+                            onChange={(color, event) => this.props.didChangeForegroundColor(color.hex)}/>
+            </Grid>
+            <Grid item>
+              <Typography variant={'title'} align={'center'}>Background Color</Typography>
+              <ChromePicker color={this.props.currentError.backgroundColor}
+                            onChange={(color, event) => this.props.didChangeBackgroundColor(color.hex)}/>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Typography variant={'subheading'}>
+              Current contrast ratio - {this.props.currentContrast.toFixed(1)}:1
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant={'subheading'}>
+              Expected contrast ratio - {this.props.currentError.expectedContrastRatio}
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     );
@@ -76,6 +97,8 @@ ContrastFixer.propTypes = {
   sideListMaxHeight: PropTypes.number.isRequired,
   contrastErrors: PropTypes.object.isRequired,
   currentError: PropTypes.object,
+  didChangeForegroundColor: PropTypes.func.isRequired,
+  didChangeBackgroundColor: PropTypes.func.isRequired,
   changeError: PropTypes.func.isRequired
 };
 

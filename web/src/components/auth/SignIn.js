@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import {REGISTER_VIEW} from '../../containers/SignInContainer';
+import {REGISTER_VIEW} from '../../containers/auth/SignInContainer';
 
 const styles = theme => ({
   root: {

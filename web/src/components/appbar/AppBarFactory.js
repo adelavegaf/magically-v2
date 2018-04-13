@@ -6,8 +6,8 @@ import Grid from 'material-ui/Grid';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import {LIGHT_GRAY} from '../utils/Colors';
-import AuthButtonContainer from '../../containers/AuthButtonContainer';
-import SearchContainer from '../../containers/SearchContainer';
+import AuthButtonContainer from '../../containers/auth/AuthButtonContainer';
+import SearchContainer from '../../containers/search/SearchContainer';
 
 const styles = theme => ({
   root: {

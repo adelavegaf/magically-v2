@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ContrastFixer from '../components/editor/ContrastFixer';
+import ContrastFixer from '../../components/editor/ContrastFixer';
 
 class ContrastFixerContainer extends Component {
   constructor(props) {

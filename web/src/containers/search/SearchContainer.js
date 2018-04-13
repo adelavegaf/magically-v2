@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {PROJECTS} from '../components/utils/Views';
-import Search from '../components/search/Search';
+import {PROJECTS} from '../../components/utils/Views';
+import Search from '../../components/search/Search';
 
 class SearchContainer extends Component {
   constructor(props) {

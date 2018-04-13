@@ -5,7 +5,7 @@ import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import List, {ListItem, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox'
-import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
+import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/editor/EditorContainer';
 
 const styles = theme => ({
   editorSideList: {

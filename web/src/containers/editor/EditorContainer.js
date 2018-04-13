@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Editor from '../components/editor/Editor';
-import firebase from '../firebase';
+import Editor from '../../components/editor/Editor';
+import firebase from '../../firebase';
 
 export const LANGUAGE_FIXER = 'language';
 export const IMAGES_FIXER = 'images';

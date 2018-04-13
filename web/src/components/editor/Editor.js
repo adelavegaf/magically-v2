@@ -12,10 +12,10 @@ import InvertColorsIcon from 'material-ui-icons/InvertColors';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox'
 import LanguageFixer from './LanguageFixer';
-import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/EditorContainer';
-import ImageFixerContainer from '../../containers/ImageFixerContainer';
-import LanguageFixerContainer from '../../containers/LanguageFixerContainer';
-import ContrastFixerContainer from '../../containers/ContrastFixerContainer';
+import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/editor/EditorContainer';
+import ImageFixerContainer from '../../containers/editor/ImageFixerContainer';
+import LanguageFixerContainer from '../../containers/editor/LanguageFixerContainer';
+import ContrastFixerContainer from '../../containers/editor/ContrastFixerContainer';
 
 const styles = theme => ({
   root: {

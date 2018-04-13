@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SignIn from '../components/auth/SignIn';
-import firebase from '../firebase';
-import {LANDING} from '../components/utils/Views';
+import SignIn from '../../components/auth/SignIn';
+import firebase from '../../firebase';
+import {LANDING} from '../../components/utils/Views';
 
 export const REGISTER_VIEW = 'register';
 export const LOGIN_VIEW = 'login';

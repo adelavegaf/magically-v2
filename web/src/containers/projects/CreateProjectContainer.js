@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {EDITOR} from '../components/utils/Views';
-import CreateProject from '../components/projects/CreateProject';
-import firebase from '../firebase';
+import {EDITOR} from '../../components/utils/Views';
+import CreateProject from '../../components/projects/CreateProject';
+import firebase from '../../firebase';
 
 class CreateProjectContainer extends Component {
   constructor(props) {

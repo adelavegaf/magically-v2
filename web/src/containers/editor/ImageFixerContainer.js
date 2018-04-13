@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ImageFixer from '../components/editor/ImageFixer';
+import ImageFixer from '../../components/editor/ImageFixer';
 
 class ImageFixerContainer extends Component {
   constructor(props) {

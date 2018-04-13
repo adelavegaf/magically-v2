@@ -3,10 +3,10 @@ import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import {CREATE_PROJECT, EDITOR, LANDING, PROJECTS, SIGN_IN} from './utils/Views';
 import LandingPageContainer from '../containers/LandingPageContainer';
-import ProjectsContainer from '../containers/ProjectsContainer';
-import EditorContainer from '../containers/EditorContainer';
-import SignInContainer from '../containers/SignInContainer';
-import CreateProjectContainer from '../containers/CreateProjectContainer';
+import ProjectsContainer from '../containers/projects/ProjectsContainer';
+import EditorContainer from '../containers/editor/EditorContainer';
+import SignInContainer from '../containers/auth/SignInContainer';
+import CreateProjectContainer from '../containers/projects/CreateProjectContainer';
 
 const theme = createMuiTheme({
   palette: {

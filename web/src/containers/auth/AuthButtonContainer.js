@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropStyles from 'prop-types';
-import AuthButton from '../components/auth/AuthButton';
-import {SIGN_IN} from '../components/utils/Views';
-import firebase from '../firebase';
+import AuthButton from '../../components/auth/AuthButton';
+import {SIGN_IN} from '../../components/utils/Views';
+import firebase from '../../firebase';
 
 class AuthButtonContainer extends Component {
   constructor(props) {

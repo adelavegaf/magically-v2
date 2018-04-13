@@ -14,7 +14,7 @@ import {
   FormHelperText,
 } from 'material-ui/Form';
 import EditorSideList from './EditorSideList';
-import {IMAGES_FIXER} from '../../containers/EditorContainer';
+import {IMAGES_FIXER} from '../../containers/editor/EditorContainer';
 
 const styles = theme => ({
   flex: {

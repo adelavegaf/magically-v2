@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import LanguageFixer from '../components/editor/LanguageFixer';
+import LanguageFixer from '../../components/editor/LanguageFixer';
 
 class LanguageFixerContainer extends Component {
   constructor(props) {

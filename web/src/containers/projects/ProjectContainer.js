@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {EDITOR} from '../components/utils/Views';
-import Project from '../components/projects/Project';
+import {EDITOR} from '../../components/utils/Views';
+import Project from '../../components/projects/Project';
 
 class ProjectContainer extends Component {
   didPressProject() {

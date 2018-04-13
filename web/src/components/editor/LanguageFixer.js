@@ -8,7 +8,7 @@ import {MenuItem} from 'material-ui/Menu';
 import {FormControl, FormHelperText} from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import EditorSideList from './EditorSideList';
-import {LANGUAGE_FIXER} from '../../containers/EditorContainer';
+import {LANGUAGE_FIXER} from '../../containers/editor/EditorContainer';
 
 const styles = theme => ({
   flex: {

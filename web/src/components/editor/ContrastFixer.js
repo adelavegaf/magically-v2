@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import EditorSideList from './EditorSideList';
-import {CONTRAST_FIXER} from '../../containers/EditorContainer';
+import {CONTRAST_FIXER} from '../../containers/editor/EditorContainer';
 import {ChromePicker} from 'react-color';
 
 const styles = theme => ({

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import {BOTTOM_STRIP_HEIGHT, FAB_SIZE} from './utils/Sizes';
 import AppBarFactory from './appbar/AppBarFactory';
-import SearchContainer from '../containers/SearchContainer';
+import SearchContainer from '../containers/search/SearchContainer';
 
 const styles = theme => ({
   root: {

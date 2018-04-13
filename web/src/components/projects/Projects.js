@@ -9,7 +9,7 @@ import Dialog, {DialogActions, DialogContent, DialogTitle} from 'material-ui/Dia
 import Typography from 'material-ui/Typography';
 import ProjectsFilter from './ProjectsFilter';
 import AppBarFactory from '../appbar/AppBarFactory';
-import ProjectContainer from '../../containers/ProjectContainer';
+import ProjectContainer from '../../containers/projects/ProjectContainer';
 import {CircularProgress} from 'material-ui/Progress';
 
 

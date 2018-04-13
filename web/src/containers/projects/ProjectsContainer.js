@@ -21,6 +21,7 @@ class ProjectsContainer extends Component {
     firebase.firestore()
             .collection('projects')
             .where('websiteUrl', '==', this.props.websiteUrl)
+            .where('isLoading', '==', false)
             .get()
             .then(snapshot => {
               const docs = snapshot.docs.map(doc => {

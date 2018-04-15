@@ -6,5 +6,12 @@
     "default_popup": "index.html",
     "default_title": "Magically"
   },
+  "background": {
+    "scripts": ["app/EventPage.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "tabs"
+  ],
   "version": "1.0"
 }

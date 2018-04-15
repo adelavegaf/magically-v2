@@ -7,11 +7,12 @@
     "default_title": "Magically"
   },
   "background": {
-    "scripts": ["app/EventPage.js"],
+    "page": "app/background.html",
     "persistent": false
   },
   "permissions": [
     "tabs"
   ],
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
   "version": "1.0"
 }

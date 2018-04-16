@@ -25,8 +25,8 @@ const applyContrastErrorsFix = (contrastErrors) => {
     .filter(([, error]) => error.isFixed)
     .map(([, error]) => {
       const body = `
-      domElement.style.background = '${error.backgroundColor} !important';
-      domElement.style.color = '${error.foregroundColor} !important';
+      domElement.style.background = '${error.backgroundColor}';
+      domElement.style.color = '${error.foregroundColor}';
       `;
       return wrapFixBodyInCommonComponent(error.domSelector, body);
     });

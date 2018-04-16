@@ -77,7 +77,7 @@ const getContrastErrors = (lhr) => {
       console.error('Failed to do failure summary regex match', error.failureSummary);
     }
     return {
-      domSelector: error.target[0],
+      domSelector: error.target[0].replace(/["\t\b\f\n\r\\]/g, '\\$&'),
       foregroundColor: foregroundColor,
       backgroundColor: backgroundColor,
       fontSize: fontSize,

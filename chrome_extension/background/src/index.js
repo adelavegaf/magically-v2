@@ -1,3 +1,13 @@
+import {createStore} from 'redux';
+import rootReducer from './reducers';
+import {wrapStore} from 'react-chrome-redux';
+
+const store = createStore(rootReducer, {});
+
+wrapStore(store, {
+  portName: 'magically'
+});
+
 const initFirebase = () => {
   const config = {
     apiKey: 'AIzaSyAskO3QYe979opV4QmRW3-tk6AwCrFRNmI',

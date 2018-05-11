@@ -46,6 +46,10 @@ class App extends Component {
     };
   }
 
+  getProjectsForCurrentUrl() {
+
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>

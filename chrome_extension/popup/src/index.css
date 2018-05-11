@@ -1,0 +1,7 @@
+html, body {
+    width: 400px;
+    height: 600px;
+    font-family: 'Roboto', sans-serif !important;
+    background-color: #eee;
+    margin: 0;
+}

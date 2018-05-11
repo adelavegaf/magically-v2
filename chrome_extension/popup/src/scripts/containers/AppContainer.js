@@ -2,9 +2,7 @@ import {connect} from 'react-redux';
 import App from '../components/App';
 
 const mapStateToProps = (state) => {
-  return {
-    tabs: state.tabs || {}
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {

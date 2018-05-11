@@ -4,7 +4,11 @@ import {withStyles} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-// 32 16 12
+import Radio from 'material-ui/Radio';
+import RadioButtonUncheckedIcon from 'material-ui-icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from 'material-ui-icons/RadioButtonChecked';
+import {FormControlLabel} from 'material-ui/Form';
+
 const styles = theme => ({
   project: {
     margin: theme.spacing.unit,
@@ -13,6 +17,18 @@ const styles = theme => ({
     '&:hover': {
       background: 'rgb(243, 246, 249)'
     }
+  },
+  radioContainer: {
+    marginLeft: '-8px',
+    marginRight: '8px',
+
+  },
+  radio: {
+    height: '24px',
+    width: '24px'
+  },
+  radioIconSize: {
+    fontSize: '16px',
   },
   flex: {
     flex: 1
@@ -61,6 +77,14 @@ class Project extends Component {
   getResultInformation() {
     return (
       <Grid container justify={'space-between'} alignItems={'center'}>
+        <FormControlLabel value={this.props.id}
+                          className={this.classes.radioContainer}
+                          control={
+                            <Radio className={this.classes.radio}
+                                   color="secondary"
+                                   icon={<RadioButtonUncheckedIcon className={this.classes.radioIconSize}/>}
+                                   checkedIcon={<RadioButtonCheckedIcon className={this.classes.radioIconSize}/>}/>
+                          }/>
         <div className={this.classes.percentageContainer} style={this.getPercentageColor()}>
           <Typography variant={'title'} color={'inherit'} align={'center'} className={this.classes.percentage}>
             {(this.getPercentage() * 100).toFixed(0)}%

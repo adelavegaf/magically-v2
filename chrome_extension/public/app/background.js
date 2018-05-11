@@ -10,6 +10,10 @@ const initFirebase = () => {
   firebase.initializeApp(config);
 };
 
+const sanitizeInput = (input) => {
+  return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+};
+
 const wrapFixBodyInCommonComponent = (domSelector, body) => {
   return `{
     const domElement = document.querySelector('${domSelector}');
@@ -25,8 +29,8 @@ const applyContrastErrorsFix = (contrastErrors) => {
     .filter(([, error]) => error.isFixed)
     .map(([, error]) => {
       const body = `
-      domElement.style.background = '${error.backgroundColor}';
-      domElement.style.color = '${error.foregroundColor}';
+      domElement.style.background = "${sanitizeInput(error.backgroundColor)}";
+      domElement.style.color = "${sanitizeInput(error.foregroundColor)}";
       `;
       return wrapFixBodyInCommonComponent(error.domSelector, body);
     });
@@ -38,7 +42,7 @@ const applyImageErrorsFix = (imageErrors) => {
     .filter(([, error]) => error.isFixed)
     .map(([, error]) => {
       const body = `
-      domElement.alt = '${error.description}';
+      domElement.alt = "${sanitizeInput(error.description)}";
       `;
       return wrapFixBodyInCommonComponent(error.domSelector, body);
     });
@@ -50,7 +54,7 @@ const applyLangErrorsFix = (langErrors) => {
     .filter(([, error]) => error.isFixed)
     .map(([, error]) => {
       const body = `
-      domElement.lang = '${error.lang}';
+      domElement.lang = "${sanitizeInput(error.lang)}";
       `;
       return wrapFixBodyInCommonComponent(error.domSelector, body);
     });

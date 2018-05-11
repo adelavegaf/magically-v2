@@ -1,3 +1,9 @@
+html {
+  width: 400px;
+  height: 600px;
+  background: #ededed;
+}
+
 body {
   margin: 0;
   padding: 0;

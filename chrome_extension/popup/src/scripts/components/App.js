@@ -41,13 +41,25 @@ const classes = {
 class App extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      projects: []
+      projects: [],
+      selectedProject: null
     };
   }
 
-  getProjectsForCurrentUrl() {
-
+  componentDidMount() {
+    chrome.tabs.query({active: true, currentWindow: true}, (arrayOfTabs) => {
+      const activeTabId = arrayOfTabs[0].id;
+      console.log(activeTabId);
+      const tabInfo = this.props.tabs[activeTabId];
+      if (!tabInfo) {
+        return;
+      }
+      const {projects, selectedProject} = tabInfo;
+      console.log(projects, selectedProject);
+      this.setState({projects: projects, selectedProject: selectedProject});
+    });
   }
 
   render() {
@@ -77,5 +89,9 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  tabs: PropTypes.object.isRequired
+};
 
 export default App;

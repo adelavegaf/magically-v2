@@ -2,6 +2,8 @@ import {createStore} from 'redux';
 import rootReducer from './reducers';
 import {wrapStore} from 'react-chrome-redux';
 
+// TODO(adelavega): consider race condition between storage get, and firebase set.
+
 const store = createStore(rootReducer, {});
 
 wrapStore(store, {
@@ -92,17 +94,44 @@ chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
       .where('websiteUrl', '==', tab.url)
       .where('isLoading', '==', false)
       .get()
-      .then(projects => {
-        if (!projects.docs.length) {
+      .then(projectsSnapshot => {
+        const tabObject = {};
+        const curState = store.getState();
+        if (!projectsSnapshot.docs.length) {
+          tabObject[tabId] = {projects: [], selectedProject: null};
+          const updateObject = {...curState.tabs, ...tabObject};
+          store.dispatch({type: 'SET_TABS', tabs: updateObject});
+          chrome.storage.local.set(updateObject, () => console.info('set to local', updateObject));
           return;
         }
+        const projects = projectsSnapshot.docs.map(project => project.data());
         // TODO(adelavega): Analyze which project should be loaded.
-        const selectedProject = projects.docs[0].data();
+        const selectedProject = projects[0];
+
+        // When the extension is opened, the store is loaded with the data from storage.
+        tabObject[tabId] = {projects: projects, selectedProject: selectedProject};
+        const updateObject = {...curState.tabs, ...tabObject};
+        store.dispatch({type: 'SET_TABS', tabs: updateObject});
+        chrome.storage.local.set(updateObject, () => console.info('set to local', updateObject));
+
         const fix = getFixFromProject(selectedProject);
-        console.log(fix);
+        console.info(fix);
         chrome.tabs.executeScript({
           code: fix
         });
       });
   }
+});
+
+chrome.storage.local.get(['state'], ({state}) => {
+
+  store.dispatch({type: 'SET_TABS', tabs: state});
+
+  const saveState = () => {
+    console.info('Saving state to chrome.storage.local');
+    const state = store.getState();
+    chrome.storage.local.set(state);
+  };
+
+  store.subscribe(saveState);
 });

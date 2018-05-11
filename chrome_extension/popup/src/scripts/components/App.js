@@ -9,6 +9,7 @@ import Paper from 'material-ui/Paper';
 import Select from 'material-ui/Select';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import Project from './Project';
 
 const theme = createMuiTheme({
   palette: {
@@ -62,6 +63,12 @@ class App extends Component {
     });
   }
 
+  getProjects() {
+    return this.state.projects.map((project, key) => {
+      return <Project project={project} isSelected={false} key={key}/>
+    });
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -74,16 +81,7 @@ class App extends Component {
           </Toolbar>
         </AppBar>
 
-        <Paper style={classes.paper}>
-          <FormControl style={classes.projectSelect}>
-            <InputLabel htmlFor="project-select">Project</InputLabel>
-            <Select value={10} inputProps={{id: 'project-select'}}>
-              <MenuItem value={10}>Untitled - adelavega</MenuItem>
-              <MenuItem value={20}>Super - rumbydombe</MenuItem>
-            </Select>
-            <FormHelperText>Load project</FormHelperText>
-          </FormControl>
-        </Paper>
+        {this.getProjects()}
 
       </MuiThemeProvider>
     );

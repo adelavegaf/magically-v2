@@ -1,55 +1,33 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
-import IconButton from 'material-ui/IconButton';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import ContentCopy from 'material-ui-icons/ContentCopy';
-import Delete from 'material-ui-icons/Delete';
-import Favorite from 'material-ui-icons/Favorite';
-import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
 import Paper from 'material-ui/Paper';
-
-import './Project.css';
-
+// 32 16 12
 const styles = theme => ({
-  resultContainer: {
+  project: {
     margin: theme.spacing.unit,
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 2,
+    cursor: 'pointer',
+    '&:hover': {
+      background: 'rgb(243, 246, 249)'
+    }
   },
-  actionsContainer: {
-    width: theme.spacing.unit * 9
+  flex: {
+    flex: 1
   },
-  iconContainer: {
-    display: 'inline-flex',
-    alignItems: 'center',
+  percentageContainer: {
+    paddingRight: theme.spacing.unit * 2
   },
-  iconButton: {
-    height: theme.spacing.unit * 2,
-    width: theme.spacing.unit * 2
+  percentage: {
+    fontSize: '32px'
   },
-  favoriteBorderButton: {
-    height: theme.spacing.unit * 2,
-    width: theme.spacing.unit * 2,
-    color: '#000'
+  title: {
+    fontSize: '16px'
   },
-  favoriteButton: {
-    height: theme.spacing.unit * 2,
-    width: theme.spacing.unit * 2,
-    color: '#e53145'
-  },
-  contentCopyButton: {
-    height: theme.spacing.unit * 2,
-    width: theme.spacing.unit * 2,
-    color: '#356cf0'
-  },
-  deleteButton: {
-    height: theme.spacing.unit * 2,
-    width: theme.spacing.unit * 2,
-    color: '#eb6523'
-  },
-  iconValue: {
-    marginLeft: theme.spacing.unit
+  author: {
+    fontSize: '12px'
   }
 });
 
@@ -82,40 +60,25 @@ class Project extends Component {
 
   getResultInformation() {
     return (
-      <Grid container justify={'center'} alignItems={'stretch'}>
-        <Grid item xs>
-          <div style={this.getPercentageColor()}>
-            <Typography variant={'display3'} color={'inherit'} align={'center'}>
-              {(this.getPercentage() * 100).toFixed(0)}%
-            </Typography>
-          </div>
-        </Grid>
-        <Grid item xs>
-          <Typography variant={'title'}>
+      <Grid container justify={'space-between'} alignItems={'center'}>
+        <div className={this.classes.percentageContainer} style={this.getPercentageColor()}>
+          <Typography variant={'title'} color={'inherit'} align={'center'} className={this.classes.percentage}>
+            {(this.getPercentage() * 100).toFixed(0)}%
+          </Typography>
+        </div>
+        <Grid item className={this.classes.flex}>
+          <Typography variant={'title'} className={this.classes.title}>
             {this.props.project.title}
           </Typography>
-          <Typography variant={'subheading'}>
-            {this.props.project.authorDisplayName ? this.props.project.authorDisplayName : this.props.project.authorEmail.split('@')[0]}
-          </Typography>
-          <Typography variant={'body1'} color={'textSecondary'}>
-            {this.props.project.createdAt.toLocaleDateString()}
-          </Typography>
-          <Typography variant={'caption'}>
-            {this.props.project.errors.totalErrorsCount - this.props.project.errors.totalFixCount} errors remaining
+          <Typography variant={'subheading'} className={this.classes.author}>
+            {this.props.project.authorDisplayName ? this.props.project.authorDisplayName :
+             this.props.project.authorEmail.split('@')[0]}
           </Typography>
         </Grid>
-        <Grid item className={this.classes.actionsContainer}>
-          {this.getActionBar()}
-        </Grid>
-      </Grid>
-    );
-  }
-
-  getActionBar() {
-    return (
-      <Grid container direction={'column'} justify={'center'}>
-        <Grid item>
-
+        <Grid item xs>
+          <Typography variant={'body1'} color={'textSecondary'} align={'right'}>
+            {(new Date()).toLocaleDateString()/*this.props.project.createdAt.toLocaleDateString() */}
+          </Typography>
         </Grid>
       </Grid>
     );
@@ -123,13 +86,9 @@ class Project extends Component {
 
   render() {
     return (
-      <Grid container direction={'column'} className={this.classes.resultContainer}>
-        <Grid item xs>
-          <Paper role={'button'} className={'project'} onClick={() => this.props.didPressProject()}>
-            {this.getResultInformation()}
-          </Paper>
-        </Grid>
-      </Grid>
+      <Paper role={'button'} className={this.classes.project} onClick={() => this.props.didPressProject()}>
+        {this.getResultInformation()}
+      </Paper>
     );
   }
 }
@@ -137,7 +96,7 @@ class Project extends Component {
 Project.propTypes = {
   project: PropTypes.object.isRequired,
   isSelected: PropTypes.bool.isRequired,
-  didPressProject: PropTypes.func.isRequired
+  // didPressProject: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Project);

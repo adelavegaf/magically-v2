@@ -10,6 +10,8 @@ import Select from 'material-ui/Select';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Project from './Project';
+import Search from './Search';
+import Grid from 'material-ui/Grid';
 
 const theme = createMuiTheme({
   palette: {
@@ -80,6 +82,10 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
+
+        <Grid container>
+          <Search/>
+        </Grid>
 
         {this.getProjects()}
 

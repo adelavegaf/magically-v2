@@ -30,6 +30,7 @@ const styles = theme => ({
     flex: 1
   },
   percentageContainer: {
+    width: theme.spacing.unit * 10,
     paddingRight: theme.spacing.unit * 2
   },
   percentage: {
@@ -70,6 +71,7 @@ class Project extends Component {
     return this.props.project.errors.totalFixCount / this.props.project.errors.totalErrorsCount
   }
 
+  // TODO(adelavega): Get real date information.
   getResultInformation() {
     return (
       <Grid container justify={'space-between'} alignItems={'center'}>

@@ -1,12 +1,10 @@
-import {connect} from 'react-redux';
+import React, {Component} from 'react';
 import App from '../components/App';
 
-const mapStateToProps = (state) => {
-  return {};
-};
+class AppContainer extends Component {
+  render() {
+    return React.createElement(App, {});
+  }
+}
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default AppContainer;

@@ -103,7 +103,7 @@ class Project extends Component {
 
   render() {
     return (
-      <Paper role={'button'} className={this.classes.project}>
+      <Paper role={'button'} className={this.classes.project} onClick={this.props.onClick}>
         {this.getResultInformation()}
       </Paper>
     );
@@ -113,7 +113,8 @@ class Project extends Component {
 Project.propTypes = {
   project: PropTypes.object.isRequired,
   projectId: PropTypes.number.isRequired,
-  currentProjectId: PropTypes.number.isRequired
+  currentProjectId: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Project);

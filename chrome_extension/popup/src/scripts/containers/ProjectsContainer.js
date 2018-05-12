@@ -45,6 +45,26 @@ class ProjectsContainer extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.tabId === -1) {
+      return;
+    }
+
+    const lastTab = prevProps.tabs[this.state.tabId];
+    const newTab = this.props.tabs[this.state.tabId];
+
+    if (!lastTab || !newTab) {
+      console.error('ProjectsContainer componentDidUpdate undefined found', lastTab, newTab);
+      return
+    }
+    const lastProjectId = lastTab.currentProjectId;
+    const newProjectId = newTab.currentProjectId;
+
+    if (lastProjectId !== newProjectId) {
+      this.setState({currentProjectId: newProjectId});
+    }
+  }
+
   render() {
     return React.createElement(Projects, {
       projects: this.state.projects,

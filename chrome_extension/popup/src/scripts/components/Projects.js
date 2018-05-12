@@ -2,52 +2,36 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Project from './Project';
-import {RadioGroup} from 'material-ui/Radio';
 
-const styles = theme => ({
-
-});
+const styles = theme => ({});
 
 class Projects extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      projects: [],
-      selectedProject: null
-    };
-  }
-
-  componentDidMount() {
-    chrome.tabs.query({active: true, currentWindow: true}, (arrayOfTabs) => {
-      const activeTabId = arrayOfTabs[0].id;
-      console.log(activeTabId);
-      const tabInfo = this.props.tabs[activeTabId];
-      if (!tabInfo) {
-        return;
-      }
-      const {projects, selectedProject} = tabInfo;
-      console.log(projects, selectedProject);
-      this.setState({projects: projects, selectedProject: selectedProject});
-    });
-  }
-
   getProjects() {
-    return this.state.projects.map((project, key) => {
-      return <Project project={project} isSelected={false} key={key}/>
-    });
+    if (this.props.projects) {
+      return this.props.projects.map((project, key) => {
+        return <Project project={project}
+                        projectId={key}
+                        currentProjectId={this.props.currentProjectId}
+                        onClick={() => this.props.didPressProject(key)}
+                        key={key}/>
+      });
+    }
   }
 
   render() {
     return (
-      <RadioGroup aria-label="project" name="projects" value={this.props.selectedProject} onChange={() => 1}>
+      <div>
         {this.getProjects()}
-      </RadioGroup>
+      </div>
     );
   }
 }
 
 Projects.propTypes = {
-  tabs: PropTypes.object.isRequired
+  projects: PropTypes.array.isRequired,
+  currentProjectId: PropTypes.number.isRequired,
+  loading: PropTypes.bool.isRequired,
+  didPressProject: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Projects);

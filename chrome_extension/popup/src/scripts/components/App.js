@@ -56,8 +56,4 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  tabs: PropTypes.object.isRequired
-};
-
 export default App;

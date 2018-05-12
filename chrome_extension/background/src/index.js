@@ -105,11 +105,12 @@ chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
           return;
         }
         const projects = projectsSnapshot.docs.map(project => project.data());
+        const currentProjectId = 0;
         // TODO(adelavega): Analyze which project should be loaded.
-        const selectedProject = projects[0];
-
+        const selectedProject = projects[currentProjectId];
+        console.log('selected project', selectedProject);
         // When the extension is opened, the store is loaded with the data from storage.
-        tabObject[tabId] = {projects: projects, selectedProject: selectedProject};
+        tabObject[tabId] = {projects: projects, currentProjectId: currentProjectId};
         const updateObject = {...curState.tabs, ...tabObject};
         store.dispatch({type: 'SET_TABS', tabs: updateObject});
         chrome.storage.local.set(updateObject, () => console.info('set to local', updateObject));

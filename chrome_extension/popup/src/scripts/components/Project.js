@@ -7,7 +7,6 @@ import Paper from 'material-ui/Paper';
 import Radio from 'material-ui/Radio';
 import RadioButtonUncheckedIcon from 'material-ui-icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from 'material-ui-icons/RadioButtonChecked';
-import {FormControlLabel} from 'material-ui/Form';
 
 const styles = theme => ({
   project: {
@@ -18,12 +17,9 @@ const styles = theme => ({
       background: 'rgb(243, 246, 249)'
     }
   },
-  radioContainer: {
+  radio: {
     marginLeft: '-8px',
     marginRight: '8px',
-
-  },
-  radio: {
     height: '24px',
     width: '24px'
   },
@@ -77,14 +73,11 @@ class Project extends Component {
   getResultInformation() {
     return (
       <Grid container justify={'space-between'} alignItems={'center'}>
-        <FormControlLabel value={this.props.id}
-                          className={this.classes.radioContainer}
-                          control={
-                            <Radio className={this.classes.radio}
-                                   color="secondary"
-                                   icon={<RadioButtonUncheckedIcon className={this.classes.radioIconSize}/>}
-                                   checkedIcon={<RadioButtonCheckedIcon className={this.classes.radioIconSize}/>}/>
-                          }/>
+        <Radio className={this.classes.radio}
+               checked={this.props.projectId === this.props.currentProjectId}
+               color="secondary"
+               icon={<RadioButtonUncheckedIcon className={this.classes.radioIconSize}/>}
+               checkedIcon={<RadioButtonCheckedIcon className={this.classes.radioIconSize}/>}/>
         <div className={this.classes.percentageContainer} style={this.getPercentageColor()}>
           <Typography variant={'title'} color={'inherit'} align={'center'} className={this.classes.percentage}>
             {(this.getPercentage() * 100).toFixed(0)}%
@@ -110,7 +103,7 @@ class Project extends Component {
 
   render() {
     return (
-      <Paper role={'button'} className={this.classes.project} onClick={() => this.props.didPressProject()}>
+      <Paper role={'button'} className={this.classes.project}>
         {this.getResultInformation()}
       </Paper>
     );
@@ -119,8 +112,8 @@ class Project extends Component {
 
 Project.propTypes = {
   project: PropTypes.object.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  // didPressProject: PropTypes.func.isRequired
+  projectId: PropTypes.number.isRequired,
+  currentProjectId: PropTypes.number.isRequired
 };
 
 export default withStyles(styles)(Project);

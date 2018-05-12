@@ -18,8 +18,9 @@ const styles = theme => ({
     height: '100%',
     backgroundColor: LIGHT_GRAY
   },
-  fullHeight: {
-    height: '100%'
+  contentContainer: {
+    height: '100%',
+    overflowY: 'scroll'
   },
   fab: {
     position: 'absolute',
@@ -47,7 +48,8 @@ const styles = theme => ({
   },
   filterButton: {
     textAlign: 'right'
-  }
+  },
+  toolbar: theme.mixins.toolbar
 });
 
 
@@ -141,15 +143,12 @@ class Projects extends Component {
 
         <AppBarFactory type={'search'} searchBarStartText={this.props.websiteUrl} changeView={this.props.changeView}/>
 
-        <Grid container className={this.classes.fullHeight}>
-
-          <Grid item xs={2}/>
-
-          <Grid item xs={8} className={this.classes.fullHeight}>
+        <Grid container className={this.classes.contentContainer} justify={'center'}>
+          <Grid item xs={8}>
+            <div className={this.classes.toolbar}/>
             <ProjectsFilter projectCount={this.props.projects.length}/>
             {this.getProjects()}
           </Grid>
-
         </Grid>
 
         <Button variant={'fab'}

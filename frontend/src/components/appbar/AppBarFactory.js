@@ -69,7 +69,7 @@ class AppBarFactory extends Component {
 
   getSearchAppBar() {
     return (
-      <AppBar color={'inherit'} elevation={1} position={'sticky'}>
+      <AppBar color={'inherit'} elevation={1}>
         <Toolbar disableGutters={true}>
           <Grid container alignItems={'center'}>
             <Grid item xs={2}>

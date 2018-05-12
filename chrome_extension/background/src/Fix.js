@@ -59,6 +59,9 @@ const getFixFromProject = (project) => {
 
 export default class Fix {
   static generateFrom(project) {
-    return getFixFromProject(project);
+    const fix = getFixFromProject(project);
+    chrome.tabs.executeScript({
+      code: fix
+    });
   }
 }

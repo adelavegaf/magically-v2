@@ -1,5 +1,5 @@
-export default class MessagingApi {
-  static getCurrentTabInformation(tabId) {
+export default class StorageApi {
+  static getTabInformation(tabId) {
     return new Promise((resolve, reject) => {
       const projectsKey = `projectsFor${tabId}`;
       const currentProjectIdKey = `currentProjectIdFor${tabId}`;
@@ -18,7 +18,7 @@ export default class MessagingApi {
     });
   }
 
-  static setCurrentProjectId(tabId, projectId) {
+  static setTabCurrentProjectId(tabId, projectId) {
     return new Promise((resolve, reject) => {
       const currentProjectIdKey = `currentProjectIdFor${tabId}`;
       const storageObject = {};

@@ -1,22 +1,28 @@
 import Fix from './Fix';
-import Api from './Api';
-import MessagingApi from './messaging/MessagingApi';
+import Api from './utils/Api';
+import StorageApi from './utils/StorageApi';
 
 
 chrome.runtime.onMessage.addListener((request, sender, response) => {
   switch (request.type) {
     case 'GET_CURRENT_TAB_INFORMATION': {
       const {tabId} = request;
-      MessagingApi.getCurrentTabInformation(tabId).then(tabInformation => {
+      StorageApi.getTabInformation(tabId).then(tabInformation => {
         response(tabInformation);
       });
       return true;
     }
     case 'SET_CURRENT_PROJECT_ID': {
       const {tabId, projectId} = request;
-      MessagingApi.setCurrentProjectId(tabId, projectId).then(projectIdUpdate => {
-        response(projectIdUpdate);
-      });
+      StorageApi
+        .setTabCurrentProjectId(tabId, projectId)
+        .then(projectIdUpdate => {
+          response(projectIdUpdate);
+          return StorageApi.getTabInformation(tabId);
+        })
+        .then(({projects, currentProjectId}) => {
+          Fix.generateFrom(projects[currentProjectId]);
+        });
       return true;
     }
     default:
@@ -43,11 +49,6 @@ chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
 
     // Fix the website
     const selectedProject = projects[currentProjectId];
-    const fix = Fix.generateFrom(selectedProject);
-    console.info('selected project', selectedProject);
-    console.info(fix);
-    chrome.tabs.executeScript({
-      code: fix
-    });
+    Fix.generateFrom(selectedProject);
   });
 });

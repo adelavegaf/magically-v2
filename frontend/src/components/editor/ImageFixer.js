@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
-import Input, {InputAdornment} from 'material-ui/Input';
+import Input from 'material-ui/Input';
 import Checkbox from 'material-ui/Checkbox'
-import {
-  FormLabel,
-  FormControl,
-  FormGroup,
-  FormControlLabel,
-  FormHelperText,
-} from 'material-ui/Form';
+import {FormControlLabel} from 'material-ui/Form';
 import EditorSideList from './EditorSideList';
 import {IMAGES_FIXER} from '../../containers/editor/EditorContainer';
 
@@ -54,7 +47,7 @@ class ImageFixer extends Component {
             </Typography>
           </Grid>
           <Grid item className={this.classes.centerContainer}>
-            <img src={this.props.currentError.imgURL}/>
+            <img alt="missing description in website" src={this.props.currentError.imgURL}/>
           </Grid>
           <Grid item>
             <Input placeholder="Type image description"

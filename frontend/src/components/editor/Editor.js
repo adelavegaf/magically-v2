@@ -5,13 +5,11 @@ import Grid from 'material-ui/Grid';
 import {LIGHT_GRAY} from '../utils/Colors';
 import AppBarFactory from '../appbar/AppBarFactory';
 import Drawer from 'material-ui/Drawer';
-import List, {ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
+import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
 import ImageIcon from 'material-ui-icons/Image';
 import LanguageIcon from 'material-ui-icons/Language';
 import InvertColorsIcon from 'material-ui-icons/InvertColors';
 import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox'
-import LanguageFixer from './LanguageFixer';
 import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/editor/EditorContainer';
 import ImageFixerContainer from '../../containers/editor/ImageFixerContainer';
 import LanguageFixerContainer from '../../containers/editor/LanguageFixerContainer';
@@ -101,6 +99,8 @@ class Editor extends Component {
         return this.props.project.errors.contrastErrorsCount - this.props.project.errors.contrastErrorsFixCount;
       case IMAGES_FIXER:
         return this.props.project.errors.imageErrorsCount - this.props.project.errors.imageErrorsFixCount;
+      default:
+        return 'Unknown';
     }
   }
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {CREATE_PROJECT, EDITOR, SIGN_IN} from '../../components/utils/Views';
+import {CREATE_PROJECT, SIGN_IN} from '../../components/utils/Views';
 import Projects from '../../components/projects/Projects';
 import firebase from '../../firebase';
 

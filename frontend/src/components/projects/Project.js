@@ -5,7 +5,6 @@ import IconButton from 'material-ui/IconButton';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import ContentCopy from 'material-ui-icons/ContentCopy';
-import Delete from 'material-ui-icons/Delete';
 import Favorite from 'material-ui-icons/Favorite';
 import FavoriteBorder from 'material-ui-icons/FavoriteBorder';
 import Paper from 'material-ui/Paper';

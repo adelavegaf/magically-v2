@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import List, {ListItem, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox'

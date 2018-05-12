@@ -66,6 +66,8 @@ class SignInContainer extends Component {
       case LOGIN_VIEW:
         this.login();
         break;
+      default:
+        return;
     }
   }
 

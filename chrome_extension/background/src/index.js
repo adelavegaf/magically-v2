@@ -2,7 +2,7 @@ import {createStore} from 'redux';
 import rootReducer from './reducers';
 import {wrapStore} from 'react-chrome-redux';
 import Fix from './Fix';
-import firebase from './firebase';
+import Api from './Api';
 
 // TODO(adelavega): consider race condition between storage get, and firebase set.
 
@@ -13,41 +13,36 @@ wrapStore(store, {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
-  if (status === 'complete') {
-    firebase
-      .firestore()
-      .collection('projects')
-      .where('websiteUrl', '==', tab.url)
-      .where('isLoading', '==', false)
-      .get()
-      .then(projectsSnapshot => {
-        const tabObject = {};
-        const curState = store.getState();
-        if (!projectsSnapshot.docs.length) {
-          tabObject[tabId] = {projects: [], selectedProject: null};
-          const updateObject = {...curState.tabs, ...tabObject};
-          store.dispatch({type: 'SET_TABS', tabs: updateObject});
-          chrome.storage.local.set(updateObject, () => console.info('set to local', updateObject));
-          return;
-        }
-        const projects = projectsSnapshot.docs.map(project => project.data());
-        const currentProjectId = 1;
-        // TODO(adelavega): Analyze which project should be loaded.
-        const selectedProject = projects[currentProjectId];
-        console.log('selected project', selectedProject);
-        // When the extension is opened, the store is loaded with the data from storage.
-        tabObject[tabId] = {projects: projects, currentProjectId: currentProjectId};
-        const updateObject = {...curState.tabs, ...tabObject};
-        store.dispatch({type: 'SET_TABS', tabs: updateObject});
-        chrome.storage.local.set(updateObject, () => console.info('set to local', updateObject));
-
-        const fix = Fix.generateFrom(selectedProject);
-        console.info(fix);
-        chrome.tabs.executeScript({
-          code: fix
-        });
-      });
+  if (status !== 'complete') {
+    return;
   }
+  Api.getProjectsWithUrl(tab.url).then(projects => {
+    const curState = store.getState();
+    const tabObject = {};
+    tabObject[tabId] = {projects: [], currentProjectId: -1};
+    if (projects.length === 0) {
+      const updateObject = {...curState.tabs, ...tabObject};
+      store.dispatch({type: 'SET_TABS', tabs: updateObject});
+      chrome.storage.local.set(updateObject, () => console.info('set to local', updateObject));
+      return;
+    }
+
+    const currentProjectId = 1;
+    // TODO(adelavega): Analyze which project should be loaded.
+    const selectedProject = projects[currentProjectId];
+    console.log('selected project', selectedProject);
+    // When the extension is opened, the store is loaded with the data from storage.
+    tabObject[tabId] = {projects: projects, currentProjectId: currentProjectId};
+    const updateObject = {...curState.tabs, ...tabObject};
+    store.dispatch({type: 'SET_TABS', tabs: updateObject});
+    chrome.storage.local.set(updateObject, () => console.info('set to local', updateObject));
+
+    const fix = Fix.generateFrom(selectedProject);
+    console.info(fix);
+    chrome.tabs.executeScript({
+      code: fix
+    });
+  });
 });
 
 chrome.storage.local.get(['state'], ({state}) => {

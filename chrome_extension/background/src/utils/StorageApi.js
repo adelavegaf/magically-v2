@@ -1,17 +1,41 @@
+const getProjectsKey = (tabId) => {
+  return `projectsFor${tabId}`;
+};
+
+const getCurrentProjectIdKey = (tabId) => {
+  return `currentProjectIdFor${tabId}`;
+};
+
 export default class StorageApi {
-  static getTabInformation(tabId) {
+
+  static setTabInformation(tabId, projects, currentProjectId) {
+    const storageObject = {};
+    storageObject[getProjectsKey(tabId)] = JSON.stringify(projects);
+    storageObject[getCurrentProjectIdKey(tabId)] = currentProjectId;
     return new Promise((resolve, reject) => {
-      const projectsKey = `projectsFor${tabId}`;
-      const currentProjectIdKey = `currentProjectIdFor${tabId}`;
-      const lookupDict = {};
-      lookupDict[projectsKey] = [];
-      lookupDict[currentProjectIdKey] = -1;
+      chrome.storage.local.set(storageObject, () => {
+        if (chrome.runtime.lastError) {
+          reject(chrome.runtime.lastError);
+          return;
+        }
+        resolve(true);
+      })
+    });
+  }
+
+  static getTabInformation(tabId) {
+    const projectsKey = getProjectsKey(tabId);
+    const currentProjectIdKey = getCurrentProjectIdKey(tabId);
+    const lookupDict = {};
+    lookupDict[projectsKey] = [];
+    lookupDict[currentProjectIdKey] = -1;
+    return new Promise((resolve, reject) => {
       chrome.storage.local.get(lookupDict, lookupResult => {
         if (chrome.runtime.lastError) {
           reject(chrome.runtime.lastError);
           return;
         }
-        const projects = lookupResult[projectsKey];
+        const projects = JSON.parse(lookupResult[projectsKey]);
         const currentProjectId = lookupResult[currentProjectIdKey];
         resolve({projects: projects, currentProjectId: currentProjectId});
       });
@@ -19,10 +43,10 @@ export default class StorageApi {
   }
 
   static setTabCurrentProjectId(tabId, projectId) {
+    const currentProjectIdKey = getCurrentProjectIdKey(tabId);
+    const storageObject = {};
+    storageObject[currentProjectIdKey] = projectId;
     return new Promise((resolve, reject) => {
-      const currentProjectIdKey = `currentProjectIdFor${tabId}`;
-      const storageObject = {};
-      storageObject[currentProjectIdKey] = projectId;
       chrome.storage.local.set(storageObject, () => {
         if (chrome.runtime.lastError) {
           reject(chrome.runtime.lastError);

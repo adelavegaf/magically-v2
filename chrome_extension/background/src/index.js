@@ -42,10 +42,7 @@ chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
     const currentProjectId = 0;
 
     // Store the results
-    const storageObject = {};
-    storageObject[`projectsFor${tabId}`] = projects;
-    storageObject[`currentProjectIdFor${tabId}`] = currentProjectId;
-    chrome.storage.local.set(storageObject, () => console.info('set to local', storageObject));
+    StorageApi.setTabInformation(tabId, projects, currentProjectId);
 
     // Fix the website
     const selectedProject = projects[currentProjectId];

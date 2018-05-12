@@ -71,7 +71,6 @@ class Project extends Component {
     return this.props.project.errors.totalFixCount / this.props.project.errors.totalErrorsCount
   }
 
-  // TODO(adelavega): Get real date information.
   getResultInformation() {
     return (
       <Grid container justify={'space-between'} alignItems={'center'}>
@@ -96,7 +95,7 @@ class Project extends Component {
         </Grid>
         <Grid item xs>
           <Typography variant={'body1'} color={'textSecondary'} align={'right'}>
-            {(new Date()).toLocaleDateString()/*this.props.project.createdAt.toLocaleDateString() */}
+            {(new Date(this.props.project.createdAt)).toLocaleDateString()}
           </Typography>
         </Grid>
       </Grid>

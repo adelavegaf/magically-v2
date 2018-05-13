@@ -95,7 +95,7 @@ const getContrastErrors = (lhr) => {
       fontSize: fontSize,
       fontWeight: fontWeight,
       expectedContrastRatio: expectedContrastRatio,
-      text: text.replace(/(\r\n\t|\n|\r\t)/gm, ' ')
+      text: text.replace(/(\r\n\t|\n|\r\t)/gm, ' ') || 'Example text'
     }
   });
 };

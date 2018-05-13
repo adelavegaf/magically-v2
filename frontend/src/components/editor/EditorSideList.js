@@ -5,6 +5,7 @@ import Grid from 'material-ui/Grid';
 import List, {ListItem, ListItemSecondaryAction, ListItemText} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox'
 import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/editor/EditorContainer';
+import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
   editorSideList: {
@@ -23,6 +24,11 @@ const styles = theme => ({
   },
   instructions: {
     paddingRight: '0px'
+  },
+  listText: {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    marginRight: theme.spacing.unit
   }
 });
 
@@ -57,14 +63,24 @@ class EditorSideList extends Component {
     return this.props.currentError.domSelector === domSelector ? this.classes.selectedListItem : ''
   }
 
+  getNoErrorMessage() {
+    return (
+      <ListItem>
+        <Typography variant={'body1'} color={'textSecondary'}>
+          No errors found
+        </Typography>
+      </ListItem>
+    )
+  }
+
   getListItems() {
-    return Object.entries(this.props.errors).map(([k, e]) => {
+    const listItems = Object.entries(this.props.errors).map(([k, e]) => {
       return (
         <ListItem button
                   key={k}
                   className={this.getListItemClass(e.domSelector)}
                   onClick={() => this.props.changeError(k, e)}>
-          <ListItemText primary={this.getListItemText(e)}/>
+          <ListItemText primary={this.getListItemText(e)} className={this.classes.listText}/>
           <ListItemSecondaryAction>
             <Checkbox
               disableRipple
@@ -74,13 +90,18 @@ class EditorSideList extends Component {
         </ListItem>
       );
     });
+    return listItems.length === 0 ? this.getNoErrorMessage() : listItems;
   }
 
   render() {
     return (
       <Grid item className={this.classes.editorSideList}>
         <List className={this.classes.list} style={{maxHeight: this.props.sideListMaxHeight}}>
-          <ListItem button disableGutters={true} divider={true}>
+          <ListItem button
+                    className={this.props.currentError ? '' : this.classes.selectedListItem}
+                    disableGutters={true}
+                    divider={true}
+                    onClick={() => this.props.changeError(-1, null)}>
             <ListItemText primary={'Instructions'} align={'center'} className={this.classes.instructions}/>
           </ListItem>
           {this.getListItems()}

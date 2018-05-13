@@ -21,6 +21,23 @@ const styles = theme => ({
     height: '100%',
     paddingRight: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 2
+  },
+  instructionContainer: {
+    flex: 1,
+    alignSelf: 'center'
+  },
+  instructionImageContainer: {
+    alignSelf: 'center',
+    width: '50%',
+    maxWidth: '300px'
+  },
+  instructionText: {
+    alignSelf: 'center',
+    maxWidth: '60%'
+  },
+  instructionImage: {
+    width: '100%',
+    height: 'auto'
   }
 });
 
@@ -32,7 +49,26 @@ class ContrastFixer extends Component {
   }
 
   getInstructions() {
-    return <div/>;
+    return (
+      <Grid item className={this.classes.instructionContainer}>
+        <Grid container direction={'column'} justify={'center'}>
+          <Grid item className={this.classes.instructionImageContainer}>
+            <img alt="" src="/paint-palette.png" className={this.classes.instructionImage}/>
+          </Grid>
+          <Grid item className={this.classes.instructionText}>
+            <Typography variant={'title'} align={'center'}>
+              Elements must have sufficient color contrast. Specifically, the contrast between foreground and background
+              colors must meets WCAG 2 AA contrast ratio thresholds.
+            </Typography>
+          </Grid>
+          <Grid item className={this.classes.instructionText}>
+            <Typography variant={'subheading'} align={'center'} color={'textSecondary'}>
+              To fix this issue use the color pickers to change the foreground and background colors ☺️
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
   }
 
   getColorPickers() {

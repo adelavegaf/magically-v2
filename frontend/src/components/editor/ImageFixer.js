@@ -23,6 +23,23 @@ const styles = theme => ({
     height: '100%',
     paddingRight: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 2
+  },
+  instructionContainer: {
+    flex: 1,
+    alignSelf: 'center'
+  },
+  instructionImageContainer: {
+    alignSelf: 'center',
+    width: '50%',
+    maxWidth: '300px'
+  },
+  instructionText: {
+    alignSelf: 'center',
+    maxWidth: '60%'
+  },
+  instructionImage: {
+    width: '100%',
+    height: 'auto'
   }
 });
 
@@ -34,7 +51,26 @@ class ImageFixer extends Component {
   }
 
   getInstructions() {
-    return <div/>;
+    return (
+      <Grid item className={this.classes.instructionContainer}>
+        <Grid container direction={'column'} justify={'center'}>
+          <Grid item className={this.classes.instructionImageContainer}>
+            <img alt="" src="/pictures.png" className={this.classes.instructionImage}/>
+          </Grid>
+          <Grid item className={this.classes.instructionText}>
+            <Typography variant={'title'} align={'center'}>
+              Images are missing a description. Informative images should aim for short, descriptive alternate
+              text. Decorative images should pass an empty description.
+            </Typography>
+          </Grid>
+          <Grid item className={this.classes.instructionText}>
+            <Typography variant={'subheading'} align={'center'} color={'textSecondary'}>
+              To fix this issue add a description using the textfield or state that the image is decorative ☺️
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
   }
 
   getFixer() {

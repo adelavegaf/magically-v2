@@ -27,6 +27,23 @@ const styles = theme => ({
   },
   formControl: {
     width: theme.spacing.unit * 29,
+  },
+  instructionContainer: {
+    flex: 1,
+    alignSelf: 'center'
+  },
+  instructionImageContainer: {
+    alignSelf: 'center',
+    width: '50%',
+    maxWidth: '300px'
+  },
+  instructionText: {
+    alignSelf: 'center',
+    maxWidth: '60%'
+  },
+  instructionImage: {
+    width: '100%',
+    height: 'auto'
   }
 });
 
@@ -38,7 +55,27 @@ class LanguageFixer extends Component {
   }
 
   getInstructions() {
-    return <div/>;
+    return (
+      <Grid item className={this.classes.instructionContainer}>
+        <Grid container direction={'column'} justify={'center'}>
+          <Grid item className={this.classes.instructionImageContainer}>
+            <img alt="" src="/language.png" className={this.classes.instructionImage}/>
+          </Grid>
+          <Grid item className={this.classes.instructionText}>
+            <Typography variant={'title'} align={'center'}>
+              If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default
+              language that the user chose when setting up the screen reader. If the page isn't actually in the default
+              language, then the screen reader might not announce the page's text correctly.
+            </Typography>
+          </Grid>
+          <Grid item className={this.classes.instructionText}>
+            <Typography variant={'subheading'} align={'center'} color={'textSecondary'}>
+              To fix this issue select a language from the dropdown menu ☺️
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
   }
 
   getFixer() {

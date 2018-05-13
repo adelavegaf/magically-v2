@@ -66,6 +66,14 @@ class ContrastFixer extends Component {
               To fix this issue use the color pickers to change the foreground and background colors ☺️
             </Typography>
           </Grid>
+          <Grid item className={this.classes.instructionText}>
+            <Typography variant={'caption'}>
+              <div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat
+                Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed
+                by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                      target="_blank">CC 3.0 BY</a></div>
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     );

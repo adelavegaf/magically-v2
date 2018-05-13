@@ -34,8 +34,7 @@ const styles = theme => ({
   },
   instructionImageContainer: {
     alignSelf: 'center',
-    width: '50%',
-    maxWidth: '300px'
+    width: '25%',
   },
   instructionText: {
     alignSelf: 'center',
@@ -56,28 +55,27 @@ class LanguageFixer extends Component {
 
   getInstructions() {
     return (
-      <Grid item className={this.classes.instructionContainer}>
+      <Grid item className={this.classes.instructionContainer} style={{maxHeight: this.props.sideListMaxHeight}}>
         <Grid container direction={'column'} justify={'center'}>
           <Grid item className={this.classes.instructionImageContainer}>
             <img alt="" src="/language.png" className={this.classes.instructionImage}/>
           </Grid>
           <Grid item className={this.classes.instructionText}>
             <Typography variant={'title'} align={'center'}>
-              If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default
-              language that the user chose when setting up the screen reader. If the page isn't actually in the default
-              language, then the screen reader might not announce the page's text correctly.
+              If a page doesn't specify a language, a screen reader might not announce the page's text correctly.
             </Typography>
           </Grid>
           <Grid item className={this.classes.instructionText}>
             <Typography variant={'subheading'} align={'center'} color={'textSecondary'}>
-              To fix this issue select a language from the dropdown menu ☺️
+              To fix this issue select a language from the dropdown menu.
             </Typography>
           </Grid>
           <Grid item className={this.classes.instructionText}>
             <Typography variant={'caption'}>
               <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a
                 href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
-                href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC
+                href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank"
+                rel="noopener noreferrer">CC
                 3.0 BY</a></div>
             </Typography>
           </Grid>

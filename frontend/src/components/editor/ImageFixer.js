@@ -30,8 +30,7 @@ const styles = theme => ({
   },
   instructionImageContainer: {
     alignSelf: 'center',
-    width: '50%',
-    maxWidth: '300px'
+    width: '25%'
   },
   instructionText: {
     alignSelf: 'center',
@@ -52,20 +51,20 @@ class ImageFixer extends Component {
 
   getInstructions() {
     return (
-      <Grid item className={this.classes.instructionContainer}>
+      <Grid item className={this.classes.instructionContainer} style={{maxHeight: this.props.sideListMaxHeight}}>
         <Grid container direction={'column'} justify={'center'}>
           <Grid item className={this.classes.instructionImageContainer}>
             <img alt="" src="/pictures.png" className={this.classes.instructionImage}/>
           </Grid>
           <Grid item className={this.classes.instructionText}>
             <Typography variant={'title'} align={'center'}>
-              Images are missing a description. Informative images should aim for short, descriptive alternate
+              Some images are missing a description. Informative images should aim for short, descriptive alternate
               text. Decorative images should pass an empty description.
             </Typography>
           </Grid>
           <Grid item className={this.classes.instructionText}>
             <Typography variant={'subheading'} align={'center'} color={'textSecondary'}>
-              To fix this issue add a description using the textfield or state that the image is decorative ☺️
+              To fix this issue add a description using the textfield or state that the image is decorative.
             </Typography>
           </Grid>
           <Grid item className={this.classes.instructionText}>
@@ -73,7 +72,7 @@ class ImageFixer extends Component {
               <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-buddha" title="Pixel Buddha">Pixel
                 Buddha</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed
                 by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
-                      target="_blank">CC 3.0 BY</a></div>
+                      target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></div>
             </Typography>
           </Grid>
         </Grid>

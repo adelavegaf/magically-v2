@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import {REGISTER_VIEW} from '../../containers/auth/SignInContainer';
+import {REGISTER_VIEW} from '../../containers/auth/AuthContainer';
 
 const styles = theme => ({
   root: {
@@ -39,7 +39,7 @@ const styles = theme => ({
   }
 });
 
-class SignIn extends Component {
+class Auth extends Component {
   constructor(props) {
     super(props);
     const {classes} = props;
@@ -159,7 +159,7 @@ class SignIn extends Component {
   }
 }
 
-SignIn.propTypes = {
+Auth.propTypes = {
   errorHelperText: PropTypes.string.isRequired,
   currentAuthView: PropTypes.string.isRequired,
   changeAuthView: PropTypes.func.isRequired,
@@ -169,4 +169,4 @@ SignIn.propTypes = {
   didPressActionButton: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(Auth);

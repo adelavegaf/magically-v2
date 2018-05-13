@@ -100,7 +100,7 @@ class LanguageFixer extends Component {
 LanguageFixer.propTypes = {
   isOwner: PropTypes.bool.isRequired,
   langErrors: PropTypes.object.isRequired,
-  currentError: PropTypes.object.isRequired,
+  currentError: PropTypes.object,
   sideListMaxHeight: PropTypes.number.isRequired,
   changeError: PropTypes.func.isRequired
 };

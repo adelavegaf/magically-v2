@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {EDITOR} from '../../components/utils/Views';
 import Project from '../../components/projects/Project';
 import firebase from '../../firebase';
 
 class ProjectContainer extends Component {
   didPressProject() {
-    this.props.changeView(EDITOR, {projectId: this.props.projectId, project: this.props.project});
+    this.props.history.push(`/editor/${this.props.projectId}`);
   }
 
   didPressCopyButton() {
@@ -58,9 +58,9 @@ class ProjectContainer extends Component {
 }
 
 ProjectContainer.propTypes = {
+  history: PropTypes.object.isRequired,
   projectId: PropTypes.string.isRequired,
-  project: PropTypes.object.isRequired,
-  changeView: PropTypes.func.isRequired
+  project: PropTypes.object.isRequired
 };
 
-export default ProjectContainer;
+export default withRouter(ProjectContainer);

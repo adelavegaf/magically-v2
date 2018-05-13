@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import SignIn from '../../components/auth/SignIn';
+import Auth from '../../components/auth/Auth';
 import firebase from '../../firebase';
-import {LANDING} from '../../components/utils/Views';
 
 export const REGISTER_VIEW = 'register';
 export const LOGIN_VIEW = 'login';
@@ -11,10 +11,10 @@ const INITIAL_STATE = {
   password: '',
   confirmPassword: '',
   errorHelperText: '',
-  currentAuthView: REGISTER_VIEW
+  currentAuthView: LOGIN_VIEW
 };
 
-class SignInContainer extends Component {
+class AuthContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -28,11 +28,17 @@ class SignInContainer extends Component {
     this.setState(nextState);
   }
 
+  goBack() {
+    // TODO(adelavega): Figure out how to actually go back :)
+    this.props.history.push('/');
+    // this.props.history.goBack();
+  }
+
   register() {
     if (this.state.password === this.state.confirmPassword) {
       // TODO(adelavega): Only show error in one of the textfields. The appropriate one.
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-              .then(() => this.props.changeView(LANDING, {}))
+              .then(() => this.goBack())
               .catch((error) => this.setState({errorHelperText: error.message}));
     }
     else {
@@ -42,7 +48,7 @@ class SignInContainer extends Component {
 
   login() {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => this.props.changeView(LANDING, {}))
+            .then(() => this.goBack())
             .catch((error) => this.setState({errorHelperText: error.message}));
   }
 
@@ -72,7 +78,7 @@ class SignInContainer extends Component {
   }
 
   render() {
-    return React.createElement(SignIn, {
+    return React.createElement(Auth, {
       errorHelperText: this.state.errorHelperText,
       currentAuthView: this.state.currentAuthView,
       changeAuthView: () => this.changeAuthView(),
@@ -84,9 +90,8 @@ class SignInContainer extends Component {
   }
 }
 
-// TODO(adelavega): Add last view prop to redirect to proper view. Also add last view state.
-SignInContainer.propTypes = {
-  changeView: PropTypes.func.isRequired
+AuthContainer.propTypes = {
+  history: PropTypes.object.isRequired
 };
 
-export default SignInContainer;
+export default withRouter(AuthContainer);

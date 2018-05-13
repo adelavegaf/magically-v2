@@ -103,7 +103,6 @@ class Projects extends Component {
     return this.props.projects.map((project, index) => {
       return <ProjectContainer project={project}
                                projectId={project.id}
-                               changeView={this.props.changeView}
                                key={index}/>
     });
   }
@@ -141,7 +140,7 @@ class Projects extends Component {
     return (
       <div className={this.classes.root}>
 
-        <AppBarFactory type={'search'} searchBarStartText={this.props.websiteUrl} changeView={this.props.changeView}/>
+        <AppBarFactory type={'search'} searchBarStartText={this.props.websiteUrl}/>
 
         <Grid container className={this.classes.contentContainer} justify={'center'}>
           <Grid item xs={8}>
@@ -172,8 +171,7 @@ Projects.propTypes = {
   openCreateProjectDialog: PropTypes.bool.isRequired,
   didPressCreateProjectButton: PropTypes.func.isRequired,
   closeDialog: PropTypes.func.isRequired,
-  confirmDialog: PropTypes.func.isRequired,
-  changeView: PropTypes.func.isRequired
+  confirmDialog: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Projects);

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import Editor from '../../components/editor/Editor';
 import firebase from '../../firebase';
 
@@ -13,8 +12,10 @@ class EditorContainer extends Component {
     super(props);
     this.state = {
       currentFixer: LANGUAGE_FIXER,
-      project: this.props.project,
-      isOwner: this.isProjectOwner(this.props.project)
+      project: {},
+      isOwner: false,
+      loading: true,
+      exists: true
     };
     this.authUnsubscribe = null;
     this.projectUnsubscribe = null;
@@ -34,11 +35,17 @@ class EditorContainer extends Component {
     this.projectUnsubscribe = firebase
       .firestore()
       .collection('projects')
-      .doc(this.props.projectId)
+      .doc(this.props.match.params.projectId)
       .onSnapshot(doc => {
+        if (!doc.data()) {
+          this.setState({loading: false, exists: false});
+          return;
+        }
         this.setState({
           project: doc.data(),
-          isOwner: this.isProjectOwner(doc.data())
+          isOwner: this.isProjectOwner(doc.data()),
+          loading: false,
+          exists: true
         });
       });
   }
@@ -67,7 +74,7 @@ class EditorContainer extends Component {
     firebase
       .firestore()
       .collection('projects')
-      .doc(this.props.projectId)
+      .doc(this.props.match.params.projectId)
       .set({title: title}, {merge: true});
   }
 
@@ -79,7 +86,7 @@ class EditorContainer extends Component {
     firebase
       .firestore()
       .collection('projects')
-      .doc(this.props.projectId)
+      .doc(this.props.match.params.projectId)
       .set({title: 'Untitled'}, {merge: true});
   }
 
@@ -105,7 +112,7 @@ class EditorContainer extends Component {
     firebase
       .firestore()
       .collection('projects')
-      .doc(this.props.projectId)
+      .doc(this.props.match.params.projectId)
       .update(updatedProject);
   }
 
@@ -130,7 +137,7 @@ class EditorContainer extends Component {
     firebase
       .firestore()
       .collection('projects')
-      .doc(this.props.projectId)
+      .doc(this.props.match.params.projectId)
       .update(updatedProject);
   }
 
@@ -156,7 +163,7 @@ class EditorContainer extends Component {
     firebase
       .firestore()
       .collection('projects')
-      .doc(this.props.projectId)
+      .doc(this.props.match.params.projectId)
       .update(updatedProject);
   }
 
@@ -172,6 +179,8 @@ class EditorContainer extends Component {
     return React.createElement(Editor, {
         isOwner: this.state.isOwner,
         project: this.state.project,
+        loading: this.state.loading,
+        exists: this.state.exists,
         currentFixer: this.state.currentFixer,
         didPressLanguageFixerButton: () => this.didPressLanguageFixerButton(),
         didPressImagesFixerButton: () => this.didPressImagesFixerButton(),
@@ -185,17 +194,12 @@ class EditorContainer extends Component {
         didChangeForegroundColor: (contrastErrorKey, color, isFixed) => this.didChangeForegroundColor(contrastErrorKey,
           color, isFixed),
         didChangeBackgroundColor: (contrastErrorKey, color, isFixed) => this.didChangeBackgroundColor(contrastErrorKey,
-          color, isFixed),
-        changeView: this.props.changeView
+          color, isFixed)
       }
     );
   }
 }
 
-EditorContainer.propTypes = {
-  projectId: PropTypes.string.isRequired,
-  project: PropTypes.object.isRequired,
-  changeView: PropTypes.func.isRequired
-};
+EditorContainer.propTypes = {};
 
 export default EditorContainer;

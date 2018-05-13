@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import PropStyles from 'prop-types';
+import {withRouter} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AuthButton from '../../components/auth/AuthButton';
-import {SIGN_IN} from '../../components/utils/Views';
 import firebase from '../../firebase';
 
 class AuthButtonContainer extends Component {
@@ -36,8 +36,8 @@ class AuthButtonContainer extends Component {
     this.authUnsubscribe();
   }
 
-  changeView() {
-    this.props.changeView(SIGN_IN, {});
+  didPressAuthButton() {
+    this.props.history.push('/auth');
   }
 
   didPressProfileButton(event) {
@@ -61,13 +61,13 @@ class AuthButtonContainer extends Component {
       closeMenu: () => this.closeMenu(),
       didPressProfileButton: (event) => this.didPressProfileButton(event),
       didPressLogoutButton: () => this.didPressLogoutButton(),
-      changeView: () => this.changeView()
+      didPressAuthButton: () => this.didPressAuthButton()
     })
   }
 }
 
 AuthButtonContainer.propStyles = {
-  changeView: PropStyles.func.isRequired
+  history: PropTypes.object.isRequired
 };
 
-export default AuthButtonContainer;
+export default withRouter(AuthButtonContainer);

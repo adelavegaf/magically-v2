@@ -68,7 +68,6 @@ class Search extends Component {
 
 Search.propTypes = {
   variant: PropTypes.string.isRequired,
-  changeView: PropTypes.func.isRequired,
   websiteUrl: PropTypes.string.isRequired,
   onWebsiteURLChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired

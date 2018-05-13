@@ -1,38 +1,12 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import LandingPage from '../components/LandingPage';
-import {PROJECTS} from '../components/utils/Views';
 
 class LandingPageContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      websiteUrl: ''
-    };
-  }
-
-  onWebsiteURLChange(websiteUrl) {
-    this.setState({websiteUrl: websiteUrl});
-  }
-
-  onSearch() {
-    const searchProps = {websiteUrl: this.state.websiteUrl};
-    this.props.changeView(PROJECTS, searchProps);
-  }
-
   render() {
-    return React.createElement(LandingPage, {
-        changeView: this.props.changeView,
-        websiteUrl: this.state.websiteUrl,
-        onWebsiteURLChange: (websiteUrl) => this.onWebsiteURLChange(websiteUrl),
-        onSearch: () => this.onSearch()
-      }
-    );
+    return React.createElement(LandingPage, {});
   }
 }
 
-LandingPageContainer.propTypes = {
-  changeView: PropTypes.func.isRequired
-};
+LandingPageContainer.propTypes = {};
 
 export default LandingPageContainer;

@@ -14,6 +14,7 @@ import {CONTRAST_FIXER, IMAGES_FIXER, LANGUAGE_FIXER} from '../../containers/edi
 import ImageFixerContainer from '../../containers/editor/ImageFixerContainer';
 import LanguageFixerContainer from '../../containers/editor/LanguageFixerContainer';
 import ContrastFixerContainer from '../../containers/editor/ContrastFixerContainer';
+import {CircularProgress} from 'material-ui/Progress';
 
 const styles = theme => ({
   root: {
@@ -92,6 +93,10 @@ class Editor extends Component {
   }
 
   getUnfixedErrorCount(fixerName) {
+    if (this.props.loading) {
+      return <div/>;
+    }
+
     switch (fixerName) {
       case LANGUAGE_FIXER:
         return this.props.project.errors.langErrorsCount - this.props.project.errors.langErrorsFixCount;
@@ -100,7 +105,7 @@ class Editor extends Component {
       case IMAGES_FIXER:
         return this.props.project.errors.imageErrorsCount - this.props.project.errors.imageErrorsFixCount;
       default:
-        return 'Unknown';
+        return '';
     }
   }
 
@@ -150,6 +155,13 @@ class Editor extends Component {
   }
 
   getEditorMainView() {
+    if (this.props.loading) {
+      return (
+        <Grid container justify={'center'} alignItems={'center'} className={this.classes.fullHeight}>
+          <CircularProgress size={50}/>
+        </Grid>
+      );
+    }
     switch (this.props.currentFixer) {
       case IMAGES_FIXER:
         return <ImageFixerContainer isOwner={this.props.isOwner}
@@ -192,14 +204,13 @@ class Editor extends Component {
     );
   }
 
-  render() {
+  getView() {
     return (
       <div className={this.classes.root}>
         <AppBarFactory
           isOwner={this.props.isOwner}
-          projectTitle={this.props.project.title}
+          projectTitle={this.props.loading ? 'Loading...' : this.props.project.title}
           type={'editor'}
-          changeView={this.props.changeView}
           didEditTitle={this.props.didEditProjectTitle}
           didFinishEditingProjectTitle={this.props.didFinishEditingProjectTitle}/>
         {this.getDrawer()}
@@ -207,11 +218,22 @@ class Editor extends Component {
       </div>
     );
   }
+
+  getNoProjectFoundView() {
+    return <div>No project found</div>
+  }
+
+  render() {
+    const view = this.props.exists ? this.getView() : this.getNoProjectFoundView();
+    return view;
+  }
 }
 
 Editor.propTypes = {
   isOwner: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  exists: PropTypes.bool.isRequired,
   currentFixer: PropTypes.string.isRequired,
   didPressLanguageFixerButton: PropTypes.func.isRequired,
   didPressImagesFixerButton: PropTypes.func.isRequired,
@@ -221,8 +243,7 @@ Editor.propTypes = {
   didEditImageDescription: PropTypes.func.isRequired,
   didChangeLang: PropTypes.func.isRequired,
   didChangeForegroundColor: PropTypes.func.isRequired,
-  didChangeBackgroundColor: PropTypes.func.isRequired,
-  changeView: PropTypes.func.isRequired
+  didChangeBackgroundColor: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Editor);

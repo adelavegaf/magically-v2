@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {EDITOR} from '../../components/utils/Views';
 import CreateProject from '../../components/projects/CreateProject';
 import firebase from '../../firebase';
 
@@ -8,12 +8,24 @@ class CreateProjectContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
+      isAuthenticated: true
     };
-    this.projectHandler = null;
+    this.authUnsubscribe = null;
+    this.projectUnsubscribe = null;
   }
 
   componentDidMount() {
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.addProject();
+      } else {
+        this.setState({isAuthenticated: false});
+      }
+      this.authUnsubscribe();
+    });
+  }
+
+  addProject() {
     firebase
       .firestore()
       .collection('projects')
@@ -23,7 +35,7 @@ class CreateProjectContainer extends Component {
         authorEmail: firebase.auth().currentUser.email,
         title: 'Untitled',
         createdAt: new Date(),
-        websiteUrl: this.props.websiteUrl,
+        websiteUrl: decodeURIComponent(this.props.match.params.url),
         favoriteCount: 0,
         favoriteBy: {},
         copiedFrom: null,
@@ -32,33 +44,38 @@ class CreateProjectContainer extends Component {
       })
       .then(projectRef => {
         const projectId = projectRef.id;
-        this.projectHandler = firebase
+        this.projectUnsubscribe = firebase
           .firestore()
           .collection('projects')
           .doc(projectId)
           .onSnapshot(project => {
             if (!project.data().isLoading) {
-              this.props.changeView(EDITOR, {projectId: projectId, project: project.data()});
+              this.props.history.push(`/editor/${projectId}`);
             }
           })
       });
   }
 
   componentWillUnmount() {
-    this.projectHandler();
+    if (this.projectUnsubscribe) {
+      this.projectUnsubscribe();
+    }
+    if (this.authUnsubscribe) {
+      this.authUnsubscribe();
+    }
   }
 
   render() {
     return React.createElement(CreateProject, {
-        websiteUrl: this.props.websiteUrl
+        isAuthenticated: this.state.isAuthenticated,
+        websiteUrl: decodeURIComponent(this.props.match.params.url)
       }
     );
   }
 }
 
 CreateProjectContainer.propTypes = {
-  websiteUrl: PropTypes.string.isRequired,
-  changeView: PropTypes.func.isRequired
+  history: PropTypes.object.isRequired
 };
 
-export default CreateProjectContainer;
+export default withRouter(CreateProjectContainer);

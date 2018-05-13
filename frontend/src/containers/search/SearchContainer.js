@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {PROJECTS} from '../../components/utils/Views';
 import Search from '../../components/search/Search';
 
 class SearchContainer extends Component {
@@ -16,13 +16,11 @@ class SearchContainer extends Component {
   }
 
   onSearch() {
-    const searchProps = {websiteUrl: this.state.websiteUrl};
-    this.props.changeView(PROJECTS, searchProps);
+    this.props.history.push(`/projects/${encodeURIComponent(this.state.websiteUrl)}`);
   }
 
   render() {
     return React.createElement(Search, {
-        changeView: this.props.changeView,
         variant: this.props.variant,
         websiteUrl: this.state.websiteUrl,
         onWebsiteURLChange: (websiteUrl) => this.onWebsiteURLChange(websiteUrl),
@@ -33,9 +31,9 @@ class SearchContainer extends Component {
 }
 
 SearchContainer.propTypes = {
+  history: PropTypes.object.isRequired,
   startText: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
-  changeView: PropTypes.func.isRequired
 };
 
-export default SearchContainer;
+export default withRouter(SearchContainer);

@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
-import PropTypes from 'prop-types';
-import {CREATE_PROJECT, EDITOR, LANDING, PROJECTS, SIGN_IN} from './utils/Views';
 import LandingPageContainer from '../containers/LandingPageContainer';
 import ProjectsContainer from '../containers/projects/ProjectsContainer';
 import EditorContainer from '../containers/editor/EditorContainer';
-import SignInContainer from '../containers/auth/SignInContainer';
+import SignInContainer from '../containers/auth/AuthContainer';
 import CreateProjectContainer from '../containers/projects/CreateProjectContainer';
+import {Route, Switch} from 'react-router-dom';
 
 const theme = createMuiTheme({
   palette: {
@@ -26,37 +25,21 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-  getCurrentView() {
-    const currentViewProps = {...this.props.currentViewProps, changeView: this.props.changeView};
-    switch (this.props.currentView) {
-      case LANDING:
-        return React.createElement(LandingPageContainer, currentViewProps);
-      case PROJECTS:
-        return React.createElement(ProjectsContainer, currentViewProps);
-      case EDITOR:
-        return React.createElement(EditorContainer, currentViewProps);
-      case SIGN_IN:
-        return React.createElement(SignInContainer, currentViewProps);
-      case CREATE_PROJECT:
-        return React.createElement(CreateProjectContainer, currentViewProps);
-      default:
-        return <div/>
-    }
-  }
-
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        {this.getCurrentView()}
+        <Switch>
+          <Route exact path="/" component={LandingPageContainer}/>
+          <Route exact path="/projects/:url" component={ProjectsContainer}/>
+          <Route exact path="/projects/:url/create" component={CreateProjectContainer}/>
+          <Route exact path="/editor/:projectId" component={EditorContainer}/>
+          <Route exact path="/auth" component={SignInContainer}/>
+        </Switch>
       </MuiThemeProvider>
     );
   }
 }
 
-App.propTypes = {
-  currentView: PropTypes.string.isRequired,
-  currentViewProps: PropTypes.object.isRequired,
-  changeView: PropTypes.func.isRequired
-};
+App.propTypes = {};
 
 export default App;

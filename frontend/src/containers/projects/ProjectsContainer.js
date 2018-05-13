@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {CREATE_PROJECT, SIGN_IN} from '../../components/utils/Views';
 import Projects from '../../components/projects/Projects';
 import firebase from '../../firebase';
+
 
 class ProjectsContainer extends Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class ProjectsContainer extends Component {
     this.projectsUnsubscribe = null;
     this.state = {
       projects: [],
-      websiteUrl: this.props.websiteUrl,
       openCreateProjectDialog: false,
       signedIn: false,
       fetching: true
@@ -25,7 +25,7 @@ class ProjectsContainer extends Component {
     this.projectsUnsubscribe = firebase
       .firestore()
       .collection('projects')
-      .where('websiteUrl', '==', this.props.websiteUrl)
+      .where('websiteUrl', '==', decodeURIComponent(this.props.match.params.url))
       .where('isLoading', '==', false)
       .onSnapshot(snapshot => {
         const docs = snapshot.docs.map(doc => {
@@ -47,7 +47,7 @@ class ProjectsContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.websiteUrl === this.props.websiteUrl) {
+    if (prevProps.match.params.url === this.props.match.params.url) {
       return;
     }
     this.fetchProjects();
@@ -68,10 +68,10 @@ class ProjectsContainer extends Component {
 
   confirmDialog() {
     if (this.state.signedIn) {
-      this.props.changeView(CREATE_PROJECT, {websiteUrl: this.props.websiteUrl});
+      this.props.history.push(`/projects/${this.props.match.params.url}/create`);
     }
     else {
-      this.props.changeView(SIGN_IN, {});
+      this.props.history.push('/auth');
     }
   }
 
@@ -80,19 +80,18 @@ class ProjectsContainer extends Component {
         signedIn: this.state.signedIn,
         fetching: this.state.fetching,
         projects: this.state.projects,
-        websiteUrl: this.state.websiteUrl,
+        websiteUrl: decodeURIComponent(this.props.match.params.url),
         openCreateProjectDialog: this.state.openCreateProjectDialog,
         didPressCreateProjectButton: () => this.didPressCreateProjectButton(),
         closeDialog: () => this.closeDialog(),
-        confirmDialog: () => this.confirmDialog(),
-        changeView: this.props.changeView
+        confirmDialog: () => this.confirmDialog()
       }
     );
   }
 }
 
 ProjectsContainer.propTypes = {
-  changeView: PropTypes.func.isRequired
+  history: PropTypes.object.isRequired
 };
 
-export default ProjectsContainer;
+export default withRouter(ProjectsContainer);

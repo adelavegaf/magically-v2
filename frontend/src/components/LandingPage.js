@@ -3,7 +3,6 @@ import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import DownIcon from 'material-ui-icons/KeyboardArrowDown';
 import Grid from 'material-ui/Grid';
-import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import {BOTTOM_STRIP_HEIGHT, FAB_SIZE} from './utils/Sizes';
 import AppBarFactory from './appbar/AppBarFactory';
@@ -71,7 +70,7 @@ class LandingPage extends Component {
   getFirstView() {
     return (
       <div className={this.classes.root}>
-        <AppBarFactory type={'invisible'} searchBarStartText={''} changeView={this.props.changeView}/>
+        <AppBarFactory type={'invisible'} searchBarStartText={''}/>
 
         <Grid container direction={'column'} className={this.classes.fullHeight} spacing={0}>
 
@@ -92,7 +91,7 @@ class LandingPage extends Component {
 
                 <Grid item md={2} lg={3} hidden={{smDown: true}}/>
                 <Grid item xs={12} md={8} lg={6}>
-                  <SearchContainer startText={''} variant={'big'} changeView={this.props.changeView}/>
+                  <SearchContainer startText={''} variant={'big'}/>
                 </Grid>
                 <Grid item md={2} lg={3} hidden={{smDown: true}}/>
 
@@ -153,8 +152,6 @@ class LandingPage extends Component {
   }
 }
 
-LandingPage.propTypes = {
-  changeView: PropTypes.func.isRequired
-};
+LandingPage.propTypes = {};
 
 export default withStyles(styles)(LandingPage);

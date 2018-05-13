@@ -27,7 +27,7 @@ class CreateProject extends Component {
     this.classes = classes;
   }
 
-  render() {
+  getView() {
     return (
       <div className={this.classes.root}>
         <Grid container spacing={24} justify={'center'} alignItems={'center'} className={this.classes.fullHeight}>
@@ -62,9 +62,14 @@ class CreateProject extends Component {
       </div>
     );
   }
+
+  render() {
+    return this.props.isAuthenticated ? this.getView() : <div>You must log in to create a project</div>
+  }
 }
 
 CreateProject.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   websiteUrl: PropTypes.string.isRequired
 };
 

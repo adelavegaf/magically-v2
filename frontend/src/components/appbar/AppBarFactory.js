@@ -53,7 +53,7 @@ class AppBarFactory extends Component {
   }
 
   getAuthButton() {
-    return <AuthButtonContainer changeView={this.props.changeView}/>;
+    return <AuthButtonContainer changeView={this.props.didPressAuthButton}/>;
   }
 
   getInvisibleAppBar() {
@@ -77,9 +77,7 @@ class AppBarFactory extends Component {
                 Magically
               </Typography>
             </Grid>
-            <SearchContainer startText={this.props.searchBarStartText}
-                             variant={'normal'}
-                             changeView={this.props.changeView}/>
+            <SearchContainer startText={this.props.searchBarStartText} variant={'normal'}/>
             <div className={this.classes.flex}/>
             {this.getAuthButton()}
           </Grid>
@@ -152,8 +150,7 @@ AppBarFactory.propTypes = {
   projectTitle: PropTypes.string,
   searchBarStartText: PropTypes.string,
   didEditTitle: PropTypes.func,
-  didFinishEditingProjectTitle: PropTypes.func,
-  changeView: PropTypes.func.isRequired
+  didFinishEditingProjectTitle: PropTypes.func
 };
 
 export default withStyles(styles)(AppBarFactory);

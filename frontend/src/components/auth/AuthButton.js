@@ -35,7 +35,7 @@ class AuthButton extends Component {
   getLoginButton() {
     return (
       <Grid item>
-        <Button variant={'raised'} color="primary" onClick={() => this.props.changeView()}>Log in</Button>
+        <Button variant={'raised'} color="primary" onClick={() => this.props.didPressAuthButton()}>Log in</Button>
       </Grid>
     );
   }
@@ -86,11 +86,11 @@ class AuthButton extends Component {
 AuthButton.propStyles = {
   didPressProfileButton: PropStyles.func.isRequired,
   didPressLogoutButton: PropStyles.func.isRequired,
+  didPressAuthButton: PropStyles.func.isRequired,
   closeMenu: () => this.closeMenu(),
   anchorElement: PropStyles.object.isRequired,
   loggedIn: PropStyles.bool.isRequired,
   displayName: PropStyles.string.isRequired,
-  changeView: PropStyles.func.isRequired
 };
 
 export default withStyles(styles)(AuthButton);

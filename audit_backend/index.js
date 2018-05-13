@@ -33,7 +33,11 @@ const publishAuditResultToQueue = (auditResult) => {
 };
 
 const getImageErrors = (lhr, url) => {
-  const errors = lhr.audits['image-alt'].details.items;
+  const accessibilityIssue = lhr.audits['image-alt'];
+  if (accessibilityIssue.notApplicable) {
+    return [];
+  }
+  const errors = accessibilityIssue.details.items;
   return errors
     .filter(error => {
       const regexMatch = error.snippet.match(/src="(.*?)"/);
@@ -51,7 +55,11 @@ const getImageErrors = (lhr, url) => {
 };
 
 const getLangErrors = (lhr) => {
-  const errors = lhr.audits['html-has-lang'].details.items;
+  const accessibilityIssue = lhr.audits['html-has-lang'];
+  if (accessibilityIssue.notApplicable) {
+    return [];
+  }
+  const errors = accessibilityIssue.details.items;
   return errors.map(error => {
     return {
       domSelector: error.selector
@@ -60,7 +68,11 @@ const getLangErrors = (lhr) => {
 };
 
 const getContrastErrors = (lhr) => {
-  const errors = lhr.audits['color-contrast'].extendedInfo.value.nodes;
+  const accessibilityIssue = lhr.audits['color-contrast'];
+  if (accessibilityIssue.notApplicable) {
+    return [];
+  }
+  const errors = accessibilityIssue.extendedInfo.value.nodes;
   return errors.map(error => {
     const textRegex = /<.*>([\s\S]*)<\/.*>/;
     const failureRegex = /.*foreground color: (.*), background color: (.*), font size: (.*), font weight: (.*)\)\. Expected contrast ratio of (.*)/;

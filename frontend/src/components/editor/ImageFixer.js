@@ -110,6 +110,7 @@ class ImageFixer extends Component {
                    disabled={this.props.hasNoDescription || !this.props.isOwner}
                    fullWidth
                    inputProps={{
+                     maxLength: 100,
                      'aria-label': 'image description',
                    }}/>
           </Grid>

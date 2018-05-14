@@ -39,6 +39,15 @@ const styles = theme => ({
   instructionImage: {
     width: '100%',
     height: 'auto'
+  },
+  imageToFixContainer: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    height: '50%'
+  },
+  imageToFix: {
+    maxWidth: '100%',
+    maxHeight: '100%'
   }
 });
 
@@ -82,15 +91,17 @@ class ImageFixer extends Component {
 
   getFixer() {
     return (
-      <Grid item className={this.classes.flex}>
+      <Grid item className={this.classes.flex} style={{maxHeight: this.props.sideListMaxHeight}}>
         <Grid container direction={'column'} className={this.classes.imageEditorContainer}>
           <Grid item>
             <Typography variant={'headline'}>
               Describe this image
             </Typography>
           </Grid>
-          <Grid item className={this.classes.centerContainer}>
-            <img alt="missing description in website" src={this.props.currentError.imgURL}/>
+          <Grid item className={this.classes.imageToFixContainer}>
+            <img alt="missing description in website"
+                 src={this.props.currentError.imgURL}
+                 className={this.classes.imageToFix}/>
           </Grid>
           <Grid item>
             <Input placeholder="Type image description"

@@ -99,7 +99,7 @@ class ContrastFixer extends Component {
 
   getFixer() {
     return (
-      <Grid item className={this.classes.flex}>
+      <Grid item className={this.classes.flex}  style={{maxHeight: this.props.sideListMaxHeight}}>
         <Grid container direction={'column'} className={this.classes.contrastEditorContainer}>
           <Grid item>
             <Typography variant={'headline'}>

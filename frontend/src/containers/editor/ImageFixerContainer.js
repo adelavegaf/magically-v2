@@ -25,7 +25,7 @@ class ImageFixerContainer extends Component {
   }
 
   render() {
-    const imageErrors = this.props.imageErrors;
+    const {imageErrors, imageErrorsCount} = this.props;
     const index = this.state.currentErrorKey;
     const error = imageErrors[index];
     const hasNoDescription = error && error.description ? error.isFixed && error.description.length === 0 : false;
@@ -37,7 +37,8 @@ class ImageFixerContainer extends Component {
         imageErrors: imageErrors,
         currentError: error,
         hasNoDescription: hasNoDescription,
-        changeError: (key, error) => this.changeError(key, error),
+        didPressNext: () => this.changeError((parseInt(this.state.currentErrorKey, 10) + 1) % imageErrorsCount),
+        changeError: (key) => this.changeError(key),
       }
     );
   }
@@ -47,7 +48,8 @@ ImageFixerContainer.propTypes = {
   isOwner: PropTypes.bool.isRequired,
   sideListMaxHeight: PropTypes.number.isRequired,
   didEditImageDescription: PropTypes.func.isRequired,
-  imageErrors: PropTypes.object.isRequired
+  imageErrors: PropTypes.object.isRequired,
+  imageErrorsCount: PropTypes.number.isRequired
 };
 
 export default ImageFixerContainer;

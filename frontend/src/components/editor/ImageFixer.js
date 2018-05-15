@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Input from 'material-ui/Input';
+import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox'
 import {FormControlLabel} from 'material-ui/Form';
 import EditorSideList from './EditorSideList';
@@ -48,6 +49,9 @@ const styles = theme => ({
   imageToFix: {
     maxWidth: '100%',
     maxHeight: '100%'
+  },
+  nextButtonContainer: {
+    alignSelf: 'flex-end'
   }
 });
 
@@ -127,6 +131,10 @@ class ImageFixer extends Component {
               label="This is a decorative image that doesn't need a description"
             />
           </Grid>
+          <Grid item className={this.classes.flex}/>
+          <Grid item className={this.classes.nextButtonContainer}>
+            <Button variant={'raised'} color={'primary'} onClick={this.props.didPressNext}>Next</Button>
+          </Grid>
         </Grid>
       </Grid>
     );
@@ -154,7 +162,8 @@ ImageFixer.propTypes = {
   imageErrors: PropTypes.object.isRequired,
   currentError: PropTypes.object,
   changeError: PropTypes.func.isRequired,
-  didEditDescription: PropTypes.func.isRequired
+  didEditDescription: PropTypes.func.isRequired,
+  didPressNext: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ImageFixer);

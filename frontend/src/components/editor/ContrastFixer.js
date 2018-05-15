@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import PropTypes from 'prop-types';
+import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import EditorSideList from './EditorSideList';
@@ -37,6 +38,9 @@ const styles = theme => ({
   instructionImage: {
     width: '100%',
     height: 'auto'
+  },
+  actionButtonsContainer: {
+    alignSelf: 'flex-end'
   }
 });
 
@@ -125,6 +129,10 @@ class ContrastFixer extends Component {
               Expected contrast ratio - {this.props.currentError.expectedContrastRatio}
             </Typography>
           </Grid>
+          <Grid item className={this.classes.flex}/>
+          <Grid item className={this.classes.actionButtonsContainer}>
+            <Button variant={'raised'} color={'primary'} onClick={this.props.didPressNext}>Next</Button>
+          </Grid>
         </Grid>
       </Grid>
     );
@@ -151,7 +159,8 @@ ContrastFixer.propTypes = {
   currentError: PropTypes.object,
   didChangeForegroundColor: PropTypes.func.isRequired,
   didChangeBackgroundColor: PropTypes.func.isRequired,
-  changeError: PropTypes.func.isRequired
+  changeError: PropTypes.func.isRequired,
+  didPressNext: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ContrastFixer);

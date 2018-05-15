@@ -27,7 +27,7 @@ class LanguageFixerContainer extends Component {
         didChangeLang: (language) => this.didChangeLang(language),
         langErrors: this.props.langErrors,
         currentError: this.props.langErrors[this.state.currentErrorKey],
-        changeError: (key, error) => this.changeError(key, error),
+        changeError: (key, error) => this.changeError(key, error)
       }
     );
   }

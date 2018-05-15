@@ -66,7 +66,7 @@ class ContrastFixerContainer extends Component {
   }
 
   render() {
-    const contrastErrors = this.props.contrastErrors;
+    const {contrastErrors, contrastErrorsCount} = this.props;
     const index = this.state.currentErrorKey;
     const error = contrastErrors[index];
     const currentContrast = error ? this.calculateContrast(error.foregroundColor, error.backgroundColor) : 0;
@@ -78,7 +78,8 @@ class ContrastFixerContainer extends Component {
         currentContrast: currentContrast,
         didChangeForegroundColor: (fgColor) => this.didChangeForegroundColor(fgColor),
         didChangeBackgroundColor: (bgColor) => this.didChangeBackgroundColor(bgColor),
-        changeError: (key, error) => this.changeError(key, error),
+        changeError: (key) => this.changeError(key),
+        didPressNext: () => this.changeError((parseInt(this.state.currentErrorKey, 10) + 1) % contrastErrorsCount),
       }
     );
   }
@@ -88,6 +89,7 @@ ContrastFixerContainer.propTypes = {
   isOwner: PropTypes.bool.isRequired,
   sideListMaxHeight: PropTypes.number.isRequired,
   contrastErrors: PropTypes.object.isRequired,
+  contrastErrorsCount: PropTypes.number.isRequired,
   didChangeForegroundColor: PropTypes.func.isRequired,
   didChangeBackgroundColor: PropTypes.func.isRequired,
 };

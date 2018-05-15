@@ -79,7 +79,7 @@ class Editor extends Component {
 
   componentDidMount() {
     // TODO(adelavega): HACK, find a way to do this better. Get height to cap side list size.
-    const height = this.editorElement.clientHeight - 48;
+    const height = this.editorElement.clientHeight - 8;
     this.setState({sideListMaxHeight: height});
   }
 
@@ -180,7 +180,8 @@ class Editor extends Component {
                                        didChangeForegroundColor={this.props.didChangeForegroundColor}
                                        didChangeBackgroundColor={this.props.didChangeBackgroundColor}
                                        sideListMaxHeight={this.state.sideListMaxHeight}
-                                       contrastErrors={this.props.project.errors.contrastErrors}/>;
+                                       contrastErrors={this.props.project.errors.contrastErrors}
+                                       contrastErrorsCount={this.props.project.errors.contrastErrorsCount}/>;
       default:
         break;
     }

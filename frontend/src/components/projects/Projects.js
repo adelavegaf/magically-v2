@@ -138,7 +138,8 @@ class Projects extends Component {
   }
 
   getCreateProjectConfirmationDialog() {
-    const dialogTitle = this.props.copyProject ? this.props.copyProject.title + ' - ' + this.props.copyProject.authorEmail : '';
+    const dialogTitle = this.props.copyProject ?
+                        this.props.copyProject.title + ' - ' + this.props.copyProject.authorEmail : '';
     return (
       <Dialog
         open={this.props.openCopyProjectDialog}
@@ -176,7 +177,13 @@ class Projects extends Component {
         <Grid container className={this.classes.contentContainer} justify={'center'}>
           <Grid item xs={8}>
             <div className={this.classes.toolbar}/>
-            <ProjectsFilter projectCount={this.props.projects.length}/>
+            <ProjectsFilter projectCount={this.props.projects.length}
+                            dateFilter={this.props.dateFilter}
+                            ownerFilter={this.props.ownerFilter}
+                            sortByFilter={this.props.sortByFilter}
+                            didPressDateFilter={this.props.didPressDateFilter}
+                            didPressOwnerFilter={this.props.didPressOwnerFilter}
+                            didPressSortByFilter={this.props.didPressSortByFilter}/>
             {this.getProjects()}
           </Grid>
         </Grid>
@@ -200,6 +207,12 @@ Projects.propTypes = {
   signedIn: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   websiteUrl: PropTypes.string.isRequired,
+  dateFilter: PropTypes.string.isRequired,
+  ownerFilter: PropTypes.string.isRequired,
+  sortByFilter: PropTypes.string.isRequired,
+  didPressDateFilter: PropTypes.func.isRequired,
+  didPressOwnerFilter: PropTypes.func.isRequired,
+  didPressSortByFilter: PropTypes.func.isRequired,
   openCreateProjectDialog: PropTypes.bool.isRequired,
   didPressCreateProjectButton: PropTypes.func.isRequired,
   closeCreateProjectDialog: PropTypes.func.isRequired,

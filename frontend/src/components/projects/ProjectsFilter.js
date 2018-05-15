@@ -20,6 +20,14 @@ const styles = theme => ({
   },
   filterButton: {
     textAlign: 'right'
+  },
+  filter: {
+    cursor: 'pointer'
+  },
+  selectedFilter: {
+    cursor: 'pointer',
+    fontWeight: '500',
+    color: '#000'
   }
 });
 
@@ -44,11 +52,13 @@ class ProjectsFilter extends Component {
     );
   }
 
-  getFilterColumnItems(items) {
+  getFilterColumnItems(items, selectedItem, didPressFunction) {
     return items.map((item, index) => {
       return (
         <Grid item key={index}>
-          <Typography variant={'caption'}>
+          <Typography variant={'caption'}
+                      className={item === selectedItem ? this.props.classes.selectedFilter : this.props.classes.filter}
+                      onClick={() => didPressFunction(item)}>
             {item}
           </Typography>
         </Grid>
@@ -56,12 +66,12 @@ class ProjectsFilter extends Component {
     });
   }
 
-  getFilterColumn(heading, items) {
+  getFilterColumn(heading, items, selectedItem, didPressFunction) {
     return (
       <Grid item xs={4} className={this.classes.filterColumn}>
         <Grid container direction={'column'}>
           {this.getFilterHeading(heading)}
-          {this.getFilterColumnItems(items)}
+          {this.getFilterColumnItems(items, selectedItem, didPressFunction)}
         </Grid>
       </Grid>
     );
@@ -70,9 +80,12 @@ class ProjectsFilter extends Component {
   getFilters() {
     return (
       <Grid container spacing={24}>
-        {this.getFilterColumn('DATE', ['Today', 'This year', 'All time'])}
-        {this.getFilterColumn('OWNER', ['Anyone', 'Only others', 'Only me'])}
-        {this.getFilterColumn('SORT BY', ['Favorites', 'Upvotes', 'Completion Percentage'])}
+        {this.getFilterColumn('DATE', ['Today', 'This year', 'All time'], this.props.dateFilter,
+          this.props.didPressDateFilter)}
+        {this.getFilterColumn('OWNER', ['Anyone', 'Only me'], this.props.ownerFilter,
+          this.props.didPressOwnerFilter)}
+        {this.getFilterColumn('SORT BY', ['Favorites', 'Date', 'Completion Percentage'], this.props.sortByFilter,
+          this.props.didPressSortByFilter)}
       </Grid>
     );
   }
@@ -104,7 +117,13 @@ class ProjectsFilter extends Component {
 }
 
 ProjectsFilter.propTypes = {
-  projectCount: PropTypes.number.isRequired
+  projectCount: PropTypes.number.isRequired,
+  dateFilter: PropTypes.string.isRequired,
+  ownerFilter: PropTypes.string.isRequired,
+  sortByFilter: PropTypes.string.isRequired,
+  didPressDateFilter: PropTypes.func.isRequired,
+  didPressOwnerFilter: PropTypes.func.isRequired,
+  didPressSortByFilter: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ProjectsFilter);

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import EditorSideList from './EditorSideList';
@@ -45,6 +46,33 @@ const styles = theme => ({
   },
   actionButtonsContainer: {
     alignSelf: 'flex-end'
+  },
+  colorPickerContainer: {
+    cursor: 'pointer'
+  },
+  colorPreview: {
+    width: '36px',
+    height: '36px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: '#eee',
+    borderRadius: '8px',
+    marginLeft: theme.spacing.unit
+  },
+  colorText: {
+    marginRight: theme.spacing.unit
+  },
+  popover: {
+    marginTop: theme.spacing.unit,
+    position: 'absolute',
+    zIndex: 2
+  },
+  cover: {
+    position: 'fixed',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    left: '0px',
   }
 });
 
@@ -86,19 +114,53 @@ class ContrastFixer extends Component {
     );
   }
 
+  getChromePicker(color, changeFn) {
+    return (
+      <div className={this.classes.popover}>
+        <div className={this.classes.cover} onClick={() => this.props.closePickers()}/>
+        <ChromePicker color={color} onChange={(color, event) => changeFn(color.hex)}/>
+      </div>
+    )
+  }
+
+  getColorPicker(text, color, openPicker, displayPicker, changeFn) {
+    return (
+      <Grid container>
+        <Grid item>
+          <Paper className={this.classes.colorPickerContainer} onClick={openPicker}>
+            <Grid container alignItems={'center'}>
+              <Grid item>
+                <div className={this.classes.colorPreview}
+                     style={{backgroundColor: color}}/>
+              </Grid>
+              <Grid item>
+                <Typography className={this.classes.colorText}>{text}</Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+          {displayPicker ? this.getChromePicker(color, changeFn) : null}
+        </Grid>
+      </Grid>
+    );
+  }
+
   getColorPickers() {
     return this.props.isOwner ? (
       <Grid item>
-        <Grid container justify={'space-around'}>
+        <Grid container>
           <Grid item>
-            <Typography variant={'title'} align={'center'}>Foreground Color</Typography>
-            <ChromePicker color={this.props.currentError.foregroundColor}
-                          onChange={(color, event) => this.props.didChangeForegroundColor(color.hex)}/>
+            {this.getColorPicker('Foreground color',
+              this.props.currentError.foregroundColor,
+              this.props.openForegroundPicker,
+              this.props.displayForegroundPicker,
+              this.props.didChangeForegroundColor)}
           </Grid>
           <Grid item>
-            <Typography variant={'title'} align={'center'}>Background Color</Typography>
-            <ChromePicker color={this.props.currentError.backgroundColor}
-                          onChange={(color, event) => this.props.didChangeBackgroundColor(color.hex)}/>
+            {this.getColorPicker('Background color',
+              this.props.currentError.backgroundColor,
+              this.props.openBackgroundPicker,
+              this.props.displayBackgroundPicker,
+              this.props.didChangeBackgroundColor)}
           </Grid>
         </Grid>
       </Grid>
@@ -107,7 +169,7 @@ class ContrastFixer extends Component {
 
   getFixer() {
     return (
-      <Grid item className={this.classes.flex}  style={{maxHeight: this.props.sideListMaxHeight}}>
+      <Grid item className={this.classes.flex} style={{maxHeight: this.props.sideListMaxHeight}}>
         <Grid container direction={'column'} className={this.classes.contrastEditorContainer}>
           <Grid item>
             <Typography variant={'headline'}>
@@ -122,17 +184,13 @@ class ContrastFixer extends Component {
               {this.props.currentError.text}
             </p>
           </Grid>
+          <Grid item>
+            <Typography variant={'caption'} align={'center'}>
+              The current contrast ratio is {this.props.currentContrast.toFixed(1)}:1. It must be at least
+              at {this.props.currentError.expectedContrastRatio}.
+            </Typography>
+          </Grid>
           {this.getColorPickers()}
-          <Grid item>
-            <Typography variant={'subheading'}>
-              Current contrast ratio - {this.props.currentContrast.toFixed(1)}:1
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant={'subheading'}>
-              Expected contrast ratio - {this.props.currentError.expectedContrastRatio}
-            </Typography>
-          </Grid>
           <Grid item className={this.classes.spacingContainer}/>
           <Grid item className={this.classes.actionButtonsContainer}>
             <Button variant={'raised'} color={'primary'} onClick={this.props.didPressNext}>Next</Button>
@@ -164,7 +222,12 @@ ContrastFixer.propTypes = {
   didChangeForegroundColor: PropTypes.func.isRequired,
   didChangeBackgroundColor: PropTypes.func.isRequired,
   changeError: PropTypes.func.isRequired,
-  didPressNext: PropTypes.func.isRequired
+  didPressNext: PropTypes.func.isRequired,
+  displayForegroundPicker: PropTypes.bool.isRequired,
+  openForegroundPicker: PropTypes.func.isRequired,
+  displayBackgroundPicker: PropTypes.bool.isRequired,
+  openBackgroundPicker: PropTypes.func.isRequired,
+  closePickers: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ContrastFixer);

@@ -7,6 +7,9 @@ class ContrastFixerContainer extends Component {
     super(props);
     this.state = {
       currentErrorKey: -1,
+      displayForegroundPicker: false,
+      displayBackgroundPicker: false,
+
     };
   }
 
@@ -65,6 +68,18 @@ class ContrastFixerContainer extends Component {
     this.props.didChangeBackgroundColor(this.state.currentErrorKey, bgColor, currentContrast >= expectedContrast);
   }
 
+  openForegroundPicker() {
+    this.setState({displayForegroundPicker: true, displayBackgroundPicker: false});
+  }
+
+  openBackgroundPicker() {
+    this.setState({displayForegroundPicker: false, displayBackgroundPicker: true});
+  }
+
+  closePickers() {
+    this.setState({displayForegroundPicker: false, displayBackgroundPicker: false});
+  }
+
   render() {
     const {contrastErrors, contrastErrorsCount} = this.props;
     const index = this.state.currentErrorKey;
@@ -76,10 +91,15 @@ class ContrastFixerContainer extends Component {
         contrastErrors: contrastErrors,
         currentError: error,
         currentContrast: currentContrast,
+        displayForegroundPicker: this.state.displayForegroundPicker,
+        displayBackgroundPicker: this.state.displayBackgroundPicker,
         didChangeForegroundColor: (fgColor) => this.didChangeForegroundColor(fgColor),
         didChangeBackgroundColor: (bgColor) => this.didChangeBackgroundColor(bgColor),
         changeError: (key) => this.changeError(key),
         didPressNext: () => this.changeError((parseInt(this.state.currentErrorKey, 10) + 1) % contrastErrorsCount),
+        openForegroundPicker: () => this.openForegroundPicker(),
+        openBackgroundPicker: () => this.openBackgroundPicker(),
+        closePickers: () => this.closePickers()
       }
     );
   }

@@ -159,7 +159,6 @@ class EditorContainer extends Component {
         wasFixed ? contrastErrorsFixCount : contrastErrorsFixCount + 1;
       updatedProject[`errors.totalFixCount`] = wasFixed ? totalFixCount : totalFixCount + 1;
     }
-
     firebase
       .firestore()
       .collection('projects')
@@ -173,6 +172,27 @@ class EditorContainer extends Component {
 
   didChangeBackgroundColor(contrastErrorKey, color, isFixed) {
     this.didChangeContrastColor(contrastErrorKey, 'backgroundColor', color, isFixed);
+  }
+
+  applyColorContrastFixToAllErrors(key) {
+    const error = this.state.project.errors.contrastErrors[key];
+    const errorCount = this.state.project.errors.contrastErrorsCount;
+    if (!error) {
+      return;
+    }
+    const {foregroundColor, backgroundColor, isFixed} = error;
+    const updatedProject = {};
+    updatedProject[`errors.contrastErrorsFixCount`] = isFixed ? errorCount : 0;
+    for (let i = 0; i < errorCount; i++) {
+      updatedProject[`errors.contrastErrors.${i}.foregroundColor`] = foregroundColor;
+      updatedProject[`errors.contrastErrors.${i}.backgroundColor`] = backgroundColor;
+      updatedProject[`errors.contrastErrors.${i}.isFixed`] = isFixed;
+    }
+    firebase
+      .firestore()
+      .collection('projects')
+      .doc(this.props.match.params.projectId)
+      .update(updatedProject);
   }
 
   render() {
@@ -194,7 +214,8 @@ class EditorContainer extends Component {
         didChangeForegroundColor: (contrastErrorKey, color, isFixed) => this.didChangeForegroundColor(contrastErrorKey,
           color, isFixed),
         didChangeBackgroundColor: (contrastErrorKey, color, isFixed) => this.didChangeBackgroundColor(contrastErrorKey,
-          color, isFixed)
+          color, isFixed),
+        applyColorContrastFixToAllErrors: (contrastErrorKey) => this.applyColorContrastFixToAllErrors(contrastErrorKey)
       }
     );
   }

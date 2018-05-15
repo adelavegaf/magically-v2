@@ -193,7 +193,16 @@ class ContrastFixer extends Component {
           {this.getColorPickers()}
           <Grid item className={this.classes.spacingContainer}/>
           <Grid item className={this.classes.actionButtonsContainer}>
-            <Button variant={'raised'} color={'primary'} onClick={this.props.didPressNext}>Next</Button>
+            <Grid container>
+              <Grid item>
+                <Button variant={'raised'} color={'primary'} onClick={this.props.didPressApplyToAll}>
+                  Apply To All
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant={'raised'} color={'primary'} onClick={this.props.didPressNext}>Next</Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -228,6 +237,7 @@ ContrastFixer.propTypes = {
   displayBackgroundPicker: PropTypes.bool.isRequired,
   openBackgroundPicker: PropTypes.func.isRequired,
   closePickers: PropTypes.func.isRequired,
+  didPressApplyToAll: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ContrastFixer);

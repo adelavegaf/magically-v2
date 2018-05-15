@@ -95,6 +95,7 @@ class ContrastFixerContainer extends Component {
         displayBackgroundPicker: this.state.displayBackgroundPicker,
         didChangeForegroundColor: (fgColor) => this.didChangeForegroundColor(fgColor),
         didChangeBackgroundColor: (bgColor) => this.didChangeBackgroundColor(bgColor),
+        didPressApplyToAll: () => this.props.applyColorContrastFixToAllErrors(this.state.currentErrorKey),
         changeError: (key) => this.changeError(key),
         didPressNext: () => this.changeError((parseInt(this.state.currentErrorKey, 10) + 1) % contrastErrorsCount),
         openForegroundPicker: () => this.openForegroundPicker(),
@@ -112,6 +113,7 @@ ContrastFixerContainer.propTypes = {
   contrastErrorsCount: PropTypes.number.isRequired,
   didChangeForegroundColor: PropTypes.func.isRequired,
   didChangeBackgroundColor: PropTypes.func.isRequired,
+  applyColorContrastFixToAllErrors: PropTypes.func.isRequired
 };
 
 export default ContrastFixerContainer;

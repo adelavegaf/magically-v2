@@ -181,7 +181,8 @@ class Editor extends Component {
                                        didChangeBackgroundColor={this.props.didChangeBackgroundColor}
                                        sideListMaxHeight={this.state.sideListMaxHeight}
                                        contrastErrors={this.props.project.errors.contrastErrors}
-                                       contrastErrorsCount={this.props.project.errors.contrastErrorsCount}/>;
+                                       contrastErrorsCount={this.props.project.errors.contrastErrorsCount}
+                                       applyColorContrastFixToAllErrors={this.props.applyColorContrastFixToAllErrors}/>;
       default:
         break;
     }
@@ -244,7 +245,8 @@ Editor.propTypes = {
   didEditImageDescription: PropTypes.func.isRequired,
   didChangeLang: PropTypes.func.isRequired,
   didChangeForegroundColor: PropTypes.func.isRequired,
-  didChangeBackgroundColor: PropTypes.func.isRequired
+  didChangeBackgroundColor: PropTypes.func.isRequired,
+  applyColorContrastFixToAllErrors: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Editor);

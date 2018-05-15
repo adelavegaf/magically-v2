@@ -10,11 +10,48 @@ exports.addProjectToAuditQueue = functions
   .document('projects/{projectId}')
   .onCreate((snapshot, context) => {
     const project = snapshot.data();
-    const websiteUrl = project.websiteUrl;
     const projectId = context.params.projectId;
+
+    if (project.processed) {
+      return Promise.resolve();
+    }
+
+    const addProcessedTag = admin
+      .firestore()
+      .collection('projects')
+      .doc(projectId)
+      .set({processed: true}, {merge: true});
+
+    if (project.copiedFrom) {
+      const copyProject = admin
+        .firestore()
+        .collection('projects')
+        .doc(project.copiedFrom)
+        .get()
+        .then(projectSnapshot => {
+          return projectSnapshot.data();
+        })
+        .then((projectToCopy) => {
+          const copyErrors = admin
+            .firestore()
+            .collection('projects')
+            .doc(projectId)
+            .set({errors: projectToCopy.errors, isLoading: false}, {merge: true});
+          const addCopyCount = admin
+            .firestore()
+            .collection('projects')
+            .doc(project.copiedFrom)
+            .update({copyCount: projectToCopy.copyCount + 1});
+          return Promise.all([copyErrors, addCopyCount]);
+        });
+
+      return Promise.all([addProcessedTag, copyProject]);
+    }
+
+    const websiteUrl = project.websiteUrl;
     const data = JSON.stringify({projectId: projectId, websiteUrl: websiteUrl});
     const dataBuffer = Buffer.from(data);
-    return pubsub
+    const addMessageToPubsub = pubsub
       .topic('audit')
       .publisher()
       .publish(dataBuffer)
@@ -25,6 +62,7 @@ exports.addProjectToAuditQueue = functions
       .catch(err => {
         console.error('ERROR:', err);
       });
+    return Promise.all([addProcessedTag, addMessageToPubsub]);
   });
 
 exports.addAuditResultToFirestore = functions

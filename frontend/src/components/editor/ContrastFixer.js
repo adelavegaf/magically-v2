@@ -39,6 +39,10 @@ const styles = theme => ({
     width: '100%',
     height: 'auto'
   },
+  spacingContainer: {
+    flex: 1,
+    padding: '0px !important'
+  },
   actionButtonsContainer: {
     alignSelf: 'flex-end'
   }
@@ -129,7 +133,7 @@ class ContrastFixer extends Component {
               Expected contrast ratio - {this.props.currentError.expectedContrastRatio}
             </Typography>
           </Grid>
-          <Grid item className={this.classes.flex}/>
+          <Grid item className={this.classes.spacingContainer}/>
           <Grid item className={this.classes.actionButtonsContainer}>
             <Button variant={'raised'} color={'primary'} onClick={this.props.didPressNext}>Next</Button>
           </Grid>

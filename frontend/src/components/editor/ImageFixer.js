@@ -50,6 +50,10 @@ const styles = theme => ({
     maxWidth: '100%',
     maxHeight: '100%'
   },
+  spacingContainer: {
+    flex: 1,
+    padding: '0px !important'
+  },
   nextButtonContainer: {
     alignSelf: 'flex-end'
   }
@@ -131,7 +135,7 @@ class ImageFixer extends Component {
               label="This is a decorative image that doesn't need a description"
             />
           </Grid>
-          <Grid item className={this.classes.flex}/>
+          <Grid item className={this.classes.spacingContainer}/>
           <Grid item className={this.classes.nextButtonContainer}>
             <Button variant={'raised'} color={'primary'} onClick={this.props.didPressNext}>Next</Button>
           </Grid>

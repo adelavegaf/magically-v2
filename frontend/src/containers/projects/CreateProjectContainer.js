@@ -50,7 +50,7 @@ class CreateProjectContainer extends Component {
           .doc(projectId)
           .onSnapshot(project => {
             if (!project.data().isLoading) {
-              this.props.history.push(`/editor/${projectId}`);
+              this.props.history.replace(`/editor/${projectId}`);
             }
           })
       });

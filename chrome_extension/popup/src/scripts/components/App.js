@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Search from './Search';
-import Grid from 'material-ui/Grid';
 import ProjectsContainer from '../containers/ProjectsContainer';
+import Switch from 'material-ui/Switch';
 
 const theme = createMuiTheme({
   palette: {
@@ -34,6 +33,9 @@ class App extends Component {
             <Typography variant="title" color="inherit">
               Magically
             </Typography>
+            <div style={{flex: 1}}/>
+            <Switch checked={this.props.isAutomaticFixEnabled}
+                    onChange={() => this.props.didToggleAutomaticFixSwitch()}/>
           </Toolbar>
         </AppBar>
         <ProjectsContainer/>
@@ -41,5 +43,10 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  isAutomaticFixEnabled: PropTypes.bool.isRequired,
+  didToggleAutomaticFixSwitch: PropTypes.func.isRequired
+};
 
 export default App;

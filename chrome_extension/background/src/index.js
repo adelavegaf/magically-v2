@@ -25,6 +25,21 @@ chrome.runtime.onMessage.addListener((request, sender, response) => {
         });
       return true;
     }
+    case 'GET_IS_AUTOMATIC_FIX_ENABLED':
+      StorageApi
+        .getIsAutomaticFixEnabled()
+        .then(isAutomaticFixEnabled => {
+          response(isAutomaticFixEnabled);
+        });
+      return true;
+    case 'SET_IS_AUTOMATIC_FIX_ENABLED':
+      const {isAutomaticFixEnabled} = request;
+      StorageApi
+        .setIsAutomaticFixEnabled(isAutomaticFixEnabled)
+        .then(isAutomaticFixEnabled => {
+          response(isAutomaticFixEnabled);
+        });
+      return true;
     default:
       console.error('unknown message', request);
   }

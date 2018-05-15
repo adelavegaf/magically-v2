@@ -12,3 +12,16 @@ export const setCurrentProjectIdRequest = (tabId, projectId) => {
     projectId: projectId
   };
 };
+
+export const getIsAutomaticFixEnabledRequest = () => {
+  return {
+    type: 'GET_IS_AUTOMATIC_FIX_ENABLED'
+  };
+};
+
+export const setIsAutomaticFixEnabledRequest = (isAutomaticFixEnabled) => {
+  return {
+    type: 'SET_IS_AUTOMATIC_FIX_ENABLED',
+    isAutomaticFixEnabled: isAutomaticFixEnabled
+  };
+};

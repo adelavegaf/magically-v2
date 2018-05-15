@@ -7,6 +7,31 @@ const getCurrentProjectIdKey = (tabId) => {
 };
 
 export default class StorageApi {
+  static getIsAutomaticFixEnabled() {
+    const lookupDict = {isAutomaticFixEnabled: true};
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(lookupDict, lookupResult => {
+        if (chrome.runtime.lastError) {
+          reject(chrome.runtime.lastError);
+          return;
+        }
+        resolve(lookupResult);
+      });
+    });
+  }
+
+  static setIsAutomaticFixEnabled(isAutomaticFixEnabled) {
+    const storageObject = {isAutomaticFixEnabled: isAutomaticFixEnabled};
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.set(storageObject, () => {
+        if (chrome.runtime.lastError) {
+          reject(chrome.runtime.lastError);
+          return;
+        }
+        resolve({isAutomaticFixEnabled: isAutomaticFixEnabled});
+      })
+    });
+  }
 
   static setTabInformation(tabId, projects, currentProjectId) {
     const storageObject = {};

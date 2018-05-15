@@ -1,4 +1,9 @@
-import {getCurrentTabInformationRequest, setCurrentProjectIdRequest} from './Requests';
+import {
+  getCurrentTabInformationRequest,
+  getIsAutomaticFixEnabledRequest,
+  setCurrentProjectIdRequest,
+  setIsAutomaticFixEnabledRequest
+} from './Requests';
 
 const getCurrentTabId = () => {
   return new Promise((resolve, reject) => {
@@ -14,6 +19,32 @@ const getCurrentTabId = () => {
 };
 
 export default class MessagingApi {
+  static getIsAutomaticFixEnabled() {
+    return new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(getIsAutomaticFixEnabledRequest(), (response) => {
+        console.log(response);
+        if (response.error) {
+          reject(response.error);
+          return;
+        }
+        resolve(response);
+      });
+    });
+  }
+
+  static setIsAutomaticFixEnabled(isAutomaticFixEnabled) {
+    return new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(setIsAutomaticFixEnabledRequest(isAutomaticFixEnabled), (response) => {
+        console.log(response);
+        if (response.error) {
+          reject(response.error);
+          return;
+        }
+        resolve(response);
+      });
+    });
+  }
+
   static getCurrentTabInformation() {
     return getCurrentTabId().then(tabId => {
       return new Promise((resolve, reject) => {

@@ -7,6 +7,7 @@ class ProjectsContainer extends Component {
     super(props);
     this.state = {
       projects: [],
+      filteredProjects: [],
       currentProjectId: -1,
       loading: true
     };
@@ -19,6 +20,7 @@ class ProjectsContainer extends Component {
         const {projects, currentProjectId} = response;
         this.setState({
           projects: projects,
+          filteredProjects: projects,
           currentProjectId: currentProjectId,
           loading: false
         });
@@ -40,12 +42,19 @@ class ProjectsContainer extends Component {
       })
   }
 
+  didModifyProjectFilter(text) {
+    const filteredProjects = this.state.projects.filter(
+      project => project.title.toLowerCase().startsWith(text.toLowerCase()));
+    this.setState({filteredProjects: filteredProjects});
+  }
+
   render() {
     return React.createElement(Projects, {
-      projects: this.state.projects,
+      projects: this.state.filteredProjects,
       currentProjectId: this.state.currentProjectId,
       loading: this.state.loading,
-      didPressProject: (projectId) => this.setCurrentProjectId(projectId)
+      didPressProject: (projectId) => this.setCurrentProjectId(projectId),
+      didModifyProjectFilter: (text) => this.didModifyProjectFilter(text)
     });
   }
 }

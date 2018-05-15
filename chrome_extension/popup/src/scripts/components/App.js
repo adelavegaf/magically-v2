@@ -36,11 +36,6 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-
-        <Grid container>
-          <Search/>
-        </Grid>
-
         <ProjectsContainer/>
       </MuiThemeProvider>
     );

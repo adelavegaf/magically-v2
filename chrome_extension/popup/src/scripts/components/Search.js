@@ -32,6 +32,7 @@ class Search extends Component {
   render() {
     return <Input className={this.classes.searchInput}
                   placeholder={'Search Projects'}
+                  onChange={(e) => this.props.didModifyProjectFilter(e.target.value)}
                   disableUnderline={true}
                   fullWidth={true}
                   startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
@@ -40,7 +41,7 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-//  onSearch: PropTypes.func.isRequired
+  didModifyProjectFilter: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Search);

@@ -6,6 +6,19 @@ const getCurrentProjectIdKey = (tabId) => {
   return `currentProjectIdFor${tabId}`;
 };
 
+const getCurrentTabId = () => {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({active: true, currentWindow: true}, (arrayOfTabs) => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+        return;
+      }
+      const tabId = arrayOfTabs[0].id;
+      resolve(tabId);
+    });
+  });
+};
+
 export default class StorageApi {
   static getIsAutomaticFixEnabled() {
     const lookupDict = {isAutomaticFixEnabled: true};
@@ -60,8 +73,8 @@ export default class StorageApi {
           reject(chrome.runtime.lastError);
           return;
         }
-        const projects = JSON.parse(lookupResult[projectsKey]);
         const currentProjectId = lookupResult[currentProjectIdKey];
+        const projects = currentProjectId >= 0 ? JSON.parse(lookupResult[projectsKey]) : [];
         resolve({projects: projects, currentProjectId: currentProjectId});
       });
     });
@@ -80,5 +93,9 @@ export default class StorageApi {
         resolve({currentProjectId: projectId});
       });
     });
+  }
+
+  static getCurrentTabInformation() {
+    return getCurrentTabId().then(tabId => this.getTabInformation(tabId));
   }
 }

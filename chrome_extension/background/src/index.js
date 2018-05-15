@@ -36,8 +36,15 @@ chrome.runtime.onMessage.addListener((request, sender, response) => {
       const {isAutomaticFixEnabled} = request;
       StorageApi
         .setIsAutomaticFixEnabled(isAutomaticFixEnabled)
-        .then(isAutomaticFixEnabled => {
-          response(isAutomaticFixEnabled);
+        .then(setResponse => {
+          response(setResponse);
+          return setResponse.isAutomaticFixEnabled ? StorageApi.getCurrentTabInformation() : Promise.resolve(null);
+        })
+        .then(tabInformation => {
+          if (tabInformation) {
+            const {projects, currentProjectId} = tabInformation;
+            return Fix.generateFrom(projects[currentProjectId]);
+          }
         });
       return true;
     default:

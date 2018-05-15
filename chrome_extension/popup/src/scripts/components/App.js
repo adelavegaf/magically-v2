@@ -38,7 +38,7 @@ class App extends Component {
                     onChange={() => this.props.didToggleAutomaticFixSwitch()}/>
           </Toolbar>
         </AppBar>
-        <ProjectsContainer/>
+        <ProjectsContainer isAutomaticFixEnabled={this.props.isAutomaticFixEnabled}/>
       </MuiThemeProvider>
     );
   }

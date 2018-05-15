@@ -6,9 +6,19 @@ import Search from './Search';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 
-const styles = theme => ({});
+const styles = theme => ({
+  automaticFixIsDisabled: {
+    color: '#a6343e',
+    fontWeight: 500
+  }
+});
 
 class Projects extends Component {
+  constructor(props) {
+    super(props);
+    this.classes = props.classes;
+  }
+
   getProjects() {
     if (this.props.projects && this.props.projects.length > 0) {
       return this.props.projects.map((project, key) => {
@@ -33,6 +43,12 @@ class Projects extends Component {
         <Grid container>
           <Search didModifyProjectFilter={this.props.didModifyProjectFilter}/>
         </Grid>
+        {
+          this.props.isAutomaticFixEnabled ? <div/> :
+          <Typography variant={'caption'} align={'center'} className={this.classes.automaticFixIsDisabled}>
+            Toggle the switch in the upper right corner to apply the project fixes.
+          </Typography>
+        }
         {this.getProjects()}
       </div>
     );
@@ -40,6 +56,7 @@ class Projects extends Component {
 }
 
 Projects.propTypes = {
+  isAutomaticFixEnabled: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   currentProjectId: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,

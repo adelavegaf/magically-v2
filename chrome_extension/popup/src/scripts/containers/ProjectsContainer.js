@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Projects from '../components/Projects';
 import MessagingApi from '../messaging/MessagingApi';
 
@@ -50,6 +51,7 @@ class ProjectsContainer extends Component {
 
   render() {
     return React.createElement(Projects, {
+      isAutomaticFixEnabled: this.props.isAutomaticFixEnabled,
       projects: this.state.filteredProjects,
       currentProjectId: this.state.currentProjectId,
       loading: this.state.loading,
@@ -58,5 +60,9 @@ class ProjectsContainer extends Component {
     });
   }
 }
+
+ProjectsContainer.propTypes = {
+  isAutomaticFixEnabled: PropTypes.bool.isRequired
+};
 
 export default ProjectsContainer;

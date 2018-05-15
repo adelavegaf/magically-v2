@@ -1,3 +1,5 @@
+import StorageApi from './utils/StorageApi';
+
 const sanitizeInput = (input) => {
   return input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 };
@@ -59,9 +61,13 @@ const getFixFromProject = (project) => {
 
 export default class Fix {
   static generateFrom(project) {
-    const fix = getFixFromProject(project);
-    chrome.tabs.executeScript({
-      code: fix
+    return StorageApi.getIsAutomaticFixEnabled().then(({isAutomaticFixEnabled}) => {
+      if (isAutomaticFixEnabled) {
+        const fix = getFixFromProject(project);
+        chrome.tabs.executeScript({
+          code: fix
+        });
+      }
     });
   }
 }

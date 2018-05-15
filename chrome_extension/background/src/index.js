@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener((request, sender, response) => {
           return StorageApi.getTabInformation(tabId);
         })
         .then(({projects, currentProjectId}) => {
-          Fix.generateFrom(projects[currentProjectId]);
+          return Fix.generateFrom(projects[currentProjectId]);
         });
       return true;
     }
@@ -49,7 +49,7 @@ chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
   if (status !== 'complete') {
     return;
   }
-  Api.getProjectsWithUrl(tab.url).then(projects => {
+  return Api.getProjectsWithUrl(tab.url).then(projects => {
     if (projects.length === 0) {
       return;
     }
@@ -61,6 +61,6 @@ chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
 
     // Fix the website
     const selectedProject = projects[currentProjectId];
-    Fix.generateFrom(selectedProject);
+    return Fix.generateFrom(selectedProject);
   });
 });

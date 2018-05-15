@@ -175,14 +175,18 @@ class EditorContainer extends Component {
   }
 
   applyColorContrastFixToAllErrors(key) {
-    const error = this.state.project.errors.contrastErrors[key];
-    const errorCount = this.state.project.errors.contrastErrorsCount;
+    const project = this.state.project;
+    const error = project.errors.contrastErrors[key];
+    const errorCount = project.errors.contrastErrorsCount;
     if (!error) {
       return;
     }
     const {foregroundColor, backgroundColor, isFixed} = error;
     const updatedProject = {};
-    updatedProject[`errors.contrastErrorsFixCount`] = isFixed ? errorCount : 0;
+    const contrastFixCount = isFixed ? errorCount : 0;
+    updatedProject[`errors.totalFixCount`] =
+      project.errors.imageErrorsFixCount + project.errors.langErrorsFixCount + contrastFixCount;
+    updatedProject[`errors.contrastErrorsFixCount`] = contrastFixCount;
     for (let i = 0; i < errorCount; i++) {
       updatedProject[`errors.contrastErrors.${i}.foregroundColor`] = foregroundColor;
       updatedProject[`errors.contrastErrors.${i}.backgroundColor`] = backgroundColor;

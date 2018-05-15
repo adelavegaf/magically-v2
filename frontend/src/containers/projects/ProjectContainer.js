@@ -9,20 +9,6 @@ class ProjectContainer extends Component {
     this.props.history.push(`/editor/${this.props.projectId}`);
   }
 
-  didPressCopyButton() {
-    const currentUser = firebase.auth().currentUser;
-    if (!currentUser) {
-      // TODO(adelavega): Tell user to log in to copy project.
-      return;
-    }
-    // TODO(adelavega): Do this after confirmation dialog.
-    firebase
-      .firestore()
-      .collection('projects')
-      .doc(this.props.projectId)
-      .update({copyCount: this.props.project.copyCount + 1});
-  }
-
   didPressFavoriteButton() {
     const currentUser = firebase.auth().currentUser;
     if (!currentUser) {
@@ -50,7 +36,7 @@ class ProjectContainer extends Component {
         projectId: this.props.projectId,
         isFavorite: isFavorite,
         didPressProject: () => this.didPressProject(),
-        didPressCopyButton: () => this.didPressCopyButton(),
+        didPressCopyButton: () => this.props.didPressCopyProjectButton(),
         didPressFavoriteButton: () => this.didPressFavoriteButton()
       }
     );
@@ -60,7 +46,8 @@ class ProjectContainer extends Component {
 ProjectContainer.propTypes = {
   history: PropTypes.object.isRequired,
   projectId: PropTypes.string.isRequired,
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
+  didPressCopyProjectButton: PropTypes.func.isRequired
 };
 
 export default withRouter(ProjectContainer);

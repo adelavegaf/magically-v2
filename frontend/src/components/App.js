@@ -6,6 +6,7 @@ import EditorContainer from '../containers/editor/EditorContainer';
 import SignInContainer from '../containers/auth/AuthContainer';
 import CreateProjectContainer from '../containers/projects/CreateProjectContainer';
 import {Route, Switch} from 'react-router-dom';
+import CopyProjectContainer from '../containers/projects/CopyProjectContainer';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,6 +33,7 @@ class App extends Component {
           <Route exact path="/" component={LandingPageContainer}/>
           <Route exact path="/projects/:url" component={ProjectsContainer}/>
           <Route exact path="/projects/:url/create" component={CreateProjectContainer}/>
+          <Route exact path="/projects/:url/copy/:projectId" component={CopyProjectContainer}/>
           <Route exact path="/editor/:projectId" component={EditorContainer}/>
           <Route exact path="/auth" component={SignInContainer}/>
         </Switch>

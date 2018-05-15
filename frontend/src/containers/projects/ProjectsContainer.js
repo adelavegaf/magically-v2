@@ -13,6 +13,8 @@ class ProjectsContainer extends Component {
     this.state = {
       projects: [],
       openCreateProjectDialog: false,
+      openCopyProjectDialog: false,
+      copyProject: null,
       signedIn: false,
       fetching: true
     }
@@ -62,13 +64,30 @@ class ProjectsContainer extends Component {
     this.setState({openCreateProjectDialog: true});
   }
 
-  closeDialog() {
+  closeCreateProjectDialog() {
     this.setState({openCreateProjectDialog: false});
   }
 
-  confirmDialog() {
+  confirmCreateProjectDialog() {
     if (this.state.signedIn) {
       this.props.history.push(`/projects/${this.props.match.params.url}/create`);
+    }
+    else {
+      this.props.history.push('/auth');
+    }
+  }
+
+  didPressCopyProjectButton(project) {
+    this.setState({openCopyProjectDialog: true, copyProject: project});
+  }
+
+  closeCopyProjectDialog() {
+    this.setState({openCopyProjectDialog: false, copyProject: null});
+  }
+
+  confirmCopyProjectDialog() {
+    if (this.state.signedIn) {
+      this.props.history.push(`/projects/${this.props.match.params.url}/copy/${this.state.copyProject.id}`);
     }
     else {
       this.props.history.push('/auth');
@@ -82,9 +101,13 @@ class ProjectsContainer extends Component {
         projects: this.state.projects,
         websiteUrl: decodeURIComponent(this.props.match.params.url),
         openCreateProjectDialog: this.state.openCreateProjectDialog,
+        openCopyProjectDialog: this.state.openCopyProjectDialog,
         didPressCreateProjectButton: () => this.didPressCreateProjectButton(),
-        closeDialog: () => this.closeDialog(),
-        confirmDialog: () => this.confirmDialog()
+        closeCreateProjectDialog: () => this.closeCreateProjectDialog(),
+        confirmCreateProjectDialog: () => this.confirmCreateProjectDialog(),
+        didPressCopyProjectButton: (project) => this.didPressCopyProjectButton(project),
+        closeCopyProjectDialog: () => this.closeCopyProjectDialog(),
+        confirmCopyProjectDialog: () => this.confirmCopyProjectDialog()
       }
     );
   }

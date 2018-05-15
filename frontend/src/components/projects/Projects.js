@@ -103,11 +103,12 @@ class Projects extends Component {
     return this.props.projects.map((project, index) => {
       return <ProjectContainer project={project}
                                projectId={project.id}
+                               didPressCopyProjectButton={() => this.props.didPressCopyProjectButton(project)}
                                key={index}/>
     });
   }
 
-  getCreateProjectConfirmationDialog() {
+  getCopyProjectConfirmationDialog() {
     return (
       <Dialog
         open={this.props.openCreateProjectDialog}
@@ -125,10 +126,40 @@ class Projects extends Component {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => this.props.closeDialog()} color="primary">
+          <Button onClick={() => this.props.closeCreateProjectDialog()} color="primary">
             Cancel
           </Button>
-          <Button onClick={() => this.props.confirmDialog()} color="primary">
+          <Button onClick={() => this.props.confirmCreateProjectDialog()} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+
+  getCreateProjectConfirmationDialog() {
+    const dialogTitle = this.props.copyProject ? this.props.copyProject.title + ' - ' + this.props.copyProject.authorEmail : '';
+    return (
+      <Dialog
+        open={this.props.openCopyProjectDialog}
+        disableBackdropClick
+        disableEscapeKeyDown
+        maxWidth="xs"
+        aria-labelledby="copy-project-confirmation-dialog"
+      >
+        <DialogTitle id="copy-project-confirmation-dialog">
+          {this.props.signedIn ? 'Copy this project to your account?' : 'Sign in to copy the project'}
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant={'subheading'} color={'textSecondary'}>
+            {this.props.signedIn ? dialogTitle : ''}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => this.props.closeCopyProjectDialog()} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => this.props.confirmCopyProjectDialog()} color="primary">
             Ok
           </Button>
         </DialogActions>
@@ -158,6 +189,7 @@ class Projects extends Component {
         </Button>
 
         {this.getCreateProjectConfirmationDialog()}
+        {this.getCopyProjectConfirmationDialog()}
       </div>
     );
   }
@@ -170,8 +202,13 @@ Projects.propTypes = {
   websiteUrl: PropTypes.string.isRequired,
   openCreateProjectDialog: PropTypes.bool.isRequired,
   didPressCreateProjectButton: PropTypes.func.isRequired,
-  closeDialog: PropTypes.func.isRequired,
-  confirmDialog: PropTypes.func.isRequired
+  closeCreateProjectDialog: PropTypes.func.isRequired,
+  confirmCreateProjectDialog: PropTypes.func.isRequired,
+  copyProject: PropTypes.object,
+  openCopyProjectDialog: PropTypes.bool.isRequired,
+  didPressCopyProjectButton: PropTypes.func.isRequired,
+  closeCopyProjectDialog: PropTypes.func.isRequired,
+  confirmCopyProjectDialog: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Projects);

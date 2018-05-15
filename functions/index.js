@@ -69,10 +69,18 @@ exports.addAuditResultToFirestore = functions
   .pubsub
   .topic('audit-result')
   .onPublish(message => {
-
     const auditPayload = message.json;
+    const error = auditPayload.error;
     const websiteUrl = auditPayload.websiteUrl;
     const projectId = auditPayload.projectId;
+
+    if (error) {
+      return admin
+        .firestore()
+        .collection('projects')
+        .doc(projectId)
+        .update({auditError: error});
+    }
 
     const arrayToObject = (array) => {
       return array.reduce((acc, cur, i) => {
@@ -120,6 +128,7 @@ exports.addAuditResultToFirestore = functions
         .collection('projects')
         .doc(projectId)
         .set({
+          auditError: null,
           isLoading: false,
           errors: auditResult
         }, {merge: true})

@@ -117,21 +117,31 @@ const getContrastErrors = (lhr) => {
     const {projectId, websiteUrl} = payload;
     console.log(`Received Message ${message.id} with URL: ${websiteUrl}`);
 
-    const lhr = await lighthouse(websiteUrl, opts, lighthouseConfig);
-    console.log(`Lighthouse score: ${lhr.score}`);
+    let auditResult;
 
-    const imageErrors = getImageErrors(lhr, websiteUrl);
-    const langErrors = getLangErrors(lhr);
-    const contrastErrors = getContrastErrors(lhr);
+    try {
+      const lhr = await lighthouse(websiteUrl, opts, lighthouseConfig);
+      console.log(`Lighthouse score: ${lhr.score}`);
 
-    const auditResult = {
-      projectId: projectId,
-      websiteUrl: websiteUrl,
-      imageErrors: imageErrors,
-      langErrors: langErrors,
-      contrastErrors: contrastErrors
-    };
+      const imageErrors = getImageErrors(lhr, websiteUrl);
+      const langErrors = getLangErrors(lhr);
+      const contrastErrors = getContrastErrors(lhr);
 
+      auditResult = {
+        projectId: projectId,
+        websiteUrl: websiteUrl,
+        imageErrors: imageErrors,
+        langErrors: langErrors,
+        contrastErrors: contrastErrors
+      };
+    } catch(error) {
+      console.error(error);
+      auditResult = {
+        projectId: projectId,
+        websiteUrl: websiteUrl,
+        error: error.message
+      };
+    }
     publishAuditResultToQueue(auditResult);
   }));
 

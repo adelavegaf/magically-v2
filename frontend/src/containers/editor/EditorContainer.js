@@ -37,12 +37,13 @@ class EditorContainer extends Component {
       .collection('projects')
       .doc(this.props.match.params.projectId)
       .onSnapshot(doc => {
-        if (!doc.data()) {
+        const project = doc.data();
+        if (!project || project.isLoading || project.auditError) {
           this.setState({loading: false, exists: false});
           return;
         }
         this.setState({
-          project: doc.data(),
+          project: project,
           isOwner: this.isProjectOwner(doc.data()),
           loading: false,
           exists: true

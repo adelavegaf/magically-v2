@@ -8,7 +8,8 @@ class CreateProjectContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthenticated: true
+      isAuthenticated: true,
+      auditError: null
     };
     this.authUnsubscribe = null;
     this.projectUnsubscribe = null;
@@ -48,8 +49,14 @@ class CreateProjectContainer extends Component {
           .firestore()
           .collection('projects')
           .doc(projectId)
-          .onSnapshot(project => {
-            if (!project.data().isLoading) {
+          .onSnapshot(projectSnapshot => {
+            const project = projectSnapshot.data();
+            if (project.auditError) {
+              this.setState({auditError: project.auditError});
+              this.projectUnsubscribe();
+              return;
+            }
+            if (!project.isLoading) {
               this.props.history.replace(`/editor/${projectId}`);
             }
           })
@@ -68,7 +75,8 @@ class CreateProjectContainer extends Component {
   render() {
     return React.createElement(CreateProject, {
         isAuthenticated: this.state.isAuthenticated,
-        websiteUrl: decodeURIComponent(this.props.match.params.url)
+        websiteUrl: decodeURIComponent(this.props.match.params.url),
+        auditError: this.state.auditError
       }
     );
   }

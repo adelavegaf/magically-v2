@@ -5,8 +5,6 @@ import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import { ListItemIcon, ListItemText } from 'material-ui/List';
-import AccountIcon from 'material-ui-icons/AccountCircle';
-import InboxIcon from 'material-ui-icons/Inbox';
 import ExitIcon from 'material-ui-icons/ExitToApp';
 
 
@@ -57,14 +55,6 @@ class AuthButton extends Component {
           open={Boolean(this.props.anchorElement)}
           onClose={() => this.props.closeMenu()}
         >
-          <MenuItem onClick={() => this.props.closeMenu()}>
-            <ListItemIcon><AccountIcon/></ListItemIcon>
-            <ListItemText primary={'Profile'}/>
-          </MenuItem>
-          <MenuItem onClick={() => this.props.closeMenu()}>
-            <ListItemIcon><InboxIcon/></ListItemIcon>
-            <ListItemText primary={'My projects'}/>
-          </MenuItem>
           <MenuItem onClick={() => this.props.didPressLogoutButton()}>
             <ListItemIcon><ExitIcon/></ListItemIcon>
             <ListItemText primary={'Logout'}/>

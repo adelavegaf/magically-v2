@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import OpenInNew from 'material-ui-icons/OpenInNew';
 import Paper from 'material-ui/Paper';
@@ -10,6 +11,7 @@ import RadioButtonUncheckedIcon from 'material-ui-icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from 'material-ui-icons/RadioButtonChecked';
 import Tooltip from 'material-ui/Tooltip';
 import Typography from 'material-ui/Typography';
+import {getEditorUrl} from '../utils/Paths';
 
 const styles = theme => ({
   project: {
@@ -46,8 +48,22 @@ const styles = theme => ({
     fontSize: '12px'
   },
   iconButton: {
-    height: '20px',
-    width: '20px',
+    height: '30px',
+    width: '30px',
+    borderRadius: '15px',
+    color: 'rgba(0, 0, 0, 0.54)',
+    '&:hover': {
+      background: 'rgba(0,0,0,.15)'
+    },
+    '&:link': {
+      color: 'rgba(0, 0, 0, 0.54)'
+    },
+    '&:visited': {
+      color: 'rgba(0, 0, 0, 0.54)'
+    },
+    '&:active': {
+      color: 'rgba(0, 0, 0, 0.54)'
+    },
   },
   openInNewIcon: {
     height: '16px',
@@ -111,9 +127,9 @@ class Project extends Component {
           </Typography>
           <Typography align={'right'}>
             <Tooltip title={'Open project in website'} placement={'left'}>
-              <IconButton className={this.classes.iconButton} href={''}>
+              <a className={this.classes.iconButton} href={getEditorUrl(this.props.project.id)} target={'_blank'}>
                 <OpenInNew className={this.classes.openInNewIcon}/>
-              </IconButton>
+              </a>
             </Tooltip>
           </Typography>
         </Grid>

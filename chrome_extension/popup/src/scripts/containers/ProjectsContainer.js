@@ -52,6 +52,7 @@ class ProjectsContainer extends Component {
   render() {
     return React.createElement(Projects, {
       isAutomaticFixEnabled: this.props.isAutomaticFixEnabled,
+      url: this.props.url,
       projects: this.state.filteredProjects,
       currentProjectId: this.state.currentProjectId,
       loading: this.state.loading,
@@ -62,7 +63,8 @@ class ProjectsContainer extends Component {
 }
 
 ProjectsContainer.propTypes = {
-  isAutomaticFixEnabled: PropTypes.bool.isRequired
+  isAutomaticFixEnabled: PropTypes.bool.isRequired,
+  url: PropTypes.string
 };
 
 export default ProjectsContainer;

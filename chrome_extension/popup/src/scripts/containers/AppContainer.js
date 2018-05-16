@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import App from '../components/App';
 import MessagingApi from '../messaging/MessagingApi';
+import TabsApi from '../utils/TabsApi';
 
 class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAutomaticFixEnabled: false
+      isAutomaticFixEnabled: false,
+      url: ''
     };
   }
 
@@ -14,6 +16,10 @@ class AppContainer extends Component {
     MessagingApi.getIsAutomaticFixEnabled().then(response => {
       this.setState({isAutomaticFixEnabled: response.isAutomaticFixEnabled});
     });
+    TabsApi.getCurrentTabUrl().then(url => {
+      console.log(url);
+      this.setState({url: url});
+    })
   }
 
   didToggleAutomaticFixSwitch() {
@@ -25,6 +31,7 @@ class AppContainer extends Component {
   render() {
     return React.createElement(App, {
       isAutomaticFixEnabled: this.state.isAutomaticFixEnabled,
+      url: this.state.url,
       didToggleAutomaticFixSwitch: () => this.didToggleAutomaticFixSwitch()
     });
   }

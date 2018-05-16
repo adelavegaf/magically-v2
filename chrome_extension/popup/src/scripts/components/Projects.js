@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 import Tooltip from 'material-ui/Tooltip';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
+import {getCreateProjectUrl} from '../utils/Paths';
 
 const styles = theme => ({
   automaticFixIsDisabled: {
@@ -72,7 +73,8 @@ class Projects extends Component {
                   color={'secondary'}
                   className={this.classes.fab}
                   mini={true}
-                  href={''}>
+                  target={'_blank'}
+                  href={getCreateProjectUrl(this.props.url)}>
             <AddIcon/>
           </Button>
         </Tooltip>
@@ -83,6 +85,7 @@ class Projects extends Component {
 
 Projects.propTypes = {
   isAutomaticFixEnabled: PropTypes.bool.isRequired,
+  url: PropTypes.string,
   projects: PropTypes.array.isRequired,
   currentProjectId: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,

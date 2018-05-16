@@ -43,7 +43,7 @@ class App extends Component {
             </Tooltip>
           </Toolbar>
         </AppBar>
-        <ProjectsContainer isAutomaticFixEnabled={this.props.isAutomaticFixEnabled}/>
+        <ProjectsContainer isAutomaticFixEnabled={this.props.isAutomaticFixEnabled} url={this.props.url}/>
       </MuiThemeProvider>
     );
   }
@@ -51,6 +51,7 @@ class App extends Component {
 
 App.propTypes = {
   isAutomaticFixEnabled: PropTypes.bool.isRequired,
+  url: PropTypes.string,
   didToggleAutomaticFixSwitch: PropTypes.func.isRequired
 };
 

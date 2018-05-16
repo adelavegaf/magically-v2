@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
-import Input, {InputAdornment} from 'material-ui/Input';
+import {InputAdornment} from 'material-ui/Input';
 import SearchIcon from 'material-ui-icons/Search';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import TextField from 'material-ui/TextField';
 
 const styles = theme => ({
   searchInput: {
@@ -30,13 +30,15 @@ class Search extends Component {
   }
 
   render() {
-    return <Input className={this.classes.searchInput}
-                  placeholder={'Search Projects'}
-                  onChange={(e) => this.props.didModifyProjectFilter(e.target.value)}
-                  disableUnderline={true}
-                  fullWidth={true}
-                  startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
-                  endAdornment={<InputAdornment position="end"><ExpandMoreIcon/></InputAdornment>}/>
+    return <TextField className={this.classes.searchInput}
+                      placeholder={'Search Projects'}
+                      onChange={(e) => this.props.didModifyProjectFilter(e.target.value)}
+                      fullWidth={true}
+                      autoFocus={true}
+                      InputProps={{
+                        disableUnderline: true,
+                        startAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>
+                      }}/>
   }
 }
 

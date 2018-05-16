@@ -3,6 +3,7 @@ import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
+import Tooltip from 'material-ui/Tooltip';
 import Typography from 'material-ui/Typography';
 import ProjectsContainer from '../containers/ProjectsContainer';
 import Switch from 'material-ui/Switch';
@@ -34,8 +35,12 @@ class App extends Component {
               Magically
             </Typography>
             <div style={{flex: 1}}/>
-            <Switch checked={this.props.isAutomaticFixEnabled}
-                    onChange={() => this.props.didToggleAutomaticFixSwitch()}/>
+            <Tooltip title={
+              `${this.props.isAutomaticFixEnabled ? 'Disable' : 'Enable'} automatic fix of websites based on a project`
+            }>
+              <Switch checked={this.props.isAutomaticFixEnabled}
+                      onChange={() => this.props.didToggleAutomaticFixSwitch()}/>
+            </Tooltip>
           </Toolbar>
         </AppBar>
         <ProjectsContainer isAutomaticFixEnabled={this.props.isAutomaticFixEnabled}/>

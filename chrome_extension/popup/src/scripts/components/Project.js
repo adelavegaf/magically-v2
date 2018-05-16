@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import OpenInNew from 'material-ui-icons/OpenInNew';
 import Paper from 'material-ui/Paper';
 import Radio from 'material-ui/Radio';
 import RadioButtonUncheckedIcon from 'material-ui-icons/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from 'material-ui-icons/RadioButtonChecked';
+import Tooltip from 'material-ui/Tooltip';
+import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
   project: {
@@ -41,6 +44,15 @@ const styles = theme => ({
   },
   author: {
     fontSize: '12px'
+  },
+  iconButton: {
+    height: '20px',
+    width: '20px',
+  },
+  openInNewIcon: {
+    height: '16px',
+    width: '16px',
+    fontSize: '16px'
   }
 });
 
@@ -93,9 +105,16 @@ class Project extends Component {
              this.props.project.authorEmail.split('@')[0]}
           </Typography>
         </Grid>
-        <Grid item xs>
+        <Grid item>
           <Typography variant={'body1'} color={'textSecondary'} align={'right'}>
             {(new Date(this.props.project.createdAt)).toLocaleDateString()}
+          </Typography>
+          <Typography align={'right'}>
+            <Tooltip title={'Open project in website'} placement={'left'}>
+              <IconButton className={this.classes.iconButton} href={''}>
+                <OpenInNew className={this.classes.openInNewIcon}/>
+              </IconButton>
+            </Tooltip>
           </Typography>
         </Grid>
       </Grid>

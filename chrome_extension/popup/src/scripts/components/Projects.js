@@ -12,11 +12,13 @@ import Typography from 'material-ui/Typography';
 const styles = theme => ({
   automaticFixIsDisabled: {
     color: '#a6343e',
-    fontWeight: 500
+    fontWeight: 500,
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit
   },
-  createProjectText: {
-    paddingTop: theme.spacing.unit * 3,
-    paddingBottom: theme.spacing.unit * 3
+  informationText: {
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit
   },
   fab: {
     position: 'absolute',
@@ -42,7 +44,7 @@ class Projects extends Component {
       });
     } else {
       return (
-        <Typography variant={'caption'} align={'center'}>
+        <Typography variant={'caption'} align={'center'} className={this.classes.informationText}>
           No projects found for this URL and/or search filter.
         </Typography>
       );
@@ -62,7 +64,7 @@ class Projects extends Component {
           </Typography>
         }
         {this.getProjects()}
-        <Typography variant={'caption'} align={'center'} gutterBottom={true} className={this.classes.createProjectText}>
+        <Typography variant={'caption'} align={'center'} gutterBottom={true} className={this.classes.informationText}>
           Click on the + button to create a project for this URL
         </Typography>
         <Tooltip title={'Create project for current URL in website'} placement={'left'}>

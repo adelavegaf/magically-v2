@@ -57,14 +57,15 @@ chrome.tabs.onUpdated.addListener((tabId, {status}, tab) => {
     return;
   }
   return Api.getProjectsWithUrl(tab.url).then(projects => {
-    if (projects.length === 0) {
-      return;
-    }
     // TODO(adelavega): Analyze which project should be loaded.
     const currentProjectId = 0;
 
     // Store the results
     StorageApi.setTabInformation(tabId, projects, currentProjectId);
+
+    if (projects.length === 0) {
+      return;
+    }
 
     // Fix the website
     const selectedProject = projects[currentProjectId];

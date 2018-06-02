@@ -15,6 +15,8 @@ const subscription = pubsub.subscription(subscriptionName);
  * add ["link-name"]
  */
 
+const safeGet = (path, object) => path.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, object);
+
 const publishAuditResultToQueue = (auditResult) => {
   const data = JSON.stringify(auditResult);
   const dataBuffer = Buffer.from(data);
@@ -37,7 +39,13 @@ const getImageErrors = (lhr, url) => {
   if (accessibilityIssue.notApplicable) {
     return [];
   }
-  const errors = accessibilityIssue.details.items;
+
+  const errors = safeGet(['details', 'items'], accessibilityIssue);
+  if (errors === null) {
+    console.error('error fetching image errors path');
+    return [];
+  }
+
   return errors
     .filter(error => {
       const regexMatch = error.snippet.match(/src="(.*?)"/);
@@ -59,7 +67,13 @@ const getLangErrors = (lhr) => {
   if (accessibilityIssue.notApplicable) {
     return [];
   }
-  const errors = accessibilityIssue.details.items;
+
+  const errors = safeGet(['details', 'items'], accessibilityIssue);
+  if (errors === null) {
+    console.error('error fetching lang errors path');
+    return [];
+  }
+
   return errors.map(error => {
     return {
       domSelector: error.selector
@@ -72,7 +86,13 @@ const getContrastErrors = (lhr) => {
   if (accessibilityIssue.notApplicable) {
     return [];
   }
-  const errors = accessibilityIssue.extendedInfo.value.nodes;
+
+  const errors = safeGet(['extendedInfo', 'value', 'nodes'], accessibilityIssue);
+  if (errors === null) {
+    console.error('error fetching contrast errors path');
+    return [];
+  }
+
   return errors.map(error => {
     const textRegex = /<.*>([\s\S]*)<\/.*>/;
     const failureRegex = /.*foreground color: (.*), background color: (.*), font size: (.*), font weight: (.*)\)\. Expected contrast ratio of (.*)/;

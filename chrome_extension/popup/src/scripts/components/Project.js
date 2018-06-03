@@ -96,7 +96,8 @@ class Project extends Component {
   }
 
   getPercentage() {
-    return this.props.project.errors.totalFixCount / this.props.project.errors.totalErrorsCount
+    const errors = this.props.project.errors;
+    return errors.totalErrorsCount === 0 ? 1 : errors.totalFixCount / errors.totalErrorsCount;
   }
 
   getResultInformation() {

@@ -1,9 +1,7 @@
 {
   "extends": "lighthouse:default",
   "settings": {
-    "onlyCategories": [
-      "accessibility"
-    ]
+    "onlyAudits": ["image-alt", "html-has-lang", "color-contrast"]
   },
   "categories": {
     "accessibility": {

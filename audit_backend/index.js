@@ -9,13 +9,15 @@ const subscriptionName = 'audit-sub';
 const subscription = pubsub.subscription(subscriptionName);
 
 /**
- * TODO(adelavega): IMPORTANT: HANDLE ERRORS WITH REGEX
+ * TODO(adelavega): IMPORTANT: Improve error handling
  * add ['document-title']
  * add ['html-lang-valid']
  * add ["link-name"]
  */
 
 const safeGet = (path, object) => path.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, object);
+
+const escapeSelector = (selector) => selector.replace(/["\t\b\f\n\r\\]/g, '\\$&');
 
 const publishAuditResultToQueue = (auditResult) => {
   const data = JSON.stringify(auditResult);
@@ -57,7 +59,7 @@ const getImageErrors = (lhr, url) => {
       const domSelector = error.selector;
       return {
         imgURL: imgURL,
-        domSelector: domSelector
+        domSelector: escapeSelector(domSelector)
       };
     })
 };
@@ -76,7 +78,7 @@ const getLangErrors = (lhr) => {
 
   return errors.map(error => {
     return {
-      domSelector: error.selector
+      domSelector: escapeSelector(error.selector)
     }
   });
 };
@@ -109,7 +111,7 @@ const getContrastErrors = (lhr) => {
       console.error('Failed to do failure summary regex match', error.failureSummary);
     }
     return {
-      domSelector: error.target[0].replace(/["\t\b\f\n\r\\]/g, '\\$&'),
+      domSelector: escapeSelector(error.target[0]),
       foregroundColor: foregroundColor,
       backgroundColor: backgroundColor,
       fontSize: fontSize,
